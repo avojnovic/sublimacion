@@ -1,0 +1,26 @@
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v5\sublimacion\bin\sublimacion.dll
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v5\sublimacion\bin\sublimacion.pdb
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v5\sublimacion\bin\sublimacion.BussinesObjects.dll
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v5\sublimacion\bin\sublimacion.DataAccessObjects.dll
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v5\sublimacion\bin\Mono.Security.dll
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v5\sublimacion\bin\Npgsql.dll
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v5\sublimacion\bin\sublimacion.DataAccessObjects.pdb
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v5\sublimacion\bin\sublimacion.BussinesObjects.pdb
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v5\sublimacion\obj\Release\ResolveAssemblyReference.cache
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v5\sublimacion\obj\Release\sublimacion.Properties.Resources.resources
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v5\sublimacion\obj\Release\sublimacion.csproj.GenerateResource.Cache
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v5\sublimacion\obj\Release\sublimacion.dll
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v5\sublimacion\obj\Release\sublimacion.pdb
+C:\Users\Alan\Desktop\sublimacion v5\sublimacion\bin\sublimacion.dll
+C:\Users\Alan\Desktop\sublimacion v5\sublimacion\bin\sublimacion.pdb
+C:\Users\Alan\Desktop\sublimacion v5\sublimacion\bin\sublimacion.BussinesObjects.dll
+C:\Users\Alan\Desktop\sublimacion v5\sublimacion\bin\sublimacion.DataAccessObjects.dll
+C:\Users\Alan\Desktop\sublimacion v5\sublimacion\bin\Mono.Security.dll
+C:\Users\Alan\Desktop\sublimacion v5\sublimacion\bin\Npgsql.dll
+C:\Users\Alan\Desktop\sublimacion v5\sublimacion\bin\sublimacion.DataAccessObjects.pdb
+C:\Users\Alan\Desktop\sublimacion v5\sublimacion\bin\sublimacion.BussinesObjects.pdb
+C:\Users\Alan\Desktop\sublimacion v5\sublimacion\obj\Release\ResolveAssemblyReference.cache
+C:\Users\Alan\Desktop\sublimacion v5\sublimacion\obj\Release\sublimacion.Properties.Resources.resources
+C:\Users\Alan\Desktop\sublimacion v5\sublimacion\obj\Release\sublimacion.csproj.GenerateResource.Cache
+C:\Users\Alan\Desktop\sublimacion v5\sublimacion\obj\Release\sublimacion.dll
+C:\Users\Alan\Desktop\sublimacion v5\sublimacion\obj\Release\sublimacion.pdb
