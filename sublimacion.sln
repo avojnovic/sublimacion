@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sublimacion", "sublimacion\sublimacion.csproj", "{F72AEA5A-B59B-4D4A-8BF5-44B5DED8C0BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sublimacion.DataAccessObjects", "sublimacion.DataAccessObjects\sublimacion.DataAccessObjects.csproj", "{B2EDAC05-FF78-4F80-9392-ACF68C5D9269}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sublimacion.BussinesObjects", "sublimacion.BussinesObjects\sublimacion.BussinesObjects.csproj", "{AE55BB2E-33C1-48E1-A2DE-138D3CE6FE8A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F72AEA5A-B59B-4D4A-8BF5-44B5DED8C0BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F72AEA5A-B59B-4D4A-8BF5-44B5DED8C0BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F72AEA5A-B59B-4D4A-8BF5-44B5DED8C0BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F72AEA5A-B59B-4D4A-8BF5-44B5DED8C0BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2EDAC05-FF78-4F80-9392-ACF68C5D9269}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2EDAC05-FF78-4F80-9392-ACF68C5D9269}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2EDAC05-FF78-4F80-9392-ACF68C5D9269}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2EDAC05-FF78-4F80-9392-ACF68C5D9269}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE55BB2E-33C1-48E1-A2DE-138D3CE6FE8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE55BB2E-33C1-48E1-A2DE-138D3CE6FE8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE55BB2E-33C1-48E1-A2DE-138D3CE6FE8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE55BB2E-33C1-48E1-A2DE-138D3CE6FE8A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
