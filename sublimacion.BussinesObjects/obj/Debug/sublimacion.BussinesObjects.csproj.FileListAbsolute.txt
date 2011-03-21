@@ -1,0 +1,45 @@
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion\sublimacion.BussinesObjects\bin\Debug\sublimacion.BussinesObjects.dll
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion\sublimacion.BussinesObjects\bin\Debug\sublimacion.BussinesObjects.pdb
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion\sublimacion.BussinesObjects\obj\Debug\ResolveAssemblyReference.cache
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion\sublimacion.BussinesObjects\obj\Debug\sublimacion.BussinesObjects.dll
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion\sublimacion.BussinesObjects\obj\Debug\sublimacion.BussinesObjects.pdb
+F:\NOE SUBLIMACION\sublimacion\sublimacion.BussinesObjects\bin\Debug\sublimacion.BussinesObjects.dll
+F:\NOE SUBLIMACION\sublimacion\sublimacion.BussinesObjects\bin\Debug\sublimacion.BussinesObjects.pdb
+F:\NOE SUBLIMACION\sublimacion\sublimacion.BussinesObjects\obj\Debug\ResolveAssemblyReference.cache
+F:\NOE SUBLIMACION\sublimacion\sublimacion.BussinesObjects\obj\Debug\sublimacion.BussinesObjects.dll
+F:\NOE SUBLIMACION\sublimacion\sublimacion.BussinesObjects\obj\Debug\sublimacion.BussinesObjects.pdb
+F:\NOE SUBLIMACION\sublimacion v2\sublimacion.BussinesObjects\bin\Debug\sublimacion.BussinesObjects.dll
+F:\NOE SUBLIMACION\sublimacion v2\sublimacion.BussinesObjects\bin\Debug\sublimacion.BussinesObjects.pdb
+F:\NOE SUBLIMACION\sublimacion v2\sublimacion.BussinesObjects\obj\Debug\ResolveAssemblyReference.cache
+F:\NOE SUBLIMACION\sublimacion v2\sublimacion.BussinesObjects\obj\Debug\sublimacion.BussinesObjects.dll
+F:\NOE SUBLIMACION\sublimacion v2\sublimacion.BussinesObjects\obj\Debug\sublimacion.BussinesObjects.pdb
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v2\sublimacion.BussinesObjects\bin\Debug\sublimacion.BussinesObjects.dll
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v2\sublimacion.BussinesObjects\bin\Debug\sublimacion.BussinesObjects.pdb
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v2\sublimacion.BussinesObjects\obj\Debug\ResolveAssemblyReference.cache
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v2\sublimacion.BussinesObjects\obj\Debug\sublimacion.BussinesObjects.dll
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v2\sublimacion.BussinesObjects\obj\Debug\sublimacion.BussinesObjects.pdb
+C:\Users\Alan\Desktop\TMP\sublimacion v2\sublimacion.BussinesObjects\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Alan\Desktop\TMP\sublimacion v2\sublimacion.BussinesObjects\obj\Debug\sublimacion.BussinesObjects.dll
+C:\Users\Alan\Desktop\TMP\sublimacion v2\sublimacion.BussinesObjects\bin\Debug\sublimacion.BussinesObjects.dll
+C:\Users\Alan\Desktop\TMP\sublimacion v2\sublimacion.BussinesObjects\bin\Debug\sublimacion.BussinesObjects.pdb
+C:\Users\Alan\Desktop\TMP\sublimacion v2\sublimacion.BussinesObjects\obj\Debug\sublimacion.BussinesObjects.pdb
+C:\Users\Alan\Desktop\TMP\sublimacion v3\sublimacion.BussinesObjects\bin\Debug\sublimacion.BussinesObjects.dll
+C:\Users\Alan\Desktop\TMP\sublimacion v3\sublimacion.BussinesObjects\bin\Debug\sublimacion.BussinesObjects.pdb
+C:\Users\Alan\Desktop\TMP\sublimacion v3\sublimacion.BussinesObjects\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Alan\Desktop\TMP\sublimacion v3\sublimacion.BussinesObjects\obj\Debug\sublimacion.BussinesObjects.dll
+C:\Users\Alan\Desktop\TMP\sublimacion v3\sublimacion.BussinesObjects\obj\Debug\sublimacion.BussinesObjects.pdb
+C:\Users\Alan\Desktop\TMP\sublimacion v4\sublimacion.BussinesObjects\bin\Debug\sublimacion.BussinesObjects.dll
+C:\Users\Alan\Desktop\TMP\sublimacion v4\sublimacion.BussinesObjects\bin\Debug\sublimacion.BussinesObjects.pdb
+C:\Users\Alan\Desktop\TMP\sublimacion v4\sublimacion.BussinesObjects\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Alan\Desktop\TMP\sublimacion v4\sublimacion.BussinesObjects\obj\Debug\sublimacion.BussinesObjects.dll
+C:\Users\Alan\Desktop\TMP\sublimacion v4\sublimacion.BussinesObjects\obj\Debug\sublimacion.BussinesObjects.pdb
+C:\Users\Alan\Desktop\TMP\sublimacion v5\sublimacion.BussinesObjects\bin\Debug\sublimacion.BussinesObjects.dll
+C:\Users\Alan\Desktop\TMP\sublimacion v5\sublimacion.BussinesObjects\bin\Debug\sublimacion.BussinesObjects.pdb
+C:\Users\Alan\Desktop\TMP\sublimacion v5\sublimacion.BussinesObjects\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Alan\Desktop\TMP\sublimacion v5\sublimacion.BussinesObjects\obj\Debug\sublimacion.BussinesObjects.dll
+C:\Users\Alan\Desktop\TMP\sublimacion v5\sublimacion.BussinesObjects\obj\Debug\sublimacion.BussinesObjects.pdb
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v5\sublimacion.BussinesObjects\bin\Debug\sublimacion.BussinesObjects.dll
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v5\sublimacion.BussinesObjects\bin\Debug\sublimacion.BussinesObjects.pdb
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v5\sublimacion.BussinesObjects\obj\Debug\ResolveAssemblyReference.cache
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v5\sublimacion.BussinesObjects\obj\Debug\sublimacion.BussinesObjects.dll
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v5\sublimacion.BussinesObjects\obj\Debug\sublimacion.BussinesObjects.pdb

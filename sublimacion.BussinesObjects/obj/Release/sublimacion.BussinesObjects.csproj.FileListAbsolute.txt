@@ -1,0 +1,10 @@
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v5\sublimacion.BussinesObjects\bin\Release\sublimacion.BussinesObjects.dll
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v5\sublimacion.BussinesObjects\bin\Release\sublimacion.BussinesObjects.pdb
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v5\sublimacion.BussinesObjects\obj\Release\ResolveAssemblyReference.cache
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v5\sublimacion.BussinesObjects\obj\Release\sublimacion.BussinesObjects.dll
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion v5\sublimacion.BussinesObjects\obj\Release\sublimacion.BussinesObjects.pdb
+C:\Users\Alan\Desktop\sublimacion v5\sublimacion.BussinesObjects\bin\Release\sublimacion.BussinesObjects.dll
+C:\Users\Alan\Desktop\sublimacion v5\sublimacion.BussinesObjects\bin\Release\sublimacion.BussinesObjects.pdb
+C:\Users\Alan\Desktop\sublimacion v5\sublimacion.BussinesObjects\obj\Release\ResolveAssemblyReference.cache
+C:\Users\Alan\Desktop\sublimacion v5\sublimacion.BussinesObjects\obj\Release\sublimacion.BussinesObjects.dll
+C:\Users\Alan\Desktop\sublimacion v5\sublimacion.BussinesObjects\obj\Release\sublimacion.BussinesObjects.pdb

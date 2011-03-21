@@ -1,0 +1,22 @@
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion\sublimacion.ControlObjects\obj\Debug\ResolveAssemblyReference.cache
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion\sublimacion.ControlObjects\bin\Debug\sublimacion.ControlObjects.dll
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion\sublimacion.ControlObjects\bin\Debug\sublimacion.ControlObjects.pdb
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion\sublimacion.ControlObjects\bin\Debug\sublimacion.BussinesObjects.dll
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion\sublimacion.ControlObjects\bin\Debug\sublimacion.DataAccessObjects.dll
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion\sublimacion.ControlObjects\bin\Debug\Mono.Security.dll
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion\sublimacion.ControlObjects\bin\Debug\Npgsql.dll
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion\sublimacion.ControlObjects\bin\Debug\sublimacion.BussinesObjects.pdb
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion\sublimacion.ControlObjects\bin\Debug\sublimacion.DataAccessObjects.pdb
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion\sublimacion.ControlObjects\obj\Debug\sublimacion.ControlObjects.dll
+d:\Ingenieria en Informatica\Materias cursantes\Trabajo de Campo\Proyecto\sublimacion\sublimacion.ControlObjects\obj\Debug\sublimacion.ControlObjects.pdb
+F:\NOE SUBLIMACION\sublimacion\sublimacion.ControlObjects\bin\Debug\sublimacion.ControlObjects.dll
+F:\NOE SUBLIMACION\sublimacion\sublimacion.ControlObjects\bin\Debug\sublimacion.ControlObjects.pdb
+F:\NOE SUBLIMACION\sublimacion\sublimacion.ControlObjects\bin\Debug\sublimacion.BussinesObjects.dll
+F:\NOE SUBLIMACION\sublimacion\sublimacion.ControlObjects\bin\Debug\sublimacion.DataAccessObjects.dll
+F:\NOE SUBLIMACION\sublimacion\sublimacion.ControlObjects\bin\Debug\Mono.Security.dll
+F:\NOE SUBLIMACION\sublimacion\sublimacion.ControlObjects\bin\Debug\Npgsql.dll
+F:\NOE SUBLIMACION\sublimacion\sublimacion.ControlObjects\bin\Debug\sublimacion.BussinesObjects.pdb
+F:\NOE SUBLIMACION\sublimacion\sublimacion.ControlObjects\bin\Debug\sublimacion.DataAccessObjects.pdb
+F:\NOE SUBLIMACION\sublimacion\sublimacion.ControlObjects\obj\Debug\ResolveAssemblyReference.cache
+F:\NOE SUBLIMACION\sublimacion\sublimacion.ControlObjects\obj\Debug\sublimacion.ControlObjects.dll
+F:\NOE SUBLIMACION\sublimacion\sublimacion.ControlObjects\obj\Debug\sublimacion.ControlObjects.pdb
