@@ -30,7 +30,14 @@ namespace sublimacion
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            _pedido = (BussinesObjects.BussinesObjects.Pedido)Session["pedido"];
+             string id = Request.QueryString["id"];
+
+            if (id != null)
+            {
+                _pedido = PedidoDAO.Instancia.obtenerPorId(id);
+            }
+
+
             _listaEstados = EstadoDAO.Instancia.obtenerEstados();
             _listaClientes = ClienteDAO.Instancia.obtenerClienteTodos();
             _listaProductos = ProductoDAO.Instancia.obtenerTodos();

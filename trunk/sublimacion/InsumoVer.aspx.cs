@@ -60,24 +60,19 @@ namespace sublimacion
 
         protected void BtnEditar_Click(object sender, EventArgs e)
         {
+
             GridViewRow row = GridView1.SelectedRow;
             if (row != null)
             {
-                string id = (row.Cells[1].Text);
-
-                BussinesObjects.Insumo i = InsumoDAO.Instancia.obtenerPorId(id.Trim()) ;
-
-                if (i != null &&  i.Idinsumo!=0)
-                {
-                    Session["insumo"] = i;
-                    Response.Redirect("Insumo.aspx");
-                }
-            }
+              
+                long id = long.Parse(row.Cells[1].Text);
+                Response.Redirect("Insumo.aspx?id=" + id.ToString());
+           }
         }
 
         protected void BtnNuevo_Click(object sender, EventArgs e)
         {
-            Session["insumo"] = null;
+
             Response.Redirect("Insumo.aspx");
         }
 
