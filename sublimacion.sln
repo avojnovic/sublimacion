@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sublimacion", "sublimacion\sublimacion.csproj", "{F72AEA5A-B59B-4D4A-8BF5-44B5DED8C0BF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sublimacion.DataAccessObjects", "sublimacion.DataAccessObjects\sublimacion.DataAccessObjects.csproj", "{B2EDAC05-FF78-4F80-9392-ACF68C5D9269}"

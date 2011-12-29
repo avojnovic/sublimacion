@@ -21,7 +21,13 @@ namespace sublimacion
         ModosEdicionEnum _modoApertura = new ModosEdicionEnum();
         protected void Page_Load(object sender, EventArgs e)
         {
-            _insumo = (BussinesObjects.Insumo)Session["insumo"];
+            string id = Request.QueryString["id"];
+            
+            if (id != null)
+            {
+                _insumo =InsumoDAO.Instancia.obtenerPorId(id);
+            }
+
             LblMensaje.Text = "";
             if (!IsPostBack)
             {
@@ -79,7 +85,7 @@ namespace sublimacion
                     }
                 }
 
-                Session["insumo"] = null;
+
                 Response.Redirect("InsumoVer.aspx");
             }
         }
@@ -151,7 +157,6 @@ namespace sublimacion
 
         protected void BtnSalir_Click(object sender, EventArgs e)
         {
-            Session["insumo"] = null;
             Response.Redirect("InsumoVer.aspx");
         }
 

@@ -102,24 +102,21 @@ namespace sublimacion
 
         protected void BtnEditar_Click(object sender, EventArgs e)
         {
+            
             GridViewRow row = GridView1.SelectedRow;
             if (row != null)
             {
-                string id = (row.Cells[1].Text);
+              
+                long id = long.Parse(row.Cells[1].Text);
+                Response.Redirect("Pedido.aspx?id=" + id.ToString());
+           }
 
-                BussinesObjects.BussinesObjects.Pedido i = PedidoDAO.Instancia.obtenerPorId(id.Trim());
-
-                if (i != null && i.IdPedido != 0)
-                {
-                    Session["pedido"] = i;
-                    Response.Redirect("Pedido.aspx");
-                }
-            }
+   
         }
 
         protected void BtnNuevo_Click(object sender, EventArgs e)
         {
-            Session["pedido"] = null;
+
             Response.Redirect("Pedido.aspx");
         }
 
