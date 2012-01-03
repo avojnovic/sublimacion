@@ -76,23 +76,7 @@ namespace sublimacion
             Response.Redirect("Insumo.aspx");
         }
 
-        protected void BtnBorrar_Click(object sender, EventArgs e)
-        {
-            GridViewRow row = GridView1.SelectedRow;
-            if (row != null)
-            {
-                string id = (row.Cells[1].Text);
-
-                BussinesObjects.Insumo i = InsumoDAO.Instancia.obtenerPorId(id.Trim());
-
-                if (i != null &&  i.Idinsumo != 0)
-                {
-                    i.Borrado = true;
-                    InsumoDAO.Instancia.actualizarInsumo(i);
-                    Response.Redirect("InsumoVer.aspx");
-                }
-            }
-        }
+       
 
         protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {

@@ -1,0 +1,5 @@
+F:\Proyectos\Sublimacion\Utils\bin\Release\Fwk.Utils.dll
+F:\Proyectos\Sublimacion\Utils\bin\Release\Fwk.Utils.pdb
+F:\Proyectos\Sublimacion\Utils\obj\Release\ResolveAssemblyReference.cache
+F:\Proyectos\Sublimacion\Utils\obj\Release\Fwk.Utils.dll
+F:\Proyectos\Sublimacion\Utils\obj\Release\Fwk.Utils.pdb
