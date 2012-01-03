@@ -19,7 +19,7 @@ namespace sublimacion
 {
     public partial class Pedido : System.Web.UI.Page
     {
-        
+
         ModosEdicionEnum _modoApertura = new ModosEdicionEnum();
         BussinesObjects.BussinesObjects.Pedido _pedido;
         Dictionary<long, Estado> _listaEstados = new Dictionary<long, Estado>();
@@ -30,7 +30,7 @@ namespace sublimacion
 
         protected void Page_Load(object sender, EventArgs e)
         {
-             string id = Request.QueryString["id"];
+            string id = Request.QueryString["id"];
 
             if (id != null)
             {
@@ -42,7 +42,7 @@ namespace sublimacion
             _listaClientes = ClienteDAO.Instancia.obtenerClienteTodos();
             _listaProductos = ProductoDAO.Instancia.obtenerTodos();
 
-        
+
 
             LblComentario.Text = "";
             user = (Usuario)Session["usuario"];
@@ -53,11 +53,11 @@ namespace sublimacion
                 cargarCombos();
                 cargarPedido();
 
-                if (_pedido!=null)
+                if (_pedido != null)
                     Session["listaProd"] = _pedido.LineaPedido;
 
             }
-            
+
 
             if (_pedido != null)
             {
@@ -90,14 +90,20 @@ namespace sublimacion
         {
 
             ListBoxProductos.DataSource = _listaProductos.Values.ToList();
+            ListBoxProductos.DataTextField = "Nombre";
+            ListBoxProductos.DataValueField = "Idproducto";
             ListBoxProductos.DataBind();
-           
+
             CmbEstado.DataSource = _listaEstados.Values.ToList();
+            CmbEstado.DataTextField = "Descripcion";
+            CmbEstado.DataValueField = "Id";
             CmbEstado.DataBind();
 
 
-         
+
             CmbCliente.DataSource = _listaClientes.Values.ToList();
+            CmbEstado.DataTextField = "NombreCompleto";
+            CmbEstado.DataValueField = "IdCliente";
             CmbCliente.DataBind();
         }
 
@@ -115,7 +121,7 @@ namespace sublimacion
                 Estado est = new Estado();
                 foreach (EstadosPedido e in _pedido.EstadosPedido.Values.ToList())
                 {
-                    if (e.Fecha_inicio>t)
+                    if (e.Fecha_inicio > t)
                     {
                         t = e.Fecha_inicio;
                         est = e.Estado;
@@ -139,34 +145,34 @@ namespace sublimacion
 
         protected void BtnGuardar_Click(object sender, EventArgs e)
         {
-            if (verificar())
+
+            if (_modoApertura == ModosEdicionEnum.Nuevo)
             {
-                if (_modoApertura == ModosEdicionEnum.Nuevo)
+                setearObjeto();
+                PedidoDAO.Instancia.insertarPedido(_pedido);
+            }
+            else
+            {
+                if (_modoApertura == ModosEdicionEnum.Modificar)
                 {
                     setearObjeto();
-                    PedidoDAO.Instancia.insertarPedido(_pedido);
-                }
-                else
-                {
-                    if (_modoApertura == ModosEdicionEnum.Modificar)
-                    {
-                        setearObjeto();
-                        PedidoDAO.Instancia.actualizarPedido(_pedido);
-                       
-                    }
-                }
-                Session["listaProd"] = null;
-                Session["pedido"] = null;
+                    PedidoDAO.Instancia.actualizarPedido(_pedido);
 
-                if ((user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.JefeProduccion))
-                {
-                    Response.Redirect("LogisticaProduccion.aspx");
-                }
-                else
-                {
-                    Response.Redirect("PedidoVer.aspx");
                 }
             }
+            Session["listaProd"] = null;
+
+
+            if ((user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.JefeProduccion))
+            {
+                Response.Redirect("LogisticaProduccion.aspx");
+            }
+            else
+            {
+                Response.Redirect("PedidoVer.aspx");
+            }
+
+
         }
 
         private void setearObjeto()
@@ -175,30 +181,21 @@ namespace sublimacion
             if (_pedido == null)
                 _pedido = new BussinesObjects.BussinesObjects.Pedido();
 
-   
+            _pedido.Cliente = _listaClientes[long.Parse(this.CmbCliente.SelectedValue)];
 
-             foreach (Cliente c in _listaClientes.Values.ToList())
-             {
-                 if (c.ToString() == CmbCliente.SelectedItem.Text)
-                 {
-                     _pedido.Cliente=c;
-                     break;
-                 }
-             }
+            _pedido.Borrado = false;
+            _pedido.Comentario = TxtComentario.Text.Trim();
 
-             _pedido.Borrado = false;
-             _pedido.Comentario = TxtComentario.Text.Trim();
-
-             if (TxtPrioridad.Text.Trim()=="")
-                 _pedido.Prioridad = 0;
+            if (TxtPrioridad.Text.Trim() == "")
+                _pedido.Prioridad = 0;
             else
-                 _pedido.Prioridad =int.Parse( TxtPrioridad.Text.Trim());
+                _pedido.Prioridad = int.Parse(TxtPrioridad.Text.Trim());
 
-             _pedido.Ubicacion = TxtUbicacion.Text.Trim();
-            
-            
-            
-            
+            _pedido.Ubicacion = TxtUbicacion.Text.Trim();
+
+
+
+
 
 
             if (_modoApertura == ModosEdicionEnum.Nuevo)
@@ -211,92 +208,59 @@ namespace sublimacion
 
             }
 
-           
 
-            foreach (Estado c in _listaEstados.Values.ToList())
+
+
+
+            if (!_pedido.EstadosPedido.ContainsKey(long.Parse(this.CmbEstado.SelectedValue)))
             {
-                if (c.ToString() == CmbEstado.SelectedItem.Text)
+                EstadosPedido est = new EstadosPedido();
+                est.Fecha_inicio = DateTime.Now;
+                est.Fecha_fin = null;
+                est.Estado = _listaEstados[long.Parse(this.CmbEstado.SelectedValue)];
+                _pedido.EstadosPedido.Add(est.Estado.Id, est);
+
+
+                foreach (EstadosPedido e in _pedido.EstadosPedido.Values.ToList())
                 {
-                    if (!_pedido.EstadosPedido.ContainsKey(c.Id))
+
+                    if (e.Estado.Id != est.Estado.Id && e.Fecha_fin == null)
                     {
-                        EstadosPedido est = new EstadosPedido();
-                        est.Fecha_inicio = DateTime.Now;
-                        est.Fecha_fin = null;
-                        est.Estado = c;
-                        _pedido.EstadosPedido.Add(c.Id, est);
-
-
-                        foreach (EstadosPedido e in _pedido.EstadosPedido.Values.ToList())
-                        {
-
-                            if (e.Estado.Id != c.Id && e.Fecha_fin == null)
-                            {
-                                e.Fecha_fin = DateTime.Now;
-                            }
-                        }
-
+                        e.Fecha_fin = DateTime.Now;
                     }
-                    break;
                 }
+
             }
 
 
-            _pedido.LineaPedido =(Dictionary<Producto,int>) Session["listaProd"];
+
+
+
+            _pedido.LineaPedido = (Dictionary<Producto, int>)Session["listaProd"];
 
         }
 
-        private bool verificar()
-        {
-            if (TxtComentario.Text.Trim() == "")
-            {
-                LblComentario.Text = "Completar campo Comentario";
-                return false;
-            }
-            
-            try
-            {
-                if (TxtPrioridad.Text.Trim() != "")
-                {
-                    int s = 0;
-                    s = int.Parse(TxtPrioridad.Text.Trim());
-                }
-            }
-            catch (Exception)
-            {
-                LblComentario.Text = "Corregir campo Prioridad";
-                return false;
-            }
 
-
-
-            if(ListBoxProductosAgregados.Items.Count==0)
-            {
-                LblComentario.Text = "Agregar Productos";
-                return false;
-            }
-
-            return true;
-        }
 
         protected void BtnSalir_Click(object sender, EventArgs e)
         {
             Session["listaProd"] = null;
-            Session["pedido"] = null;
+
             Response.Redirect("PedidoVer.aspx");
         }
 
         protected void BtnAgregarProducto_Click(object sender, EventArgs e)
         {
-  
+
             _listaProductosAgregados = (Dictionary<Producto, int>)Session["listaProd"];
-             LblValidarAgregarProducto.Text="";
-            if(TxtCantidad.Text!="")
+            LblValidarAgregarProducto.Text = "";
+            if (TxtCantidad.Text != "")
             {
                 bool continuar = true;
                 int cant = 0;
                 try
                 {
-                    cant =int.Parse( TxtCantidad.Text.Trim());
+                    cant = int.Parse(TxtCantidad.Text.Trim());
 
                 }
                 catch (Exception)
@@ -315,11 +279,11 @@ namespace sublimacion
                     {
                         if (pr.ToString() == ListBoxProductos.SelectedItem.Text)
                         {
-                            
-                            
-                            
-                            
-                            bool agregar=true;
+
+
+
+
+                            bool agregar = true;
                             foreach (Producto pi in _listaProductosAgregados.Keys.ToList())
                             {
                                 if (pi.Idproducto == pr.Idproducto)
@@ -347,7 +311,7 @@ namespace sublimacion
             }
             else
             {
-                LblValidarAgregarProducto.Text="Escriba una cantidad";
+                LblValidarAgregarProducto.Text = "Escriba una cantidad";
             }
         }
 

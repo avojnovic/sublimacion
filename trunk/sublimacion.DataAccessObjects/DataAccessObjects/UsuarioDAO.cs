@@ -42,9 +42,8 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
         public Dictionary<long, Usuario> obtenerTodos()
         {
 
-            string sql = "";
-            sql += "SELECT u.id, u.usuario, u.contrasenia, u.nombre, u.apellido, u.telefono, u.mail, u.borrado, p.perfil, p.id as idper FROM usuario u";
-            sql += " left join perfil p on u.id_perfil=p.id where u.borrado=false";
+            string sql = @"SELECT u.id, u.usuario, u.contrasenia, u.nombre, u.apellido, u.telefono, u.mail, u.borrado, p.perfil, p.id as idper FROM usuario u
+              left join perfil p on u.id_perfil=p.id where u.borrado=false";
             NpgsqlDb.Instancia.PrepareCommand(sql);
             NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
             Dictionary<long, Usuario> dicUsuario = new Dictionary<long, Usuario>();
@@ -66,9 +65,8 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
         public Usuario obtenerUsuario (string usuario, string pass)
         {
 
-            string sql = "";
-            sql += "SELECT u.id, u.usuario, u.contrasenia, u.nombre, u.apellido, u.telefono, u.mail, u.borrado, p.perfil, p.id as idper FROM usuario u";
-            sql += " left join perfil p on u.id_perfil=p.id where u.borrado=false and u.usuario='{0}' and u.contrasenia='{1}' ";
+            string sql = @"SELECT u.id, u.usuario, u.contrasenia, u.nombre, u.apellido, u.telefono, u.mail, u.borrado, p.perfil, p.id as idper FROM usuario u
+            left join perfil p on u.id_perfil=p.id where u.borrado=false and u.usuario='{0}' and u.contrasenia='{1}' ";
 
             sql=string.Format(sql, usuario, pass);
             NpgsqlDb.Instancia.PrepareCommand(sql);
@@ -87,9 +85,8 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
         public Usuario obtenerUsuarioPorId(string id)
         {
 
-            string sql = "";
-            sql += "SELECT u.id, u.usuario, u.contrasenia, u.nombre, u.apellido, u.telefono, u.mail, u.borrado, p.perfil, p.id as idper FROM usuario u";
-            sql += " left join perfil p on u.id_perfil=p.id where u.borrado=false and u.id='{0}' ";
+            string sql = @"SELECT u.id, u.usuario, u.contrasenia, u.nombre, u.apellido, u.telefono, u.mail, u.borrado, p.perfil, p.id as idper FROM usuario u
+            left join perfil p on u.id_perfil=p.id where u.borrado=false and u.id='{0}' ";
 
             sql = string.Format(sql, id);
             NpgsqlDb.Instancia.PrepareCommand(sql);

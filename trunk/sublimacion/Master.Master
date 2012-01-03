@@ -1,4 +1,7 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Master.master.cs" Inherits="sublimacion.Master" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="act" %>
+
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -20,7 +23,7 @@
         </center>
         </div>
          <div style="border: 1px solid Black; background-color: black; width: 100%; height: 1px;" /> 
-                        <asp:Menu ID="Menu1" runat="server" BackColor="#F7F6F3" 
+                        <asp:Menu ID="divMenu" runat="server" BackColor="#F7F6F3" 
                             DynamicHorizontalOffset="2" Font-Names="Verdana" Font-Size="0.8em" 
                             ForeColor="#7C6F57" Orientation="Horizontal" StaticSubMenuIndent="0.8em">
                             <StaticSelectedStyle BackColor="#5D7B9D" />
@@ -31,6 +34,13 @@
                             <StaticHoverStyle BackColor="#7C6F57" ForeColor="White" />
             
                         </asp:Menu>
+
+        <act:ToolkitScriptManager ID="ScriptManager1" runat="server" AsyncPostBackTimeout="60000"
+            EnablePageMethods="true" OnAsyncPostBackError="ScriptManager1_AsyncPostBackError">
+            <Services>
+                <asp:ServiceReference Path="~/webmethods.asmx" />
+            </Services>
+        </act:ToolkitScriptManager>
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         
         

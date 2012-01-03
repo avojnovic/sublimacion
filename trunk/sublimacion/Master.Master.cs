@@ -24,11 +24,31 @@ namespace sublimacion
             //LblUsuario.Text = user.Nombre;
            if(!IsPostBack)
             {
-                generarMenu();
+                if (!Page.Request.Url.ToString().ToLower().Contains("login.aspx") && !Page.Request.Url.ToString().ToLower().Contains("error.aspx"))
+                {
+
+                    if (user == null)
+                    {
+                        Response.Redirect("login.aspx");
+                    }
+                    else
+                    {
+                        this.divMenu.Visible = true;
+                        generarMenu();
+                    }
+                }
+                else
+                {
+                    this.divMenu.Visible = false;
+                }
             }
         }
 
-
+        protected void ScriptManager1_AsyncPostBackError(object sender, AsyncPostBackErrorEventArgs e)
+        {
+            ScriptManager1.AsyncPostBackErrorMessage = e.Exception.Message;
+            Response.Redirect(Request.Url.ToString());
+        }
 
         private void generarMenu()
         {
@@ -38,50 +58,43 @@ namespace sublimacion
                 MenuItem itCa = new MenuItem("Catalogos");
 
 
-                MenuItem itn = new MenuItem("Nuevo");
-                itn.Value = "CatalogoNuevo";
-                itn.NavigateUrl = "Catalogo.aspx";
+                MenuItem itn = new MenuItem("Ver");
+                itn.Value = "CatalogoVer";
+                itn.NavigateUrl = "CatalogoVer.aspx";
                 itCa.ChildItems.Add(itn);
 
-                MenuItem ite = new MenuItem("Editar");
-                ite.Value = "CatalogoEditar";
+                MenuItem ite = new MenuItem("Nuevo");
+                ite.Value = "CatalogoNuevo";
                 ite.NavigateUrl = "Catalogo.aspx";
                 itCa.ChildItems.Add(ite);
 
-                MenuItem itd = new MenuItem("Eliminar");
-                itd.Value = "CatalogoEliminar";
-                itd.NavigateUrl = "Catalogo.aspx";
-                itCa.ChildItems.Add(itd);
 
-                Menu1.Items.Add(itCa);
+
+                divMenu.Items.Add(itCa);
 
 
                 MenuItem itPla = new MenuItem("Plantillas");
 
+                MenuItem itPlaE = new MenuItem("Ver");
+                itPlaE.Value = "PlantillaVer";
+                itPlaE.NavigateUrl = "PlantillaVer.aspx";
+                itPla.ChildItems.Add(itPlaE);
 
                 MenuItem itPlaN = new MenuItem("Nuevo");
                 itPlaN.Value = "PlantillaNuevo";
                 itPlaN.NavigateUrl = "Plantilla.aspx";
                 itPla.ChildItems.Add(itPlaN);
 
-                MenuItem itPlaE = new MenuItem("Editar");
-                itPlaE.Value = "PlantillaEditar";
-                itPlaE.NavigateUrl = "Plantilla.aspx";
-                itPla.ChildItems.Add(itPlaE);
+                
 
-                MenuItem itPlaD = new MenuItem("Eliminar");
-                itPlaD.Value = "PlantillaEliminar";
-                itPlaD.NavigateUrl = "Plantilla.aspx";
-                itPla.ChildItems.Add(itPlaD);
-
-                Menu1.Items.Add(itPla);
+                divMenu.Items.Add(itPla);
 
                 MenuItem itReg = new MenuItem("Registrar Diseño");
 
                 itReg.Value = "RegistrarDisenio";
                 itReg.NavigateUrl = "RegistrarDisenio.aspx";
 
-                Menu1.Items.Add(itReg);
+                divMenu.Items.Add(itReg);
 
             }
 
@@ -90,68 +103,58 @@ namespace sublimacion
                 //INSUMO
                 MenuItem itIns = new MenuItem("Insumos");
 
-                MenuItem itInsN = new MenuItem("Nuevo");
-                itInsN.Value = "InsumoNuevo";
-                itInsN.NavigateUrl = "Insumo.aspx";
-                itIns.ChildItems.Add(itInsN);
 
                 MenuItem itInsE = new MenuItem("Ver");
                 itInsE.Value = "InsumoVer";
                 itInsE.NavigateUrl = "InsumoVer.aspx";
                 itIns.ChildItems.Add(itInsE);
 
-                //MenuItem itInsE = new MenuItem("Editar");
-                //itInsE.Value = "InsumoEditar";
-                //itInsE.NavigateUrl = "Insumo.aspx";
-                //itIns.ChildItems.Add(itInsE);
+                MenuItem itInsN = new MenuItem("Nuevo");
+                itInsN.Value = "InsumoNuevo";
+                itInsN.NavigateUrl = "Insumo.aspx";
+                itIns.ChildItems.Add(itInsN);
 
-                //MenuItem itInsD = new MenuItem("Eliminar");
-                //itInsD.Value = "InsumoEliminar";
-                //itInsD.NavigateUrl = "Insumo.aspx";
-                //itIns.ChildItems.Add(itInsD);
 
-                Menu1.Items.Add(itIns);
+
+
+                divMenu.Items.Add(itIns);
 
                 //PRODUCTO
                 MenuItem itPro = new MenuItem("Productos");
+
+
+                MenuItem itProE = new MenuItem("Ver");
+                itProE.Value = "ProductoVer";
+                itProE.NavigateUrl = "ProductoVer.aspx";
+                itPro.ChildItems.Add(itProE);
 
                 MenuItem itProN = new MenuItem("Nuevo");
                 itProN.Value = "ProductoNuevo";
                 itProN.NavigateUrl = "Producto.aspx";
                 itPro.ChildItems.Add(itProN);
 
-                MenuItem itProE = new MenuItem("Editar");
-                itProE.Value = "ProductoEditar";
-                itProE.NavigateUrl = "Producto.aspx";
-                itPro.ChildItems.Add(itProE);
 
-                MenuItem itProD = new MenuItem("Eliminar");
-                itProD.Value = "ProductoEliminar";
-                itProD.NavigateUrl = "Producto.aspx";
-                itPro.ChildItems.Add(itProD);
-
-                Menu1.Items.Add(itPro);
+                divMenu.Items.Add(itPro);
 
                 //DESCUENTO
                 MenuItem itDe = new MenuItem("Descuentos");
+
+
+                MenuItem itDeE = new MenuItem("Ver");
+                itDeE.Value = "DescuentoVer";
+                itDeE.NavigateUrl = "DescuentoVer.aspx";
+                itDe.ChildItems.Add(itDeE);
 
                 MenuItem itDeN = new MenuItem("Nuevo");
                 itDeN.Value = "DescuentoNuevo";
                 itDeN.NavigateUrl = "Descuento.aspx";
                 itDe.ChildItems.Add(itDeN);
 
-                MenuItem itDeE = new MenuItem("Editar");
-                itDeE.Value = "DescuentoEditar";
-                itDeE.NavigateUrl = "Descuento.aspx";
-                itDe.ChildItems.Add(itDeE);
-
-                MenuItem itDeD = new MenuItem("Eliminar");
-                itDeD.Value = "DescuentoEliminar";
-                itDeD.NavigateUrl = "Descuento.aspx";
-                itDe.ChildItems.Add(itDeD);
 
 
-                Menu1.Items.Add(itDe);
+
+
+                divMenu.Items.Add(itDe);
 
                
 
@@ -162,7 +165,7 @@ namespace sublimacion
                 itAcep.Value = "AceptarDisenio";
                 itAcep.NavigateUrl = "AceptarDisenio.aspx";
 
-                Menu1.Items.Add(itAcep);
+                divMenu.Items.Add(itAcep);
 
 
             }
@@ -172,6 +175,11 @@ namespace sublimacion
              //PEDIDO
                 MenuItem itPe = new MenuItem("Pedidos");
 
+                MenuItem itPeE = new MenuItem("Ver");
+                itPeE.Value = "PedidoVer";
+                itPeE.NavigateUrl = "PedidoVer.aspx";
+                itPe.ChildItems.Add(itPeE);
+
                 if ((user.Perfil != sublimacion.BussinesObjects.Usuario.PerfilesEnum.JefeProduccion))
                 {
                     MenuItem itPeN = new MenuItem("Nuevo");
@@ -180,17 +188,14 @@ namespace sublimacion
                     itPe.ChildItems.Add(itPeN);
                 }
 
-                MenuItem itPeE = new MenuItem("Ver");
-                itPeE.Value = "PedidoVer";
-                itPeE.NavigateUrl = "PedidoVer.aspx";
-                itPe.ChildItems.Add(itPeE);
+                
 
                 //MenuItem itPeD = new MenuItem("Eliminar");
                 //itPeD.Value = "PedidoEliminar";
                 //itPeD.NavigateUrl = "Pedido.aspx";
                 //itPe.ChildItems.Add(itPeD);
 
-                Menu1.Items.Add(itPe);
+                divMenu.Items.Add(itPe);
             }
 
             if ((user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.JefeProduccion))
@@ -198,17 +203,19 @@ namespace sublimacion
                 
                 MenuItem itIns = new MenuItem("Logistica Producción");
 
-                MenuItem itInsN = new MenuItem("Crear");
-                itInsN.Value = "Crear";
-                itInsN.NavigateUrl = "LogisticaProduccion.aspx";
-                itIns.ChildItems.Add(itInsN);
-
                 MenuItem itPeE = new MenuItem("Ver");
                 itPeE.Value = "VerLogistica";
                 itPeE.NavigateUrl = "VerLogistica.aspx";
                 itIns.ChildItems.Add(itPeE);
 
-                Menu1.Items.Add(itIns);
+                MenuItem itInsN = new MenuItem("Crear");
+                itInsN.Value = "Crear";
+                itInsN.NavigateUrl = "LogisticaProduccion.aspx";
+                itIns.ChildItems.Add(itInsN);
+
+            
+
+                divMenu.Items.Add(itIns);
             }
 
 
@@ -221,7 +228,7 @@ namespace sublimacion
             itSalir.Value = "Salir";
             itSalir.NavigateUrl = "Login.aspx";
 
-            Menu1.Items.Add(itSalir);
+            divMenu.Items.Add(itSalir);
 
         }
     }

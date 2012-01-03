@@ -17,15 +17,18 @@ namespace sublimacion
 {
     public partial class Insumo : System.Web.UI.Page
     {
-       BussinesObjects.Insumo _insumo;
+        BussinesObjects.Insumo _insumo;
         ModosEdicionEnum _modoApertura = new ModosEdicionEnum();
         protected void Page_Load(object sender, EventArgs e)
         {
+            BtnBorrar.Attributes.Add("OnClick", "javascript:if(confirm('Esta seguro que desea borrar el Caso')== false) return false;");
+
             string id = Request.QueryString["id"];
-            
+
             if (id != null)
             {
-                _insumo =InsumoDAO.Instancia.obtenerPorId(id);
+                _insumo = InsumoDAO.Instancia.obtenerPorId(id);
+
             }
 
             LblMensaje.Text = "";
@@ -33,19 +36,20 @@ namespace sublimacion
             {
                 cargarInsumo();
             }
-           
-            
+
+
             if (_insumo != null)
             {
                 _modoApertura = ModosEdicionEnum.Modificar;
+                BtnBorrar.Visible = true;
             }
             else
             {
                 _modoApertura = ModosEdicionEnum.Nuevo;
-               
+                BtnBorrar.Visible = false;
             }
 
-            
+
         }
 
         private void cargarInsumo()
@@ -68,8 +72,7 @@ namespace sublimacion
         protected void Button1_Click(object sender, EventArgs e)
         {
 
-            if (verificar())
-            {
+          
                 if (_modoApertura == ModosEdicionEnum.Nuevo)
                 {
                     setearObjeto();
@@ -87,61 +90,10 @@ namespace sublimacion
 
 
                 Response.Redirect("InsumoVer.aspx");
-            }
-        }
-
-        private bool verificar()
-        {
-            if (TxtNombre.Text.Trim() == "")
-            {
-                LblMensaje.Text = "Completar campo Nombre";
-                return false;
-            }
-            if (TxtCosto.Text.Trim() == "")
-            {
-                LblMensaje.Text = "Completar campo costo";
-                return false;
-            }
-            if (TxtFabricante.Text.Trim() == "")
-            {
-                LblMensaje.Text = "Completar campo Fabricante";
-                return false;
-            }
-            if (Txtstock.Text.Trim() == "")
-            {
-                LblMensaje.Text = "Completar campo Stock";
-                return false;
-            }
            
-            try
-            {
-                int s = 0;
-                s = int.Parse(Txtstock.Text.Trim());
-
-            }
-            catch(Exception )
-            {
-                LblMensaje.Text = "Corregir campo Stock";
-                return false;
-            }
-
-            try
-            {
-                float s = 0;
-                s = int.Parse(TxtCosto.Text.Trim().Replace(',','.'));
-
-            }
-            catch (Exception )
-            {
-                LblMensaje.Text = "Corregir campo Costo";
-                return false;
-            }
-
-
-            return true;
-
         }
 
+       
         private void setearObjeto()
         {
             if (_insumo == null)
@@ -149,9 +101,9 @@ namespace sublimacion
 
             _insumo.Nombre = TxtNombre.Text;
             _insumo.Costo = float.Parse(TxtCosto.Text.Trim().Replace(',', '.'));
-            _insumo.NombreFab=TxtFabricante.Text.Trim() ;
+            _insumo.NombreFab = TxtFabricante.Text.Trim();
             _insumo.FechaAct = DateTime.Now;
-            _insumo.Stock=int.Parse( Txtstock.Text.Trim());
+            _insumo.Stock = int.Parse(Txtstock.Text.Trim());
 
         }
 
@@ -160,7 +112,15 @@ namespace sublimacion
             Response.Redirect("InsumoVer.aspx");
         }
 
-       
+        protected void BtnBorrar_Click(object sender, EventArgs e)
+        {
+
+            setearObjeto();
+            _insumo.Borrado = true;
+            InsumoDAO.Instancia.actualizarInsumo(_insumo);
+            Response.Redirect("InsumoVer.aspx");
+
+        }
 
     }
 }

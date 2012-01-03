@@ -72,7 +72,10 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             set { _borrado = value; }
         }
 
-
+        public string NombreCompleto
+        {
+            get { return Nombre + " " + Apellido; }
+        }
 
         public override string ToString()
         {
