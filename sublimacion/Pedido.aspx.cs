@@ -25,7 +25,7 @@ namespace sublimacion
         Dictionary<long, Estado> _listaEstados = new Dictionary<long, Estado>();
         Dictionary<long, Cliente> _listaClientes = new Dictionary<long, Cliente>();
         Dictionary<long, Producto> _listaProductos = new Dictionary<long, Producto>();
-        Dictionary<Producto, int> _listaProductosAgregados;
+        Dictionary<Producto, int> _listaProductosAgregados = new Dictionary<Producto, int>();
         Usuario user;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -49,12 +49,9 @@ namespace sublimacion
 
             if (!IsPostBack)
             {
-                _listaProductosAgregados = new Dictionary<Producto, int>();
+
                 cargarCombos();
                 cargarPedido();
-
-                if (_pedido != null)
-                    Session["listaProd"] = _pedido.LineaPedido;
 
             }
 
@@ -62,10 +59,12 @@ namespace sublimacion
             if (_pedido != null)
             {
                 _modoApertura = ModosEdicionEnum.Modificar;
+                BtnBorrar.Visible = true;
             }
             else
             {
                 _modoApertura = ModosEdicionEnum.Nuevo;
+                BtnBorrar.Visible = false;
 
             }
 
@@ -79,10 +78,10 @@ namespace sublimacion
                 TxtUsuario.ReadOnly = true;
                 CmbCliente.Enabled = false;
                 CmbEstado.Enabled = false;
-                ListBoxProductos.Visible = false;
+                ListBoxProductos.Enabled = false;
                 ListBoxProductosAgregados.Enabled = false;
-                BtnAgregarProducto.Visible = false;
-                LblProductosDisp.Visible = false;
+                BtnAgregarProducto.Enabled = false;
+                LblProductosDisp.Enabled = false;
             }
         }
 
@@ -102,8 +101,8 @@ namespace sublimacion
 
 
             CmbCliente.DataSource = _listaClientes.Values.ToList();
-            CmbEstado.DataTextField = "NombreCompleto";
-            CmbEstado.DataValueField = "IdCliente";
+            CmbCliente.DataTextField = "NombreCompleto";
+            CmbCliente.DataValueField = "IdCliente";
             CmbCliente.DataBind();
         }
 
@@ -119,6 +118,7 @@ namespace sublimacion
 
                 DateTime? t = DateTime.MinValue;
                 Estado est = new Estado();
+
                 foreach (EstadosPedido e in _pedido.EstadosPedido.Values.ToList())
                 {
                     if (e.Fecha_inicio > t)
@@ -128,19 +128,42 @@ namespace sublimacion
                     }
                 }
 
-                CmbEstado.SelectedValue = _listaEstados[est.Id].ToString();
+                CmbEstado.SelectedValue =est.Id.ToString();
 
-                CmbCliente.SelectedValue = _listaClientes[_pedido.Cliente.IdCliente].ToString();
+                CmbCliente.SelectedValue = _pedido.Cliente.IdCliente.ToString();
 
 
+
+                ListBoxProductosAgregados.DataValueField = "Idproducto";
+                ListBoxProductosAgregados.DataTextField = "ParaPedido";
                 ListBoxProductosAgregados.DataSource = _pedido.LineaPedido.Keys.ToList();
                 ListBoxProductosAgregados.DataBind();
+
+                if (ListBoxProductosAgregados.Items.Count > 0)
+                    ListBoxProductosAgregados.SelectedIndex = 0;
 
             }
             else
             {
                 _modoApertura = ModosEdicionEnum.Nuevo;
             }
+        }
+
+        protected void BtnBorrar_Click(object sender, EventArgs e)
+        {
+            setearObjeto();
+            _pedido.Borrado = true;
+            PedidoDAO.Instancia.actualizarPedido(_pedido);
+
+            if ((user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.JefeProduccion))
+            {
+                Response.Redirect("LogisticaProduccion.aspx");
+            }
+            else
+            {
+                Response.Redirect("PedidoVer.aspx");
+            }
+
         }
 
         protected void BtnGuardar_Click(object sender, EventArgs e)
@@ -160,7 +183,7 @@ namespace sublimacion
 
                 }
             }
-            Session["listaProd"] = null;
+
 
 
             if ((user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.JefeProduccion))
@@ -212,6 +235,7 @@ namespace sublimacion
 
 
 
+
             if (!_pedido.EstadosPedido.ContainsKey(long.Parse(this.CmbEstado.SelectedValue)))
             {
                 EstadosPedido est = new EstadosPedido();
@@ -232,11 +256,25 @@ namespace sublimacion
 
             }
 
+             _pedido.LineaPedido = new Dictionary<Producto,int>();
 
 
 
 
-            _pedido.LineaPedido = (Dictionary<Producto, int>)Session["listaProd"];
+             _listaProductosAgregados = new Dictionary<Producto, int>();
+
+             for (int i = 0; i < ListBoxProductosAgregados.Items.Count; i++)
+             {
+                 string text = ListBoxProductosAgregados.Items[i].Text;
+                 int cantidad = int.Parse(text.Substring(text.IndexOf(" - ") + 3));
+                 _listaProductos[long.Parse(ListBoxProductosAgregados.Items[i].Value)].Cantidad = cantidad;
+                 _listaProductosAgregados.Add(_listaProductos[long.Parse(ListBoxProductosAgregados.Items[i].Value)], cantidad);
+
+             }
+
+            _pedido.LineaPedido=_listaProductosAgregados;
+
+
 
         }
 
@@ -244,96 +282,60 @@ namespace sublimacion
 
         protected void BtnSalir_Click(object sender, EventArgs e)
         {
-            Session["listaProd"] = null;
 
-            Response.Redirect("PedidoVer.aspx");
+            if ((user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.JefeProduccion))
+            {
+                Response.Redirect("LogisticaProduccion.aspx");
+            }
+            else
+            {
+                Response.Redirect("PedidoVer.aspx");
+            }
         }
 
         protected void BtnAgregarProducto_Click(object sender, EventArgs e)
         {
 
-            _listaProductosAgregados = (Dictionary<Producto, int>)Session["listaProd"];
-            LblValidarAgregarProducto.Text = "";
-            if (TxtCantidad.Text != "")
+            int cant = int.Parse(TxtCantidad.Text.Trim());
+
+
+            _listaProductosAgregados = new Dictionary<Producto, int>();
+
+            for (int i = 0; i < ListBoxProductosAgregados.Items.Count; i++)
             {
-                bool continuar = true;
-                int cant = 0;
-                try
-                {
-                    cant = int.Parse(TxtCantidad.Text.Trim());
-
-                }
-                catch (Exception)
-                {
-
-                    LblValidarAgregarProducto.Text = "Escriba una cantidad correcta";
-                    continuar = false;
-                }
-
-                if (continuar)
-                {
-                    Producto p = new Producto();
-                    if (_listaProductosAgregados == null)
-                        _listaProductosAgregados = new Dictionary<Producto, int>();
-                    foreach (Producto pr in _listaProductos.Values.ToList())
-                    {
-                        if (pr.ToString() == ListBoxProductos.SelectedItem.Text)
-                        {
-
-
-
-
-                            bool agregar = true;
-                            foreach (Producto pi in _listaProductosAgregados.Keys.ToList())
-                            {
-                                if (pi.Idproducto == pr.Idproducto)
-                                    agregar = false;
-                            }
-
-                            if (agregar)
-                            {
-                                if (!_listaProductosAgregados.ContainsKey(pr))
-                                    _listaProductosAgregados.Add(pr, cant);
-
-                            }
-                            else
-                            {
-                                LblValidarAgregarProducto.Text = "Producto ya agregado";
-                            }
-
-                            Session["listaProd"] = _listaProductosAgregados;
-                            ListBoxProductosAgregados.DataSource = _listaProductosAgregados.Keys.ToList();
-                            ListBoxProductosAgregados.DataBind();
-                            break;
-                        }
-                    }
-                }
+                string text=ListBoxProductosAgregados.Items[i].Text;
+                int cantidad = int.Parse(text.Substring(text.IndexOf(" - ")+3));
+                _listaProductos[long.Parse(ListBoxProductosAgregados.Items[i].Value)].Cantidad = cantidad;
+                 _listaProductosAgregados.Add( _listaProductos[long.Parse( ListBoxProductosAgregados.Items[i].Value)],cantidad);
+               
             }
-            else
+
+
+            bool agregar = true;
+            foreach (Producto pi in _listaProductosAgregados.Keys.ToList())
             {
-                LblValidarAgregarProducto.Text = "Escriba una cantidad";
+                if (pi.Idproducto == _listaProductos[long.Parse(ListBoxProductos.SelectedValue)].Idproducto)
+                    agregar = false;
             }
+            _listaProductos[long.Parse(ListBoxProductos.SelectedValue)].Cantidad = cant;
+
+            if (agregar)
+                _listaProductosAgregados.Add(_listaProductos[long.Parse(ListBoxProductos.SelectedValue)], cant);
+
+
+            ListBoxProductosAgregados.DataValueField = "Idproducto";
+            ListBoxProductosAgregados.DataTextField = "ParaPedido";
+            ListBoxProductosAgregados.DataSource = _listaProductosAgregados.Keys.ToList();
+            ListBoxProductosAgregados.DataBind();
+
+
+            TxtCantidad.Text = "";
+
+            if (ListBoxProductosAgregados.Items.Count > 0)
+                ListBoxProductosAgregados.SelectedIndex = 0;
+            
         }
 
-        protected void ListBoxProductosAgregados_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //if (Session["listaProd"] != null)
-            //    _listaProductosAgregados = (Dictionary<Producto, int>)Session["listaProd"];
-            //else
-            //{
-            //    if (_listaProductosAgregados == null)
-            //        _listaProductosAgregados = new Dictionary<Producto, int>();
-            //}
-            //foreach (Producto pr in _listaProductosAgregados.Keys.ToList())
-            //{
-            //    if (pr.ToString() == ListBoxProductosAgregados.SelectedItem.Text)
-            //    {
-            //        TxtCantidad.Text = _listaProductosAgregados[pr].ToString();
 
-            //        break;
-            //    }
-            //}
-
-        }
     }
 }

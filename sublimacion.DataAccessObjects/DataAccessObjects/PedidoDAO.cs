@@ -452,6 +452,9 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
                 if (!dr.IsDBNull(dr.GetOrdinal("cantidad")))
                     cant = dr.GetInt32(dr.GetOrdinal("cantidad"));
 
+
+                p.Cantidad = cant;
+
                 if (!_dicLinea.ContainsKey(p))
                     _dicLinea.Add(p,cant);
             }
