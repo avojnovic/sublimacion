@@ -50,10 +50,22 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             set { _tiempo = value; }
         }
 
+        private int _cantidad;
+
+        public int Cantidad
+        {
+            get { return _cantidad; }
+            set { _cantidad = value; }
+        }
 
         public override string ToString()
         {
             return Nombre;
+        }
+
+        public string ParaPedido
+        {
+            get { return Nombre +" - "+Cantidad.ToString(); }
         }
 
     }

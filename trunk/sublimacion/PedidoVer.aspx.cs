@@ -35,8 +35,8 @@ namespace sublimacion
 
             if ((user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.JefeProduccion))
             {
-                BtnBorrar.Visible = false;
-                BtnNuevo.Visible = false;
+
+                BtnImgNuevo.Visible = false;
             }
 
             setearGrillaSiEstaVacia();
@@ -100,19 +100,7 @@ namespace sublimacion
             GridView1.DataBind();
         }
 
-        protected void BtnEditar_Click(object sender, EventArgs e)
-        {
-            
-            GridViewRow row = GridView1.SelectedRow;
-            if (row != null)
-            {
-              
-                long id = long.Parse(row.Cells[1].Text);
-                Response.Redirect("Pedido.aspx?id=" + id.ToString());
-           }
-
-   
-        }
+     
 
         protected void BtnNuevo_Click(object sender, EventArgs e)
         {
@@ -120,22 +108,6 @@ namespace sublimacion
             Response.Redirect("Pedido.aspx");
         }
 
-        protected void BtnBorrar_Click(object sender, EventArgs e)
-        {
-            GridViewRow row = GridView1.SelectedRow;
-            if (row != null)
-            {
-                string id = (row.Cells[1].Text);
-
-                BussinesObjects.BussinesObjects.Pedido i = PedidoDAO.Instancia.obtenerPorId(id.Trim());
-
-                if (i != null && i.IdPedido != 0)
-                {
-                    i.Borrado = true;
-                    PedidoDAO.Instancia.actualizarPedido(i);
-                    Response.Redirect("PedidoVer.aspx");
-                }
-            }
-        }
+       
     }
 }
