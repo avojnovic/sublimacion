@@ -31,8 +31,6 @@ namespace sublimacion
             if (!IsPostBack)
             {
                 _dicPlanificar = new Dictionary<long, sublimacion.BussinesObjects.BussinesObjects.Pedido>();
-                Session["listaPedidos"] = null;
-
                 TxtFechaInicio.Text = DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToLongTimeString();
 
             }
@@ -91,7 +89,7 @@ namespace sublimacion
             _dicTemp = PedidoDAO.Instancia.obtenerTodos();
             _dicPedidos = new Dictionary<long, sublimacion.BussinesObjects.BussinesObjects.Pedido>();
 
-            if ((user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.JefeProduccion))
+            if ((user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.JefeProduccion) || (user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.Administrador))
             {
 
                 foreach (BussinesObjects.BussinesObjects.Pedido p in _dicTemp.Values.ToList())

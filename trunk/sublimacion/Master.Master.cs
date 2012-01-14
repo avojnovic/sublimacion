@@ -198,7 +198,7 @@ namespace sublimacion
                 divMenu.Items.Add(itPe);
             }
 
-            if ((user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.JefeProduccion))
+            if ((user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.JefeProduccion) || (user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.Administrador))
             {
                 
                 MenuItem itIns = new MenuItem("Logistica Producción");
