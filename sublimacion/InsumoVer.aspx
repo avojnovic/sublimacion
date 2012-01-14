@@ -28,9 +28,7 @@
                 </asp:TemplateField>
             </Columns>
            
-            <SelectedRowStyle BackColor="Silver" HorizontalAlign="Center" 
-                VerticalAlign="Middle" />
-           
+            <SelectedRowStyle BackColor="Silver" HorizontalAlign="Center" VerticalAlign="Middle" />
             <HeaderStyle BackColor="Silver" Font-Bold="True" ForeColor="White" />
            
         </asp:GridView>
