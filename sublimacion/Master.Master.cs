@@ -172,6 +172,22 @@ namespace sublimacion
 
             if ((user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.Vendedor) || (user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.Administrador) || (user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.JefeProduccion))
             {
+
+                //CLIENTES
+                MenuItem itCli = new MenuItem("Clientes");
+                MenuItem ititCliE = new MenuItem("Ver");
+                ititCliE.Value = "ClienteVer";
+                ititCliE.NavigateUrl = "ClienteVer.aspx";
+                itCli.ChildItems.Add(ititCliE);
+
+                MenuItem ititCliV = new MenuItem("Nuevo");
+                ititCliV.Value = "ClienteNuevo";
+                ititCliV.NavigateUrl = "Cliente.aspx";
+                itCli.ChildItems.Add(ititCliV);
+
+
+
+                divMenu.Items.Add(itCli);
              //PEDIDO
                 MenuItem itPe = new MenuItem("Pedidos");
 

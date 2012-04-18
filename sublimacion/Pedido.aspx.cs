@@ -23,7 +23,7 @@ namespace sublimacion
         ModosEdicionEnum _modoApertura = new ModosEdicionEnum();
         BussinesObjects.BussinesObjects.Pedido _pedido;
         Dictionary<long, Estado> _listaEstados = new Dictionary<long, Estado>();
-        Dictionary<long, Cliente> _listaClientes = new Dictionary<long, Cliente>();
+        Dictionary<long, BussinesObjects.BussinesObjects.Cliente> _listaClientes = new Dictionary<long, BussinesObjects.BussinesObjects.Cliente>();
         Dictionary<long, Producto> _listaProductos = new Dictionary<long, Producto>();
         Dictionary<Producto, int> _listaProductosAgregados = new Dictionary<Producto, int>();
         Usuario user;

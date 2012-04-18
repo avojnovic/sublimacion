@@ -61,6 +61,8 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Cliente.aspx" />
+    <Content Include="ClienteVer.aspx" />
     <Content Include="controls\DateComboPicker.ascx" />
     <Content Include="controls\DatePicker.ascx" />
     <Content Include="Default.aspx" />
@@ -69,6 +71,20 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cliente.aspx.cs">
+      <DependentUpon>Cliente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cliente.aspx.designer.cs">
+      <DependentUpon>Cliente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ClienteVer.aspx.cs">
+      <DependentUpon>ClienteVer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClienteVer.aspx.designer.cs">
+      <DependentUpon>ClienteVer.aspx</DependentUpon>
+    </Compile>
     <Compile Include="controls\DateComboPicker.ascx.cs">
       <DependentUpon>DateComboPicker.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
