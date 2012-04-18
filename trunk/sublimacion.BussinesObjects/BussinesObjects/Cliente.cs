@@ -10,6 +10,11 @@ namespace sublimacion.BussinesObjects.BussinesObjects
 
         private long _idCliente;
 
+        public string IdClienteStr
+        {
+            get { return IdCliente.ToString();}
+        }
+
         public long IdCliente
         {
             get { return _idCliente; }

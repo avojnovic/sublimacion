@@ -124,5 +124,15 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
              return c;
         }
+
+        public void insertar(Cliente _cliente)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void actualizar(Cliente _cliente)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
