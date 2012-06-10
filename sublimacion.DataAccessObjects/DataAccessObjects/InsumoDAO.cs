@@ -12,35 +12,9 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 {
     public class InsumoDAO
     {
-        #region Singleton
-        private static InsumoDAO Instance = null;
-        private InsumoDAO() 
-        {
-            
-        }
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        private static void CreateInstance()
-        {
-            if (Instance == null)
-            {
-                Instance = new InsumoDAO();
-            }
-        }
-
-        public static InsumoDAO Instancia
-        {
-            get
-            {
-                CreateInstance();
-                return Instance;
-            }
-        }
-        #endregion
-
-
-
-        public void insertarInsumo(Insumo i)
+        
+        
+        public static void insertarInsumo(Insumo i)
         {
 
             string queryStr;
@@ -50,7 +24,6 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
                 VALUES (:nombre, :nombre_fab, :costo, :borrado, :stock, :fecha_act_stock)";
             
             NpgsqlDb.Instancia.PrepareCommand(queryStr);
-           // NpgsqlDb.Instancia.AddCommandParameter(":idinsumo", NpgsqlDbType.Varchar, ParameterDirection.Input, false, i.Idinsumo);
             NpgsqlDb.Instancia.AddCommandParameter(":nombre", NpgsqlDbType.Varchar, ParameterDirection.Input, false, i.Nombre);
             NpgsqlDb.Instancia.AddCommandParameter(":nombre_fab", NpgsqlDbType.Varchar, ParameterDirection.Input, false, i.NombreFab);
             NpgsqlDb.Instancia.AddCommandParameter(":costo", NpgsqlDbType.Numeric, ParameterDirection.Input, false, i.Costo);
@@ -94,8 +67,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
           
         }
 
-
-        public void actualizarInsumo(Insumo i)
+        public static void actualizarInsumo(Insumo i)
         {
 
             string queryStr;
@@ -126,7 +98,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
         }
 
 
-        public Dictionary<long, Insumo> obtenerTodos()
+        public static Dictionary<long, Insumo> obtenerInsumoTodos()
         {
 
             string sql = "";
@@ -151,7 +123,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
         }
 
 
-        public  Insumo obtenerPorId(string id)
+        public static Insumo obtenerInsumoPorId(string id)
         {
 
             string sql = "";
@@ -171,7 +143,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
         }
 
-        private Insumo getInsumosDelDataReader(NpgsqlDataReader dr)
+        private static Insumo getInsumosDelDataReader(NpgsqlDataReader dr)
         {
             Insumo i = new Insumo();
 

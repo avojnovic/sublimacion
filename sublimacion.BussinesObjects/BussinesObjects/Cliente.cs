@@ -86,5 +86,7 @@ namespace sublimacion.BussinesObjects.BussinesObjects
         {
             return Nombre+" " + Apellido;
         }
+
+
     }
 }

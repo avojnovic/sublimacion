@@ -65,20 +65,28 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
         public Usuario obtenerUsuario (string usuario, string pass)
         {
 
-            string sql = @"SELECT u.id, u.usuario, u.contrasenia, u.nombre, u.apellido, u.telefono, u.mail, u.borrado, p.perfil, p.id as idper FROM usuario u
-            left join perfil p on u.id_perfil=p.id where u.borrado=false and u.usuario='{0}' and u.contrasenia='{1}' ";
+            string sql = @"
+            SELECT u.id, u.usuario, u.contrasenia, u.nombre, u.apellido, u.telefono, u.mail, u.borrado, p.perfil, p.id as idper 
+            FROM usuario u
+            left join perfil p on u.id_perfil=p.id 
+            where u.borrado=false and u.usuario='{0}' and u.contrasenia='{1}' ";
 
-            sql=string.Format(sql, usuario, pass);
+            sql=string.Format(sql,usuario, pass);
+
+
             NpgsqlDb.Instancia.PrepareCommand(sql);
             NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
+            
+            
             Dictionary<long, Usuario> dicUsuario = new Dictionary<long, Usuario>();
             Usuario u=null;
+
             while (dr.Read())
             {
                 u = getUsuarioDelDataReader(dr);
 
             }
-
+ 
             return u;
 
         }

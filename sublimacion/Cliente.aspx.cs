@@ -73,7 +73,7 @@ namespace sublimacion
             if (_modoApertura == ModosEdicionEnum.Nuevo)
             {
                 setearObjeto();
-                ClienteDAO.Instancia.insertar(_cliente);
+                ClienteDAO.Instancia.insertarCliente(_cliente);
 
             }
             else

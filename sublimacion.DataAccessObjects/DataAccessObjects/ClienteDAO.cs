@@ -5,39 +5,16 @@ using System.Text;
 using System.Runtime.CompilerServices;
 using sublimacion.BussinesObjects.BussinesObjects;
 using Npgsql;
+using NpgsqlTypes;
+using System.Data;
 
 namespace sublimacion.DataAccessObjects.DataAccessObjects
 {
    public class ClienteDAO
     {
-       #region Singleton
-        private static ClienteDAO Instance = null;
-        private ClienteDAO() 
-        {
-            
-        }
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        private static void CreateInstance()
-        {
-            if (Instance == null)
-            {
-                Instance = new ClienteDAO();
-            }
-        }
-
-        public static ClienteDAO Instancia
-        {
-            get
-            {
-                CreateInstance();
-                return Instance;
-            }
-        }
-        #endregion
-
-
-        public Dictionary<long,Cliente> obtenerClienteTodos()
+      
+       
+        public static Dictionary<long,Cliente> obtenerClienteTodos()
         {
 
             string sql = "";
@@ -65,8 +42,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
         }
 
-
-        public Cliente obtenerClientePorId(string id)
+        public static Cliente obtenerClientePorId(string id)
         {
 
             string sql = "";
@@ -89,7 +65,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
         }
 
-        private Cliente getClienteDelDataReader(NpgsqlDataReader dr)
+        private static Cliente getClienteDelDataReader(NpgsqlDataReader dr)
         {
 
             Cliente c = new Cliente();
@@ -125,14 +101,66 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
              return c;
         }
 
-        public void insertar(Cliente _cliente)
+        public static void insertarCliente(Cliente i)
         {
-            throw new NotImplementedException();
+
+            string queryStr;
+
+
+            queryStr = @"INSERT INTO cliente( nombre, apellido, dni, direccion, telefono, mail, fecha, borrado)
+                VALUES (:nombre, :apelido, :dni, :direccion, :telefono, :mail, :fecha, :borrado)";
+
+            NpgsqlDb.Instancia.PrepareCommand(queryStr);
+
+            parametrosQuery(i);
+
+            try
+            {
+                NpgsqlDb.Instancia.ExecuteNonQuery();
+
+            }
+            catch (System.OverflowException Ex)
+            {
+                throw Ex;
+            }
         }
 
-        public void actualizar(Cliente _cliente)
+        public static void actualizarCliente(Cliente i)
         {
-            throw new NotImplementedException();
+            string queryStr;
+
+
+            queryStr = @"UPDATE cliente
+                        SET nombre=:nombre, apellido=:apelido, dni=:dni, direccion=:direccion, telefono=:telefono, mail=:mail, fecha=:fecha, borrado=:borrado
+                    WHERE idcliente=:idcliente";
+
+            NpgsqlDb.Instancia.PrepareCommand(queryStr);
+            NpgsqlDb.Instancia.AddCommandParameter(":idcliente", NpgsqlDbType.Varchar, ParameterDirection.Input, false, i.IdCliente);
+
+            parametrosQuery(i);
+
+            try
+            {
+                NpgsqlDb.Instancia.ExecuteNonQuery();
+
+            }
+            catch (System.OverflowException Ex)
+            {
+                throw Ex;
+            }
+        }
+
+        private static void parametrosQuery(Cliente i)
+        {
+            NpgsqlDb.Instancia.AddCommandParameter(":nombre", NpgsqlDbType.Varchar, ParameterDirection.Input, false, i.Nombre);
+            NpgsqlDb.Instancia.AddCommandParameter(":apellido", NpgsqlDbType.Varchar, ParameterDirection.Input, false, i.Apellido);
+            NpgsqlDb.Instancia.AddCommandParameter(":dni", NpgsqlDbType.Integer, ParameterDirection.Input, false, i.Dni);
+            NpgsqlDb.Instancia.AddCommandParameter(":direccion", NpgsqlDbType.Varchar, ParameterDirection.Input, false, i.Direccion);
+            NpgsqlDb.Instancia.AddCommandParameter(":telefono", NpgsqlDbType.Varchar, ParameterDirection.Input, false, i.Telefono);
+            NpgsqlDb.Instancia.AddCommandParameter(":mail", NpgsqlDbType.Varchar, ParameterDirection.Input, false, i.Mail);
+            NpgsqlDb.Instancia.AddCommandParameter(":fecha", NpgsqlDbType.Date, ParameterDirection.Input, false, i.Fecha);
+            NpgsqlDb.Instancia.AddCommandParameter(":borrado", NpgsqlDbType.Boolean, ParameterDirection.Input, false, i.Borrado);
+
         }
     }
 }
