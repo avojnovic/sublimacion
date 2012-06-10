@@ -14,7 +14,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
    
         public class NpgsqlDb
         {
-            // _db("localhost", 5432, "postgres", "BlackSquare18", "GESTPRO", true, 20);
+
             public const string DB_USER = "postgres";
             public const string DB_PASSWORD = "BlackSquare18";
 

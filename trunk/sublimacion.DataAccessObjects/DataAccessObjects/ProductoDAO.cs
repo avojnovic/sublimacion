@@ -95,17 +95,17 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
 
             if (!dr.IsDBNull(dr.GetOrdinal("precio")))
-                i.Precio = float.Parse(dr["precio"].ToString());
+                i.Precio = dr.GetFloat(dr.GetOrdinal("precio"));
 
             if (!dr.IsDBNull(dr.GetOrdinal("borrado")))
                 i.Borrado = dr.GetBoolean(dr.GetOrdinal("borrado"));
 
-             if (!dr.IsDBNull(dr.GetOrdinal("costo")))
-                i.Costo = float.Parse(dr["costo"].ToString());
+            if (!dr.IsDBNull(dr.GetOrdinal("costo")))
+                i.Costo = dr.GetFloat(dr.GetOrdinal("costo"));
 
 
            if (!dr.IsDBNull(dr.GetOrdinal("tiempo")))
-                i.Tiempo = float.Parse(dr["tiempo"].ToString());
+               i.Tiempo = dr.GetFloat(dr.GetOrdinal("tiempo"));
 
 
             return i;

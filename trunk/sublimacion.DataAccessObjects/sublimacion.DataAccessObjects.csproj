@@ -62,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccessObjects\CatalogoDAO.cs" />
     <Compile Include="DataAccessObjects\ClienteDAO.cs" />
     <Compile Include="DataAccessObjects\EstadoDAO.cs" />
     <Compile Include="DataAccessObjects\InsumoDAO.cs" />
