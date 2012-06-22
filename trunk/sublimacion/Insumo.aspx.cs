@@ -27,7 +27,7 @@ namespace sublimacion
 
             if (id != null)
             {
-                _insumo = InsumoDAO.Instancia.obtenerPorId(id);
+                _insumo = InsumoDAO.obtenerInsumoPorId(id);
 
             }
 
@@ -76,7 +76,7 @@ namespace sublimacion
                 if (_modoApertura == ModosEdicionEnum.Nuevo)
                 {
                     setearObjeto();
-                    InsumoDAO.Instancia.insertarInsumo(_insumo);
+                    InsumoDAO.insertarInsumo(_insumo);
 
                 }
                 else
@@ -84,7 +84,7 @@ namespace sublimacion
                     if (_modoApertura == ModosEdicionEnum.Modificar)
                     {
                         setearObjeto();
-                        InsumoDAO.Instancia.actualizarInsumo(_insumo);
+                        InsumoDAO.actualizarInsumo(_insumo);
                     }
                 }
 
@@ -117,7 +117,7 @@ namespace sublimacion
 
             setearObjeto();
             _insumo.Borrado = true;
-            InsumoDAO.Instancia.actualizarInsumo(_insumo);
+            InsumoDAO.actualizarInsumo(_insumo);
             Response.Redirect("InsumoVer.aspx");
 
         }

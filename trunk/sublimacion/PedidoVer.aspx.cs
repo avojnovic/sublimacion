@@ -44,7 +44,7 @@ namespace sublimacion
 
         private void cargarCombos()
         {
-            _listaEstados = EstadoDAO.Instancia.obtenerEstados();
+            _listaEstados = EstadoDAO.obtenerEstados();
             CmbEstados.DataSource = _listaEstados.Values.ToList();
             CmbEstados.DataBind();
         }
@@ -77,7 +77,7 @@ namespace sublimacion
         {
 
             Dictionary<long, BussinesObjects.BussinesObjects.Pedido> _dicTemp = new Dictionary<long, sublimacion.BussinesObjects.BussinesObjects.Pedido>();
-            _dicPedidos = PedidoDAO.Instancia.obtenerTodos();
+            _dicPedidos = PedidoDAO.obtenerTodos();
            
             List<BussinesObjects.BussinesObjects.Pedido> listP = _dicPedidos.Values.ToList();
 

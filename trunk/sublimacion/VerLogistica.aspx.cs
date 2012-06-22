@@ -39,7 +39,7 @@ namespace sublimacion
         {
 
             Dictionary<long, PlanDeProduccion> _listaPlan = new Dictionary<long, PlanDeProduccion>();
-            _dicPedidos = PedidoDAO.Instancia.obtenerTodosConIdPlanProd();
+            _dicPedidos = PedidoDAO.obtenerTodosConIdPlanProd();
             foreach (BussinesObjects.BussinesObjects.Pedido ped in _dicPedidos.Values.ToList())
             {
                 if (!_listaPlan.ContainsKey(ped.PlanDeProduccion.IdPlan))

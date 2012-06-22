@@ -34,13 +34,13 @@ namespace sublimacion
 
             if (id != null)
             {
-                _pedido = PedidoDAO.Instancia.obtenerPorId(id);
+                _pedido = PedidoDAO.obtenerPorId(id);
             }
 
 
-            _listaEstados = EstadoDAO.Instancia.obtenerEstados();
-            _listaClientes = ClienteDAO.Instancia.obtenerClienteTodos();
-            _listaProductos = ProductoDAO.Instancia.obtenerTodos();
+            _listaEstados = EstadoDAO.obtenerEstados();
+            _listaClientes = ClienteDAO.obtenerClienteTodos();
+            _listaProductos = ProductoDAO.obtenerTodos();
 
 
 
@@ -153,7 +153,7 @@ namespace sublimacion
         {
             setearObjeto();
             _pedido.Borrado = true;
-            PedidoDAO.Instancia.actualizarPedido(_pedido);
+            PedidoDAO.actualizarPedido(_pedido);
 
             if ((user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.JefeProduccion))
             {
@@ -172,14 +172,14 @@ namespace sublimacion
             if (_modoApertura == ModosEdicionEnum.Nuevo)
             {
                 setearObjeto();
-                PedidoDAO.Instancia.insertarPedido(_pedido);
+                PedidoDAO.insertarPedido(_pedido);
             }
             else
             {
                 if (_modoApertura == ModosEdicionEnum.Modificar)
                 {
                     setearObjeto();
-                    PedidoDAO.Instancia.actualizarPedido(_pedido);
+                    PedidoDAO.actualizarPedido(_pedido);
 
                 }
             }

@@ -8,37 +8,12 @@ using Npgsql;
 
 namespace sublimacion.DataAccessObjects.DataAccessObjects
 {
-    public class EstadoDAO
+    public static class EstadoDAO
     {
 
 
-         #region Singleton
-        private static EstadoDAO Instance = null;
-        private EstadoDAO() 
-        {
-            
-        }
 
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        private static void CreateInstance()
-        {
-            if (Instance == null)
-            {
-                Instance = new EstadoDAO();
-            }
-        }
-
-        public static EstadoDAO Instancia
-        {
-            get
-            {
-                CreateInstance();
-                return Instance;
-            }
-        }
-        #endregion
-
-        public Dictionary<long,Estado> obtenerEstados()
+        public static Dictionary<long, Estado> obtenerEstados()
         {
 
             string sql = "";
@@ -61,7 +36,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             return estados;
 
         }
-        public Estado obtenerEstadosPorId(string id)
+        public static Estado obtenerEstadosPorId(string id)
         {
 
             string sql = "";
@@ -84,7 +59,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
         }
 
-        private Estado getEstadoDelDataReader(NpgsqlDataReader dr)
+        private static Estado getEstadoDelDataReader(NpgsqlDataReader dr)
         {
             Estado e = new Estado();
 

@@ -10,11 +10,11 @@ using System.Data;
 
 namespace sublimacion.DataAccessObjects.DataAccessObjects
 {
-    public class InsumoDAO
+    public static class InsumoDAO
     {
         
         
-        public static void insertarInsumo(Insumo i)
+        public  static void insertarInsumo(Insumo i)
         {
 
             string queryStr;

@@ -8,38 +8,11 @@ using Npgsql;
 
 namespace sublimacion.DataAccessObjects.DataAccessObjects
 {
-    public class UsuarioDAO
+    public static class UsuarioDAO
     {
-        //crea una unica instancia de la clase USUARIODAO
-         #region Singleton
-        private static UsuarioDAO Instance = null;
-        private UsuarioDAO() 
-        {
-            
-        }
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        private static void CreateInstance()
-        {
-            if (Instance == null)
-            {
-                Instance = new UsuarioDAO();
-            }
-        }
-
-        public static UsuarioDAO Instancia
-        {
-            get
-            {
-                CreateInstance();
-                return Instance;
-            }
-        }
-        #endregion
 
 
-
-        public Dictionary<long, Usuario> obtenerTodos()
+        public static Dictionary<long, Usuario> obtenerTodos()
         {
 
             string sql = @"SELECT u.id, u.usuario, u.contrasenia, u.nombre, u.apellido, u.telefono, u.mail, u.borrado, p.perfil, p.id as idper FROM usuario u
@@ -62,7 +35,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
         }
 
-        public Usuario obtenerUsuario (string usuario, string pass)
+        public static Usuario obtenerUsuario(string usuario, string pass)
         {
 
             string sql = @"
@@ -90,7 +63,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             return u;
 
         }
-        public Usuario obtenerUsuarioPorId(string id)
+        public static Usuario obtenerUsuarioPorId(string id)
         {
 
             string sql = @"SELECT u.id, u.usuario, u.contrasenia, u.nombre, u.apellido, u.telefono, u.mail, u.borrado, p.perfil, p.id as idper FROM usuario u
@@ -111,7 +84,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
         }
 
-        private static Usuario getUsuarioDelDataReader(NpgsqlDataReader dr)
+        private static  Usuario getUsuarioDelDataReader(NpgsqlDataReader dr)
         {
             Usuario u = new Usuario();
 

@@ -10,36 +10,11 @@ using System.Data;
 
 namespace sublimacion.DataAccessObjects.DataAccessObjects
 {
-   public  class PlanProdDAO
+    public static class PlanProdDAO
     {
 
-         #region Singleton
-        private static PlanProdDAO Instance = null;
-        private PlanProdDAO() 
-        {
-            
-        }
 
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        private static void CreateInstance()
-        {
-            if (Instance == null)
-            {
-                Instance = new PlanProdDAO();
-            }
-        }
-
-        public static PlanProdDAO Instancia
-        {
-            get
-            {
-                CreateInstance();
-                return Instance;
-            }
-        }
-        #endregion
-
-        public Dictionary<long, PlanDeProduccion> obtenerTodos()
+        public static Dictionary<long, PlanDeProduccion> obtenerTodos()
         {
 
             string sql = "";
@@ -65,7 +40,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
         }
 
 
-        public PlanDeProduccion obtenerPorId(string id)
+        public static PlanDeProduccion obtenerPorId(string id)
         {
 
             string sql = "";
@@ -85,7 +60,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
         }
 
-        private PlanDeProduccion getPlanDelDataReader(NpgsqlDataReader dr)
+        private static PlanDeProduccion getPlanDelDataReader(NpgsqlDataReader dr)
         {
             PlanDeProduccion i = new PlanDeProduccion();
 
@@ -104,7 +79,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
         }
 
 
-        public void insertarPlan(PlanDeProduccion p)
+        public static void insertarPlan(PlanDeProduccion p)
         {
 
             string queryStr;
@@ -140,7 +115,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
            
         }
 
-        private void PrepararParametros(PlanDeProduccion p)
+        private static void PrepararParametros(PlanDeProduccion p)
         {
             NpgsqlDb.Instancia.AddCommandParameter(":fecha_inicio", NpgsqlDbType.Timestamp, ParameterDirection.Input, true, p.Fecha_inicio);
             NpgsqlDb.Instancia.AddCommandParameter(":fecha_fin", NpgsqlDbType.Timestamp, ParameterDirection.Input, true, p.Fecha_fin);

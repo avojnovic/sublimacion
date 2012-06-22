@@ -28,7 +28,7 @@ namespace sublimacion
 
         private void cargarGrilla()
         {
-            _dicInsumo = InsumoDAO.Instancia.obtenerTodos();
+            _dicInsumo = InsumoDAO.obtenerInsumoTodos();
 
             GridView1.DataSource = _dicInsumo.Values.ToList();
             GridView1.DataBind();
