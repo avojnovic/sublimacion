@@ -21,9 +21,9 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             get { return _nombre; }
             set { _nombre = value; }
         }
-        private float _precio;
+        private decimal _precio;
 
-        public float Precio
+        public decimal Precio
         {
             get { return _precio; }
             set { _precio = value; }
@@ -35,16 +35,16 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             get { return _borrado; }
             set { _borrado = value; }
         }
-        private float _costo;
+        private decimal _costo;
 
-        public float Costo
+        public decimal Costo
         {
             get { return _costo; }
             set { _costo = value; }
         }
-        private float _tiempo;
+        private decimal _tiempo;
 
-        public float Tiempo
+        public decimal Tiempo
         {
             get { return _tiempo; }
             set { _tiempo = value; }

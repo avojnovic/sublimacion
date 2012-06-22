@@ -27,7 +27,7 @@ namespace sublimacion
 
         private void cargarGrilla()
         {
-            _dicCliente = ClienteDAO.Instancia.obtenerClienteTodos();
+            _dicCliente = ClienteDAO.obtenerClienteTodos();
 
             GridView1.DataSource = _dicCliente.Values.ToList();
             GridView1.DataBind();

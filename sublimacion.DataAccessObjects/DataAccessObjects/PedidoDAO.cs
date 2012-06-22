@@ -10,37 +10,11 @@ using System.Data;
 
 namespace sublimacion.DataAccessObjects.DataAccessObjects
 {
-   public class PedidoDAO
+    public static class PedidoDAO
     {
-         #region Singleton
-        private static PedidoDAO Instance = null;
-        private PedidoDAO() 
-        {
-            
-        }
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        private static void CreateInstance()
-        {
-            if (Instance == null)
-            {
-                Instance = new PedidoDAO();
-            }
-        }
-
-        public static PedidoDAO Instancia
-        {
-            get
-            {
-                CreateInstance();
-                return Instance;
-            }
-        }
-        #endregion
 
 
-
-        public Dictionary<long, Pedido> obtenerTodos()
+        public static Dictionary<long, Pedido> obtenerTodos()
         {
 
             string sql = "";
@@ -73,7 +47,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
         }
 
-        public Dictionary<long, Pedido> obtenerTodosConIdPlanProd()
+        public static Dictionary<long, Pedido> obtenerTodosConIdPlanProd()
         {
 
             string sql = "";
@@ -106,7 +80,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
         }
 
-        public  Pedido obtenerPorId(string id)
+        public static Pedido obtenerPorId(string id)
         {
 
             string sql = "";
@@ -130,7 +104,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             return p;
 
         }
-        public void insertarPedido(Pedido p)
+        public static void insertarPedido(Pedido p)
         {
 
             string queryStr;
@@ -170,10 +144,10 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
         }
 
-       
 
 
-        public void actualizarPedido(Pedido p)
+
+        public static void actualizarPedido(Pedido p)
         {
 
             string queryStr;
@@ -206,7 +180,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
         }
 
-        private void actualizarEstados(Pedido p)
+        private static void actualizarEstados(Pedido p)
         {
             foreach (EstadosPedido estPedido in p.EstadosPedido.Values.ToList())
             {
@@ -278,7 +252,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
         }
 
 
-        private void actualizarLineasPedido(Pedido p)
+        private static void actualizarLineasPedido(Pedido p)
         {
             //Borro e inserto nuevamente
            string sql = @"DELETE FROM linea_pedido WHERE id_pedido="+p.IdPedido;
@@ -352,7 +326,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
 
 
-        private Pedido getPedidosDelDataReader(NpgsqlDataReader dr)
+        private static Pedido getPedidosDelDataReader(NpgsqlDataReader dr)
         {
             Pedido p = new Pedido();
 
@@ -380,7 +354,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             if (!dr.IsDBNull(dr.GetOrdinal("id_usuario")))
             {
                 id_user = dr.GetInt64(dr.GetOrdinal("id_usuario")).ToString();
-                p.Usuario= UsuarioDAO.Instancia.obtenerUsuarioPorId(id_user);
+                p.Usuario= UsuarioDAO.obtenerUsuarioPorId(id_user);
             }
 
             p.OrdenDeTrabajo = new OrdenDeTrabajo();
@@ -398,7 +372,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
              if (!dr.IsDBNull(dr.GetOrdinal("id_plan_prod")))
              {
                  long id= long.Parse(dr["id_plan_prod"].ToString());
-                 p.PlanDeProduccion = PlanProdDAO.Instancia.obtenerPorId(id.ToString());
+                 p.PlanDeProduccion = PlanProdDAO.obtenerPorId(id.ToString());
              }
 
              if (!dr.IsDBNull(dr.GetOrdinal("fip")))
@@ -411,7 +385,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
              if (!dr.IsDBNull(dr.GetOrdinal("id_cliente")))
              {
                  id_cliente = dr.GetInt64(dr.GetOrdinal("id_cliente")).ToString();
-                 p.Cliente = ClienteDAO.Instancia.obtenerClientePorId(id_cliente) ;
+                 p.Cliente = ClienteDAO.obtenerClientePorId(id_cliente) ;
              }
 
              p.EstadosPedido = obtenerEstadosDelPedido(p.IdPedido.ToString());
@@ -424,7 +398,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
 
 
-        private Dictionary<Producto, int> obtenerLineasDePedido(string id)
+        private static Dictionary<Producto, int> obtenerLineasDePedido(string id)
         {
             string sql = "";
 
@@ -446,7 +420,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
                     idP = dr.GetInt64(dr.GetOrdinal("id_producto")).ToString();
 
                 Producto p = new Producto();
-                p = ProductoDAO.Instancia.obtenerPorId(idP.Trim());
+                p = ProductoDAO.obtenerPorId(idP.Trim());
 
                 int cant = 0;
                 if (!dr.IsDBNull(dr.GetOrdinal("cantidad")))
@@ -463,7 +437,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
         }
 
 
-       public  Dictionary<long,EstadosPedido> obtenerEstadosDelPedido(string id)
+        public static Dictionary<long, EstadosPedido> obtenerEstadosDelPedido(string id)
        {
         string sql="";
 

@@ -142,7 +142,7 @@ namespace sublimacion.BussinesObjects.BussinesObjects
         {
             get
             {
-                float tiempo = 0;
+                decimal tiempo = 0;
                 if (LineaPedido != null && LineaPedido.Keys.ToList().Count > 0)
                 {
                     foreach (Producto p in LineaPedido.Keys.ToList())
@@ -159,7 +159,7 @@ namespace sublimacion.BussinesObjects.BussinesObjects
         {
             get
             {
-                float costo = 0;
+                decimal costo = 0;
                 if (LineaPedido != null && LineaPedido.Keys.ToList().Count > 0)
                 {
                     foreach (Producto p in LineaPedido.Keys.ToList())

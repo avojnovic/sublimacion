@@ -28,7 +28,7 @@ namespace sublimacion
 
             if (id != null)
             {
-                _cliente = ClienteDAO.Instancia.obtenerClientePorId(id);
+                _cliente = ClienteDAO.obtenerClientePorId(id);
 
             }
 
@@ -73,7 +73,7 @@ namespace sublimacion
             if (_modoApertura == ModosEdicionEnum.Nuevo)
             {
                 setearObjeto();
-                ClienteDAO.Instancia.insertarCliente(_cliente);
+                ClienteDAO.insertarCliente(_cliente);
 
             }
             else
@@ -81,7 +81,7 @@ namespace sublimacion
                 if (_modoApertura == ModosEdicionEnum.Modificar)
                 {
                     setearObjeto();
-                    ClienteDAO.Instancia.actualizar(_cliente);
+                    ClienteDAO.actualizarCliente(_cliente);
                 }
             }
 
@@ -110,7 +110,7 @@ namespace sublimacion
 
             setearObjeto();
             _cliente.Borrado = true;
-            ClienteDAO.Instancia.actualizar(_cliente);
+            ClienteDAO.actualizarCliente(_cliente);
             Response.Redirect("ClienteVer.aspx");
 
         }

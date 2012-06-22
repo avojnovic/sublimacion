@@ -8,37 +8,12 @@ using Npgsql;
 
 namespace sublimacion.DataAccessObjects.DataAccessObjects
 {
-   public class ProductoDAO
+    public static class ProductoDAO
     {
-        #region Singleton
-        private static ProductoDAO Instance = null;
-        private ProductoDAO() 
-        {
-            
-        }
-
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        private static void CreateInstance()
-        {
-            if (Instance == null)
-            {
-                Instance = new ProductoDAO();
-            }
-        }
-
-        public static ProductoDAO Instancia
-        {
-            get
-            {
-                CreateInstance();
-                return Instance;
-            }
-        }
-        #endregion
 
 
 
-        public Dictionary<long, Producto> obtenerTodos()
+       public static Dictionary<long, Producto> obtenerTodos()
         {
 
             string sql = "";
@@ -63,7 +38,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
         }
 
-        public Producto obtenerPorId(string id)
+       public static Producto obtenerPorId(string id)
         {
 
             string sql = "";
@@ -83,7 +58,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
         }
 
-        private Producto getProductosDelDataReader(NpgsqlDataReader dr)
+       private static Producto getProductosDelDataReader(NpgsqlDataReader dr)
         {
             Producto i = new Producto();
 
@@ -95,17 +70,17 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
 
             if (!dr.IsDBNull(dr.GetOrdinal("precio")))
-                i.Precio = dr.GetFloat(dr.GetOrdinal("precio"));
+                i.Precio = dr.GetDecimal(dr.GetOrdinal("precio"));
 
             if (!dr.IsDBNull(dr.GetOrdinal("borrado")))
                 i.Borrado = dr.GetBoolean(dr.GetOrdinal("borrado"));
 
             if (!dr.IsDBNull(dr.GetOrdinal("costo")))
-                i.Costo = dr.GetFloat(dr.GetOrdinal("costo"));
+                i.Costo = dr.GetDecimal(dr.GetOrdinal("costo"));
 
 
            if (!dr.IsDBNull(dr.GetOrdinal("tiempo")))
-               i.Tiempo = dr.GetFloat(dr.GetOrdinal("tiempo"));
+               i.Tiempo = dr.GetDecimal(dr.GetOrdinal("tiempo"));
 
 
             return i;

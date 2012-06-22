@@ -86,7 +86,7 @@ namespace sublimacion
         {
 
             Dictionary<long, BussinesObjects.BussinesObjects.Pedido> _dicTemp = new Dictionary<long, sublimacion.BussinesObjects.BussinesObjects.Pedido>();
-            _dicTemp = PedidoDAO.Instancia.obtenerTodos();
+            _dicTemp = PedidoDAO.obtenerTodos();
             _dicPedidos = new Dictionary<long, sublimacion.BussinesObjects.BussinesObjects.Pedido>();
 
             if ((user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.JefeProduccion) || (user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.Administrador))
@@ -154,7 +154,7 @@ namespace sublimacion
                 {
                     string id = (row.Cells[1].Text);
 
-                    BussinesObjects.BussinesObjects.Pedido i = PedidoDAO.Instancia.obtenerPorId(id.Trim());
+                    BussinesObjects.BussinesObjects.Pedido i = PedidoDAO.obtenerPorId(id.Trim());
 
                     if (i != null && i.IdPedido != 0)
                     {
@@ -251,14 +251,14 @@ namespace sublimacion
                     plan.Fecha_inicio=fechaInicio;
                     plan.Fecha_fin=fechaFin;
 
-                    PlanProdDAO.Instancia.insertarPlan(plan);
+                    PlanProdDAO.insertarPlan(plan);
                     if (plan.IdPlan != 0)
                     {
                         foreach (BussinesObjects.BussinesObjects.Pedido pedido in _dicPlanificar.Values.ToList())
                         {
                             setearEstadoEnProduccion(pedido);
                             pedido.PlanDeProduccion = plan;
-                            PedidoDAO.Instancia.actualizarPedido(pedido);
+                            PedidoDAO.actualizarPedido(pedido);
 
                         }
                         Response.Redirect("LogisticaProduccion.aspx");
@@ -277,7 +277,7 @@ namespace sublimacion
 
         private void setearEstadoEnProduccion(sublimacion.BussinesObjects.BussinesObjects.Pedido pedido)
         {
-          Estado c= EstadoDAO.Instancia.obtenerEstadosPorId("6");
+          Estado c= EstadoDAO.obtenerEstadosPorId("6");
 
             if (!pedido.EstadosPedido.ContainsKey(c.Id))
             {
@@ -307,7 +307,7 @@ namespace sublimacion
             {
                 string id = (row.Cells[1].Text);
 
-                BussinesObjects.BussinesObjects.Pedido i = PedidoDAO.Instancia.obtenerPorId(id.Trim());
+                BussinesObjects.BussinesObjects.Pedido i = PedidoDAO.obtenerPorId(id.Trim());
 
                 if (i != null && i.IdPedido != 0)
                 {

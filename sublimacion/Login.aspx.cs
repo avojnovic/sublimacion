@@ -35,7 +35,7 @@ namespace sublimacion
 
             if (LoginCmp.Password.Trim() != "" && LoginCmp.UserName.Trim() != "")
             {
-                user =UsuarioDAO.Instancia.obtenerUsuario(LoginCmp.UserName.Trim(), LoginCmp.Password.Trim());
+                user =UsuarioDAO.obtenerUsuario(LoginCmp.UserName.Trim(), LoginCmp.Password.Trim());
             
             }
 

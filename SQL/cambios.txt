@@ -1,0 +1,3 @@
+ALTER TABLE producto ALTER precio TYPE numeric(17,10);
+ALTER TABLE producto ALTER costo TYPE numeric(17,10);
+ALTER TABLE producto ALTER tiempo TYPE numeric(17,10);
