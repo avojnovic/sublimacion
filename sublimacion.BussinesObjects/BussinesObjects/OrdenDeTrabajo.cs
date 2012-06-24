@@ -29,9 +29,9 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             get { return _fecha_finalizacion; }
             set { _fecha_finalizacion = value; }
         }
-        private float _tiempo_estimado;
+        private decimal _tiempo_estimado;
 
-        public float Tiempo_estimado
+        public decimal Tiempo_estimado
         {
             get { return _tiempo_estimado; }
             set { _tiempo_estimado = value; }

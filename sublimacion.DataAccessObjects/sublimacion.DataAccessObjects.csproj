@@ -64,7 +64,9 @@
   <ItemGroup>
     <Compile Include="DataAccessObjects\CatalogoDAO.cs" />
     <Compile Include="DataAccessObjects\ClienteDAO.cs" />
-    <Compile Include="DataAccessObjects\EstadoDAO.cs" />
+    <Compile Include="DataAccessObjects\OrdenTrabajoDAO.cs" />
+    <Compile Include="DataAccessObjects\PlantillaDAO.cs" />
+    <Compile Include="DataAccessObjects\TipoEstadoDAO.cs" />
     <Compile Include="DataAccessObjects\InsumoDAO.cs" />
     <Compile Include="DataAccessObjects\NpgsqlDb.cs" />
     <Compile Include="DataAccessObjects\PedidoDAO.cs" />

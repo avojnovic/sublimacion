@@ -10,8 +10,7 @@
     <div>
         <div>
         <center>
-            <asp:Image ID="Image1" runat="server" ImageAlign="Middle" 
-                ImageUrl="~/Images/logosuperior.PNG" Width= "100%" />
+            <asp:Image ID="Image1" runat="server" ImageAlign="Middle" ImageUrl="~/Images/logosuperior.PNG" Width= "100%" />
         </center>
         </div>
     <center>
@@ -21,7 +20,6 @@
         <asp:Login ID="LoginCmp" runat="server" DestinationPageUrl="~/Default.aspx" 
             DisplayRememberMe="False" onauthenticate="LoginCmp_Authenticate" 
              TextBoxStyle-Width="150"  BackColor="#DDDDDD" BorderColor="#DDDDDD"   
-            onloggingin="LoginCmp_LoggingIn" 
             FailureText="Usuario o Constraseña incorrectos, intentelo nuevamente.">
             <TitleTextStyle Font-Bold="True" />
         </asp:Login>

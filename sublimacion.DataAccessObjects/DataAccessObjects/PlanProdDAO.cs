@@ -90,7 +90,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             VALUES ( :fecha_inicio, :fecha_fin, :borrado);";
 
             NpgsqlDb.Instancia.PrepareCommand(queryStr);
-            PrepararParametros(p);
+            parametrosQuery(p);
 
             try
             {
@@ -115,7 +115,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
            
         }
 
-        private static void PrepararParametros(PlanDeProduccion p)
+        private static void parametrosQuery(PlanDeProduccion p)
         {
             NpgsqlDb.Instancia.AddCommandParameter(":fecha_inicio", NpgsqlDbType.Timestamp, ParameterDirection.Input, true, p.Fecha_inicio);
             NpgsqlDb.Instancia.AddCommandParameter(":fecha_fin", NpgsqlDbType.Timestamp, ParameterDirection.Input, true, p.Fecha_fin);

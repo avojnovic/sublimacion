@@ -24,10 +24,7 @@ namespace sublimacion
 
         }
 
-        protected void LoginCmp_LoggingIn(object sender, LoginCancelEventArgs e)
-        {
-
-        }
+      
 
         protected void LoginCmp_Authenticate(object sender, AuthenticateEventArgs e)
         {
