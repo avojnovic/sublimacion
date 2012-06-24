@@ -8,7 +8,7 @@ using Npgsql;
 
 namespace sublimacion.DataAccessObjects.DataAccessObjects
 {
-    public static class EstadoDAO
+    public static class TipoEstadoDAO
     {
 
 

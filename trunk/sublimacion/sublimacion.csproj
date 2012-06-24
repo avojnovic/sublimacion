@@ -67,6 +67,7 @@
     <Content Include="controls\DatePicker.ascx" />
     <Content Include="Default.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="PlantillaVer.aspx" />
     <Content Include="style.css" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -154,6 +155,13 @@
     </Compile>
     <Compile Include="PedidoVer.aspx.designer.cs">
       <DependentUpon>PedidoVer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PlantillaVer.aspx.cs">
+      <DependentUpon>PlantillaVer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PlantillaVer.aspx.designer.cs">
+      <DependentUpon>PlantillaVer.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

@@ -10,7 +10,7 @@ using System.Data;
 
 namespace sublimacion.DataAccessObjects.DataAccessObjects
 {
-   public class ClienteDAO
+   public static class ClienteDAO
     {
       
        
@@ -108,7 +108,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
 
             queryStr = @"INSERT INTO cliente( nombre, apellido, dni, direccion, telefono, mail, fecha, borrado)
-                VALUES (:nombre, :apelido, :dni, :direccion, :telefono, :mail, :fecha, :borrado)";
+                VALUES (:nombre, :apellido, :dni, :direccion, :telefono, :mail, :fecha, :borrado)";
 
             NpgsqlDb.Instancia.PrepareCommand(queryStr);
 
@@ -135,7 +135,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
                     WHERE idcliente=:idcliente";
 
             NpgsqlDb.Instancia.PrepareCommand(queryStr);
-            NpgsqlDb.Instancia.AddCommandParameter(":idcliente", NpgsqlDbType.Varchar, ParameterDirection.Input, false, i.IdCliente);
+            NpgsqlDb.Instancia.AddCommandParameter(":idcliente", NpgsqlDbType.Bigint, ParameterDirection.Input, false, i.IdCliente);
 
             parametrosQuery(i);
 

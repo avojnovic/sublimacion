@@ -42,28 +42,6 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             }
 
 
-
-
-            queryStr = "select currval('pedido_idpedido_seq');";
-            NpgsqlDb.Instancia.PrepareCommand(queryStr);
-            string idped = "";
-            try
-            {
-                NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
-                while (dr.Read())
-                {
-                    if (!dr.IsDBNull(dr.GetOrdinal("pedido_idpedido_seq")))
-                        idped = dr.GetString(dr.GetOrdinal("pedido_idpedido_seq"));
-                }
-
-            }
-            catch (System.OverflowException Ex)
-            {
-                throw Ex;
-            }
-
-          
-
           
         }
 

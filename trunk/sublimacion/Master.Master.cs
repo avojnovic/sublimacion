@@ -20,8 +20,8 @@ namespace sublimacion
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            user = (Usuario)Session["usuario"];
-            //LblUsuario.Text = user.Nombre;
+            user = (Usuario)Session["usuario"];     
+
            if(!IsPostBack)
             {
                 if (!Page.Request.Url.ToString().ToLower().Contains("login.aspx") && !Page.Request.Url.ToString().ToLower().Contains("error.aspx"))

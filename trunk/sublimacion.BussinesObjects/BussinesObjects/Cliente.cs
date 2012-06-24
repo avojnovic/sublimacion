@@ -27,7 +27,9 @@ namespace sublimacion.BussinesObjects.BussinesObjects
         {
             get { return _nombre; }
             set { _nombre = value; }
-        }private string _apellido;
+        }
+        
+        private string _apellido;
 
         public string Apellido
         {

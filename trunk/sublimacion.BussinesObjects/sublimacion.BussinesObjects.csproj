@@ -57,6 +57,7 @@
     <Compile Include="BussinesObjects\OrdenDeTrabajo.cs" />
     <Compile Include="BussinesObjects\Pedido.cs" />
     <Compile Include="BussinesObjects\PlanDeProduccion.cs" />
+    <Compile Include="BussinesObjects\Plantilla.cs" />
     <Compile Include="BussinesObjects\Producto.cs" />
     <Compile Include="Exceptions\ExcepcionComunicacionBD.cs" />
     <Compile Include="Exceptions\ExcepcionConexionBDNoEstablecida.cs" />

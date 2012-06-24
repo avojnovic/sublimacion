@@ -44,7 +44,7 @@ namespace sublimacion
 
         private void cargarCombos()
         {
-            _listaEstados = EstadoDAO.obtenerEstados();
+            _listaEstados = TipoEstadoDAO.obtenerEstados();
             CmbEstados.DataSource = _listaEstados.Values.ToList();
             CmbEstados.DataBind();
         }

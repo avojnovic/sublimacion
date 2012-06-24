@@ -358,14 +358,14 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             }
 
             p.OrdenDeTrabajo = new OrdenDeTrabajo();
-             if (!dr.IsDBNull(dr.GetOrdinal("id_orden_trab")))
-                   p.OrdenDeTrabajo.Idorden= long.Parse(dr["id_orden_trab"].ToString());
+            if (!dr.IsDBNull(dr.GetOrdinal("id_orden_trab")))
+                p.OrdenDeTrabajo.Idorden = dr.GetInt64(dr.GetOrdinal("id_orden_trab"));
              if (!dr.IsDBNull(dr.GetOrdinal("fco")))
-                 p.OrdenDeTrabajo.Fecha_comienzo = DateTime.Parse(dr["fco"].ToString());
+                 p.OrdenDeTrabajo.Fecha_comienzo = dr.GetDateTime(dr.GetOrdinal("fco"));
              if (!dr.IsDBNull(dr.GetOrdinal("ffo")))
-                 p.OrdenDeTrabajo.Fecha_finalizacion = DateTime.Parse(dr["fco"].ToString());
+                 p.OrdenDeTrabajo.Fecha_finalizacion = dr.GetDateTime(dr.GetOrdinal("ffo"));
              if (!dr.IsDBNull(dr.GetOrdinal("tiempo_estimado")))
-                 p.OrdenDeTrabajo.Tiempo_estimado = float.Parse(dr["tiempo_estimado"].ToString());
+                 p.OrdenDeTrabajo.Tiempo_estimado = dr.GetDecimal(dr.GetOrdinal("tiempo_estimado"));
 
              p.PlanDeProduccion = new PlanDeProduccion();
 

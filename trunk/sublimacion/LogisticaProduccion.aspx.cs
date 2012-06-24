@@ -277,7 +277,7 @@ namespace sublimacion
 
         private void setearEstadoEnProduccion(sublimacion.BussinesObjects.BussinesObjects.Pedido pedido)
         {
-          Estado c= EstadoDAO.obtenerEstadosPorId("6");
+          Estado c= TipoEstadoDAO.obtenerEstadosPorId("6");
 
             if (!pedido.EstadosPedido.ContainsKey(c.Id))
             {

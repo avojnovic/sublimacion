@@ -18,11 +18,13 @@ namespace sublimacion
     public partial class Cliente : System.Web.UI.Page
     {
         BussinesObjects.BussinesObjects.Cliente _cliente;
+
+
         ModosEdicionEnum _modoApertura = new ModosEdicionEnum();
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            BtnBorrar.Attributes.Add("OnClick", "javascript:if(confirm('Esta seguro que desea borrar el Caso')== false) return false;");
+            BtnBorrar.Attributes.Add("OnClick", "javascript:if(confirm('Esta seguro que desea borrar el Cliente')== false) return false;");
 
             string id = Request.QueryString["id"];
 
@@ -33,6 +35,7 @@ namespace sublimacion
             }
 
             LblMensaje.Text = "";
+
             if (!IsPostBack)
             {
                 cargarCliente();
@@ -58,6 +61,8 @@ namespace sublimacion
             {
 
                 TxtNombre.Text = _cliente.Nombre;
+
+                //agregar restos de campos
               
             }
             else
@@ -66,7 +71,7 @@ namespace sublimacion
             }
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
+        protected void BtnGuardar_Click(object sender, EventArgs e)
         {
 
 
@@ -96,7 +101,7 @@ namespace sublimacion
                 _cliente = new BussinesObjects.BussinesObjects.Cliente();
 
             _cliente.Nombre = TxtNombre.Text;
-           
+           //agregar campos
 
         }
 
