@@ -420,7 +420,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
                     idP = dr.GetInt64(dr.GetOrdinal("id_producto")).ToString();
 
                 Producto p = new Producto();
-                p = ProductoDAO.obtenerPorId(idP.Trim());
+                p = ProductoDAO.obtenerProductoPorId(idP.Trim());
 
                 int cant = 0;
                 if (!dr.IsDBNull(dr.GetOrdinal("cantidad")))

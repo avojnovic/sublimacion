@@ -5,15 +5,16 @@ using System.Text;
 using System.Runtime.CompilerServices;
 using sublimacion.BussinesObjects.BussinesObjects;
 using Npgsql;
+using NpgsqlTypes;
+using System.Data;
 
 namespace sublimacion.DataAccessObjects.DataAccessObjects
 {
     public static class ProductoDAO
     {
 
-
-
-       public static Dictionary<long, Producto> obtenerTodos()
+        
+       public static Dictionary<long, Producto> obtenerProductoTodos()
         {
 
             string sql = "";
@@ -38,7 +39,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
         }
 
-       public static Producto obtenerPorId(string id)
+       public static Producto obtenerProductoPorId(string id)
         {
 
             string sql = "";
@@ -85,5 +86,76 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
             return i;
         }
+
+       public static void insertarProducto(Producto i)
+       {
+
+           string queryStr;
+
+
+           queryStr = @"INSERT INTO producto( nombre, precio, borrado, costo, tiempo)
+                VALUES (:nombre, :precio, :borrado, :costo, :tiempo)";
+
+
+
+           NpgsqlDb.Instancia.PrepareCommand(queryStr);
+
+           parametrosQuery(i);
+
+           try
+           {
+               NpgsqlDb.Instancia.ExecuteNonQuery();
+
+           }
+           catch (System.OverflowException Ex)
+           {
+               throw Ex;
+           }
+
+
+       }
+
+       public static void actualizarCatalogo(Producto i)
+       {
+
+           string queryStr;
+
+
+           queryStr = @"UPDATE producto
+                    SET nombre=:nombre, precio=:precio, borrado=:borrado, costo=:costo, tiempo=:tiempo
+                    WHERE idproducto=:idproducto";
+
+     
+
+
+           NpgsqlDb.Instancia.PrepareCommand(queryStr);
+           NpgsqlDb.Instancia.AddCommandParameter(":idproducto", NpgsqlDbType.Bigint, ParameterDirection.Input, false, i.Idproducto);
+
+           parametrosQuery(i);
+
+           try
+           {
+               NpgsqlDb.Instancia.ExecuteNonQuery();
+
+           }
+           catch (System.OverflowException Ex)
+           {
+               throw Ex;
+           }
+       }
+
+       private static void parametrosQuery(Producto i)
+       {
+           NpgsqlDb.Instancia.AddCommandParameter(":nombre", NpgsqlDbType.Varchar, ParameterDirection.Input, false, i.Nombre);
+           NpgsqlDb.Instancia.AddCommandParameter(":precio", NpgsqlDbType.Numeric, ParameterDirection.Input, false, i.Precio);
+           NpgsqlDb.Instancia.AddCommandParameter(":borrado", NpgsqlDbType.Boolean, ParameterDirection.Input, false, i.Borrado);
+           NpgsqlDb.Instancia.AddCommandParameter(":costo", NpgsqlDbType.Numeric, ParameterDirection.Input, false, i.Costo);
+           NpgsqlDb.Instancia.AddCommandParameter(":tiempo", NpgsqlDbType.Numeric, ParameterDirection.Input, false, i.Tiempo);
+
+             
+       }
+
+
+
     }
 }
