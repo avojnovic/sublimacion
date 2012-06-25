@@ -58,7 +58,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
         }
 
-       private static Producto getProductosDelDataReader(NpgsqlDataReader dr)
+       public static Producto getProductosDelDataReader(NpgsqlDataReader dr)
         {
             Producto i = new Producto();
 

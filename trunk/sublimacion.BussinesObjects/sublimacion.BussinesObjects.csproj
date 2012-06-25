@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="BussinesObjects\Catalogo.cs" />
     <Compile Include="BussinesObjects\Cliente.cs" />
+    <Compile Include="BussinesObjects\Descuento.cs" />
     <Compile Include="BussinesObjects\Estado.cs" />
     <Compile Include="BussinesObjects\EstadosPedido.cs" />
     <Compile Include="BussinesObjects\OrdenDeTrabajo.cs" />
