@@ -40,7 +40,7 @@ namespace sublimacion
 
             _listaEstados = TipoEstadoDAO.obtenerEstados();
             _listaClientes = ClienteDAO.obtenerClienteTodos();
-            _listaProductos = ProductoDAO.obtenerTodos();
+            _listaProductos = ProductoDAO.obtenerProductoTodos();
 
 
 
