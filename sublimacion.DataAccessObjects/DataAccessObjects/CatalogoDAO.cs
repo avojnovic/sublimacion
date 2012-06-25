@@ -121,7 +121,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
                     WHERE idcatalogo=:idcatalogo";
 
           NpgsqlDb.Instancia.PrepareCommand(queryStr);
-          NpgsqlDb.Instancia.AddCommandParameter(":idcatalogo", NpgsqlDbType.Varchar, ParameterDirection.Input, false, i.IdCatalogo);
+          NpgsqlDb.Instancia.AddCommandParameter(":idcatalogo", NpgsqlDbType.Bigint, ParameterDirection.Input, false, i.IdCatalogo);
 
           parametrosQuery(i);
 
