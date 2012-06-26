@@ -6,12 +6,13 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using sublimacion.DataAccessObjects.DataAccessObjects;
 using System.Data;
+using sublimacion.BussinesObjects.BussinesObjects;
 
 namespace sublimacion
 {
     public partial class PlantillaVer : System.Web.UI.Page
     {
-        private Dictionary<long, BussinesObjects.BussinesObjects.Plantilla> _dicPlantilla;
+        private Dictionary<long, Plantilla> _dicPlantilla;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -54,7 +55,7 @@ namespace sublimacion
         protected void BtnNuevo_Click(object sender, EventArgs e)
         {
 
-            Response.Redirect("Plantilla.aspx");
+            Response.Redirect("PlantillaABM.aspx");
         }
 
         protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)

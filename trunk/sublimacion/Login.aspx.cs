@@ -12,6 +12,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using sublimacion.BussinesObjects;
 using sublimacion.DataAccessObjects.DataAccessObjects;
+using sublimacion.BussinesObjects.BussinesObjects;
 
 namespace sublimacion
 {

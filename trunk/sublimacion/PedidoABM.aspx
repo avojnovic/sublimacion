@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Pedido.aspx.cs" Inherits="sublimacion.Pedido" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="PedidoABM.aspx.cs" Inherits="sublimacion.PedidoABM" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="act" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">

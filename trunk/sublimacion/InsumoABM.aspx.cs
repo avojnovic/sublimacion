@@ -12,16 +12,17 @@ using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using sublimacion.BussinesObjects;
 using sublimacion.DataAccessObjects.DataAccessObjects;
+using sublimacion.BussinesObjects.BussinesObjects;
 
 namespace sublimacion
 {
-    public partial class Insumo : System.Web.UI.Page
+    public partial class InsumoABM : System.Web.UI.Page
     {
-        BussinesObjects.Insumo _insumo;
+       Insumo _insumo;
         ModosEdicionEnum _modoApertura = new ModosEdicionEnum();
         protected void Page_Load(object sender, EventArgs e)
         {
-            BtnBorrar.Attributes.Add("OnClick", "javascript:if(confirm('Esta seguro que desea borrar el Caso')== false) return false;");
+            BtnBorrar.Attributes.Add("OnClick", "javascript:if(confirm('Esta seguro que desea borrar el Insumo')== false) return false;");
 
             string id = Request.QueryString["id"];
 
@@ -97,7 +98,7 @@ namespace sublimacion
         private void setearObjeto()
         {
             if (_insumo == null)
-                _insumo = new BussinesObjects.Insumo();
+                _insumo = new Insumo();
 
             _insumo.Nombre = TxtNombre.Text;
             _insumo.Costo = float.Parse(TxtCosto.Text.Trim().Replace(',', '.'));

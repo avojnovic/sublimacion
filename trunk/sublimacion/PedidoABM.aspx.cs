@@ -10,20 +10,22 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
-using sublimacion.BussinesObjects.BussinesObjects;
-using sublimacion.BussinesObjects;
+
 using sublimacion.DataAccessObjects.DataAccessObjects;
 using System.Collections.Generic;
+using sublimacion.BussinesObjects.BussinesObjects;
+using sublimacion.BussinesObjects;
 
 namespace sublimacion
 {
-    public partial class Pedido : System.Web.UI.Page
+    public partial class PedidoABM : System.Web.UI.Page
     {
 
         ModosEdicionEnum _modoApertura = new ModosEdicionEnum();
-        BussinesObjects.BussinesObjects.Pedido _pedido;
+        Pedido _pedido;
+
         Dictionary<long, Estado> _listaEstados = new Dictionary<long, Estado>();
-        Dictionary<long, BussinesObjects.BussinesObjects.Cliente> _listaClientes = new Dictionary<long, BussinesObjects.BussinesObjects.Cliente>();
+        Dictionary<long, Cliente> _listaClientes = new Dictionary<long, Cliente>();
         Dictionary<long, Producto> _listaProductos = new Dictionary<long, Producto>();
         Dictionary<Producto, int> _listaProductosAgregados = new Dictionary<Producto, int>();
         Usuario user;
@@ -69,7 +71,7 @@ namespace sublimacion
             }
 
 
-            if (user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.JefeProduccion)
+            if (user.Perfil == Usuario.PerfilesEnum.JefeProduccion)
             {
                 TxtCantidad.ReadOnly = true;
                 TxtComentario.ReadOnly = true;
@@ -155,7 +157,7 @@ namespace sublimacion
             _pedido.Borrado = true;
             PedidoDAO.actualizarPedido(_pedido);
 
-            if ((user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.JefeProduccion))
+            if ((user.Perfil == Usuario.PerfilesEnum.JefeProduccion))
             {
                 Response.Redirect("LogisticaProduccion.aspx");
             }
@@ -186,7 +188,7 @@ namespace sublimacion
 
 
 
-            if ((user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.JefeProduccion))
+            if ((user.Perfil == Usuario.PerfilesEnum.JefeProduccion))
             {
                 Response.Redirect("LogisticaProduccion.aspx");
             }
@@ -202,7 +204,7 @@ namespace sublimacion
         {
 
             if (_pedido == null)
-                _pedido = new BussinesObjects.BussinesObjects.Pedido();
+                _pedido = new Pedido();
 
             _pedido.Cliente = _listaClientes[long.Parse(this.CmbCliente.SelectedValue)];
 
@@ -283,7 +285,7 @@ namespace sublimacion
         protected void BtnSalir_Click(object sender, EventArgs e)
         {
 
-            if ((user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.JefeProduccion))
+            if ((user.Perfil == Usuario.PerfilesEnum.JefeProduccion))
             {
                 Response.Redirect("LogisticaProduccion.aspx");
             }

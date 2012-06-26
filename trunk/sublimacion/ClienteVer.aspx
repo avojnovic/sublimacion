@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#"  MasterPageFile="~/Master.Master"  AutoEventWireup="true" CodeBehind="ClienteVer.aspx.cs" Inherits="sublimacion.Clientes" %>
+﻿<%@ Page Language="C#"  MasterPageFile="~/Master.Master"  AutoEventWireup="true" CodeBehind="ClienteVer.aspx.cs" Inherits="sublimacion.ClienteVer" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -16,17 +16,17 @@
             <PagerSettings PageButtonCount="5" />
             <RowStyle HorizontalAlign="Center" VerticalAlign="Middle" />
             <Columns>
-                <asp:BoundField DataField="IdClienteStr" HeaderText="Id" ReadOnly="True" SortExpression="id" />
-                <asp:BoundField DataField="Nombre" HeaderText="Nombre" ReadOnly="True" SortExpression="nombre" />
-                <asp:BoundField DataField="Apellido" HeaderText="Apellido" SortExpression="apellido" />
-                <asp:BoundField DataField="Dni" HeaderText="Dni" SortExpression="Dni" />
-                <asp:BoundField DataField="Direccion" HeaderText="Direccion" SortExpression="Direccion" />
-                <asp:BoundField DataField="Telefono" HeaderText="Telefono" SortExpression="Telefono" />
-               <asp:BoundField DataField="Mail" HeaderText="Mail" SortExpression="Mail" />
-               <asp:BoundField DataField="Fecha" HeaderText="Fecha" SortExpression="Fecha" />
+                <asp:BoundField DataField="IdClienteStr" HeaderText="ID" HeaderStyle-Font-Names="calibri" ReadOnly="True" SortExpression="id" />
+                <asp:BoundField DataField="Nombre" HeaderText="Nombre" HeaderStyle-Font-Names="calibri" SortExpression="nombre" />
+                <asp:BoundField DataField="Apellido" HeaderText="Apellido" HeaderStyle-Font-Names="calibri" SortExpression="apellido" />
+                <asp:BoundField DataField="Dni" HeaderText="Dni" HeaderStyle-Font-Names="calibri" SortExpression="Dni" />
+                <asp:BoundField DataField="Direccion" HeaderText="Direccion" HeaderStyle-Font-Names="calibri" SortExpression="Direccion" />
+                <asp:BoundField DataField="Telefono" HeaderText="Telefono" HeaderStyle-Font-Names="calibri" SortExpression="Telefono" />
+               <asp:BoundField DataField="Mail" HeaderText="Mail" HeaderStyle-Font-Names="calibri" SortExpression="Mail" />
+               <asp:BoundField DataField="Fecha" HeaderText="Fecha" HeaderStyle-Font-Names="calibri" SortExpression="Fecha" />
                 <asp:TemplateField  ItemStyle-Width="25px">
                  <ItemTemplate>  
-                    <a href="Cliente.aspx?id=<%# Eval("IdCliente") %>" >
+                    <a href="ClienteABM.aspx?id=<%# Eval("IdCliente") %>" >
                         <img alt="Abrir" src="../images/File-Open-icon.png" border="0"  width="16px" height="16px"/>
                       </a>
                   </ItemTemplate>

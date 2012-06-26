@@ -11,6 +11,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using sublimacion.BussinesObjects;
+using sublimacion.BussinesObjects.BussinesObjects;
 
 namespace sublimacion
 {
@@ -53,7 +54,7 @@ namespace sublimacion
         private void generarMenu()
         {
 
-            if ((user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.Diseniador) || (user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.Administrador) )
+            if ((user.Perfil == Usuario.PerfilesEnum.Diseniador) || (user.Perfil == Usuario.PerfilesEnum.Administrador) )
             {
                 MenuItem itCa = new MenuItem("Catalogos");
 
@@ -65,7 +66,7 @@ namespace sublimacion
 
                 MenuItem ite = new MenuItem("Nuevo");
                 ite.Value = "CatalogoNuevo";
-                ite.NavigateUrl = "Catalogo.aspx";
+                ite.NavigateUrl = "CatalogoABM.aspx";
                 itCa.ChildItems.Add(ite);
 
 
@@ -82,7 +83,7 @@ namespace sublimacion
 
                 MenuItem itPlaN = new MenuItem("Nuevo");
                 itPlaN.Value = "PlantillaNuevo";
-                itPlaN.NavigateUrl = "Plantilla.aspx";
+                itPlaN.NavigateUrl = "PlantillaABM.aspx";
                 itPla.ChildItems.Add(itPlaN);
 
                 
@@ -98,7 +99,7 @@ namespace sublimacion
 
             }
 
-            if ((user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.Vendedor) || (user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.Administrador) )
+            if ((user.Perfil == Usuario.PerfilesEnum.Vendedor) || (user.Perfil == Usuario.PerfilesEnum.Administrador) )
             {
                 //INSUMO
                 MenuItem itIns = new MenuItem("Insumos");
@@ -111,7 +112,7 @@ namespace sublimacion
 
                 MenuItem itInsN = new MenuItem("Nuevo");
                 itInsN.Value = "InsumoNuevo";
-                itInsN.NavigateUrl = "Insumo.aspx";
+                itInsN.NavigateUrl = "InsumoABM.aspx";
                 itIns.ChildItems.Add(itInsN);
 
 
@@ -130,7 +131,7 @@ namespace sublimacion
 
                 MenuItem itProN = new MenuItem("Nuevo");
                 itProN.Value = "ProductoNuevo";
-                itProN.NavigateUrl = "Producto.aspx";
+                itProN.NavigateUrl = "ProductoABM.aspx";
                 itPro.ChildItems.Add(itProN);
 
 
@@ -147,7 +148,7 @@ namespace sublimacion
 
                 MenuItem itDeN = new MenuItem("Nuevo");
                 itDeN.Value = "DescuentoNuevo";
-                itDeN.NavigateUrl = "Descuento.aspx";
+                itDeN.NavigateUrl = "DescuentoABM.aspx";
                 itDe.ChildItems.Add(itDeN);
 
 
@@ -170,7 +171,7 @@ namespace sublimacion
 
             }
 
-            if ((user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.Vendedor) || (user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.Administrador) || (user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.JefeProduccion))
+            if ((user.Perfil == Usuario.PerfilesEnum.Vendedor) || (user.Perfil == Usuario.PerfilesEnum.Administrador) || (user.Perfil == Usuario.PerfilesEnum.JefeProduccion))
             {
 
                 //CLIENTES
@@ -182,7 +183,7 @@ namespace sublimacion
 
                 MenuItem ititCliV = new MenuItem("Nuevo");
                 ititCliV.Value = "ClienteNuevo";
-                ititCliV.NavigateUrl = "Cliente.aspx";
+                ititCliV.NavigateUrl = "ClienteABM.aspx";
                 itCli.ChildItems.Add(ititCliV);
 
 
@@ -196,11 +197,11 @@ namespace sublimacion
                 itPeE.NavigateUrl = "PedidoVer.aspx";
                 itPe.ChildItems.Add(itPeE);
 
-                if ((user.Perfil != sublimacion.BussinesObjects.Usuario.PerfilesEnum.JefeProduccion))
+                if ((user.Perfil != Usuario.PerfilesEnum.JefeProduccion))
                 {
                     MenuItem itPeN = new MenuItem("Nuevo");
                     itPeN.Value = "PedidoNuevo";
-                    itPeN.NavigateUrl = "Pedido.aspx";
+                    itPeN.NavigateUrl = "PedidoABM.aspx";
                     itPe.ChildItems.Add(itPeN);
                 }
 
@@ -214,7 +215,7 @@ namespace sublimacion
                 divMenu.Items.Add(itPe);
             }
 
-            if ((user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.JefeProduccion) || (user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.Administrador))
+            if ((user.Perfil == Usuario.PerfilesEnum.JefeProduccion) || (user.Perfil == Usuario.PerfilesEnum.Administrador))
             {
                 
                 MenuItem itIns = new MenuItem("Logistica Producción");

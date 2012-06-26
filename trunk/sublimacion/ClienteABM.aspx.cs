@@ -12,12 +12,13 @@ using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using sublimacion.BussinesObjects;
 using sublimacion.DataAccessObjects.DataAccessObjects;
+using sublimacion.BussinesObjects.BussinesObjects;
 
 namespace sublimacion
 {
-    public partial class Cliente : System.Web.UI.Page
+    public partial class ClienteABM : System.Web.UI.Page
     {
-        BussinesObjects.BussinesObjects.Cliente _cliente;
+        Cliente _cliente;
 
 
         ModosEdicionEnum _modoApertura = new ModosEdicionEnum();
@@ -41,6 +42,7 @@ namespace sublimacion
                 cargarCliente();
             }
 
+            TxtFecha.ReadOnly = true;
 
             if (_cliente != null)
             {
@@ -50,6 +52,8 @@ namespace sublimacion
             else
             {
                 _modoApertura = ModosEdicionEnum.Nuevo;
+                TxtFecha.Text = DateTime.Now.ToShortDateString();
+              
                 BtnBorrar.Visible = false;
             }
 
@@ -61,10 +65,14 @@ namespace sublimacion
             {
 
                 TxtNombre.Text = _cliente.Nombre;
-
-                //agregar restos de campos
-              
-            }
+                TxtApellido.Text = _cliente.Apellido;
+                TxtDni.Text= _cliente.Dni.ToString();
+                TxtDireccion.Text =_cliente.Direccion;
+                TxtTelefono.Text = _cliente.Telefono;
+                TxtMail.Text = _cliente.Mail;
+                TxtFecha.Text= _cliente.Fecha.ToString();
+                
+           }
             else
             {
                 _modoApertura = ModosEdicionEnum.Nuevo;
@@ -100,9 +108,15 @@ namespace sublimacion
             if (_cliente == null)
                 _cliente = new BussinesObjects.BussinesObjects.Cliente();
 
-            _cliente.Nombre = TxtNombre.Text;
-           //agregar campos
 
+            _cliente.Nombre = TxtNombre.Text;
+            _cliente.Apellido = TxtApellido.Text;
+            _cliente.Dni = long.Parse(TxtDni.Text);
+             _cliente.Direccion = TxtDireccion.Text;
+            _cliente.Telefono = TxtTelefono.Text;
+            _cliente.Mail = TxtMail.Text;
+          
+         
         }
 
         protected void BtnSalir_Click(object sender, EventArgs e)

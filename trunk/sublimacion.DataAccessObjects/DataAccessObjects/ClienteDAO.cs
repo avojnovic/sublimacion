@@ -112,7 +112,11 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
             NpgsqlDb.Instancia.PrepareCommand(queryStr);
 
+            i.Fecha = DateTime.Now;
+            NpgsqlDb.Instancia.AddCommandParameter(":fecha", NpgsqlDbType.Date, ParameterDirection.Input, false, i.Fecha);
+           
             parametrosQuery(i);
+            
 
             try
             {
@@ -131,7 +135,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
 
             queryStr = @"UPDATE cliente
-                        SET nombre=:nombre, apellido=:apelido, dni=:dni, direccion=:direccion, telefono=:telefono, mail=:mail, fecha=:fecha, borrado=:borrado
+                        SET nombre=:nombre, apellido=:apelido, dni=:dni, direccion=:direccion, telefono=:telefono, mail=:mail, borrado=:borrado
                     WHERE idcliente=:idcliente";
 
             NpgsqlDb.Instancia.PrepareCommand(queryStr);
@@ -158,7 +162,6 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             NpgsqlDb.Instancia.AddCommandParameter(":direccion", NpgsqlDbType.Varchar, ParameterDirection.Input, false, i.Direccion);
             NpgsqlDb.Instancia.AddCommandParameter(":telefono", NpgsqlDbType.Varchar, ParameterDirection.Input, false, i.Telefono);
             NpgsqlDb.Instancia.AddCommandParameter(":mail", NpgsqlDbType.Varchar, ParameterDirection.Input, false, i.Mail);
-            NpgsqlDb.Instancia.AddCommandParameter(":fecha", NpgsqlDbType.Date, ParameterDirection.Input, false, i.Fecha);
             NpgsqlDb.Instancia.AddCommandParameter(":borrado", NpgsqlDbType.Boolean, ParameterDirection.Input, false, i.Borrado);
 
         }

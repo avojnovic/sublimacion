@@ -14,16 +14,16 @@
             <PagerSettings PageButtonCount="5" />
             <RowStyle HorizontalAlign="Center" VerticalAlign="Middle" />
             <Columns>
-                <asp:BoundField DataField="IdInsumoStr" HeaderText="Id" ReadOnly="True" SortExpression="id" />
-                <asp:BoundField DataField="Nombre" HeaderText="Nombre" ReadOnly="True" SortExpression="nombre" />
-                <asp:BoundField DataField="NombreFab" HeaderText="Fabricante" SortExpression="fabricante" />
-                <asp:BoundField DataField="CostoStr" HeaderText="Costo" SortExpression="costo" />
-                <asp:BoundField DataField="StockStr" HeaderText="Stock" SortExpression="stock" />
-                <asp:BoundField DataField="FechaActStr" HeaderText="Fecha Actualizacion" SortExpression="fechaAct" />
+                <asp:BoundField DataField="IdInsumo" HeaderText="ID" HeaderStyle-Font-Names="calibri" ReadOnly="True" SortExpression="id" />
+                <asp:BoundField DataField="Nombre" HeaderText="Nombre" HeaderStyle-Font-Names="calibri" ReadOnly="True" SortExpression="nombre" />
+                <asp:BoundField DataField="NombreFab" HeaderText="Fabricante" HeaderStyle-Font-Names="calibri" SortExpression="fabricante" />
+                <asp:BoundField DataField="Costo" HeaderText="Costo" HeaderStyle-Font-Names="calibri" SortExpression="costo" />
+                <asp:BoundField DataField="Stock" HeaderText="Stock" HeaderStyle-Font-Names="calibri" SortExpression="stock" />
+                <asp:BoundField DataField="FechaAct" HeaderText="Fecha Actualizacion" HeaderStyle-Font-Names="calibri" SortExpression="fechaAct" />
                
                 <asp:TemplateField  ItemStyle-Width="25px">
                  <ItemTemplate>  
-                    <a href="Insumo.aspx?id=<%# Eval("Idinsumo") %>" >
+                    <a href="InsumoABM.aspx?id=<%# Eval("Idinsumo") %>" >
                         <img alt="Abrir" src="../images/File-Open-icon.png" border="0"  width="16px" height="16px"/>
                       </a>
                   </ItemTemplate>

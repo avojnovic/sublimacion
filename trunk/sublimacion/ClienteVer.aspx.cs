@@ -12,12 +12,13 @@ using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using System.Collections.Generic;
 using sublimacion.DataAccessObjects.DataAccessObjects;
+using sublimacion.BussinesObjects.BussinesObjects;
 
 namespace sublimacion
 {
-    public partial class Clientes : System.Web.UI.Page
+    public partial class ClienteVer : System.Web.UI.Page
     {
-        private Dictionary<long, BussinesObjects.BussinesObjects.Cliente> _dicCliente;
+        private Dictionary<long, Cliente> _dicCliente;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -66,7 +67,7 @@ namespace sublimacion
         protected void BtnNuevo_Click(object sender, EventArgs e)
         {
 
-            Response.Redirect("Cliente.aspx");
+            Response.Redirect("ClienteABM.aspx");
         }
 
         protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
