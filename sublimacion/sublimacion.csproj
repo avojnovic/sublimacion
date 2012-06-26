@@ -61,23 +61,26 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Cliente.aspx" />
+    <Content Include="ClienteABM.aspx" />
     <Content Include="ClienteVer.aspx" />
     <Content Include="controls\DateComboPicker.ascx" />
     <Content Include="controls\DatePicker.ascx" />
     <Content Include="Default.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="PlantillaABM.aspx" />
     <Content Include="PlantillaVer.aspx" />
+    <Content Include="ProductoABM.aspx" />
+    <Content Include="ProductoVer.aspx" />
     <Content Include="style.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cliente.aspx.cs">
-      <DependentUpon>Cliente.aspx</DependentUpon>
+    <Compile Include="ClienteABM.aspx.cs">
+      <DependentUpon>ClienteABM.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Cliente.aspx.designer.cs">
-      <DependentUpon>Cliente.aspx</DependentUpon>
+    <Compile Include="ClienteABM.aspx.designer.cs">
+      <DependentUpon>ClienteABM.aspx</DependentUpon>
     </Compile>
     <Compile Include="ClienteVer.aspx.cs">
       <DependentUpon>ClienteVer.aspx</DependentUpon>
@@ -107,12 +110,12 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Insumo.aspx.cs">
-      <DependentUpon>Insumo.aspx</DependentUpon>
+    <Compile Include="InsumoABM.aspx.cs">
+      <DependentUpon>InsumoABM.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Insumo.aspx.designer.cs">
-      <DependentUpon>Insumo.aspx</DependentUpon>
+    <Compile Include="InsumoABM.aspx.designer.cs">
+      <DependentUpon>InsumoABM.aspx</DependentUpon>
     </Compile>
     <Compile Include="InsumoVer.aspx.cs">
       <DependentUpon>InsumoVer.aspx</DependentUpon>
@@ -142,12 +145,12 @@
     <Compile Include="Master.Master.designer.cs">
       <DependentUpon>Master.Master</DependentUpon>
     </Compile>
-    <Compile Include="Pedido.aspx.cs">
-      <DependentUpon>Pedido.aspx</DependentUpon>
+    <Compile Include="PedidoABM.aspx.cs">
+      <DependentUpon>PedidoABM.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pedido.aspx.designer.cs">
-      <DependentUpon>Pedido.aspx</DependentUpon>
+    <Compile Include="PedidoABM.aspx.designer.cs">
+      <DependentUpon>PedidoABM.aspx</DependentUpon>
     </Compile>
     <Compile Include="PedidoVer.aspx.cs">
       <DependentUpon>PedidoVer.aspx</DependentUpon>
@@ -156,12 +159,33 @@
     <Compile Include="PedidoVer.aspx.designer.cs">
       <DependentUpon>PedidoVer.aspx</DependentUpon>
     </Compile>
+    <Compile Include="PlantillaABM.aspx.cs">
+      <DependentUpon>PlantillaABM.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PlantillaABM.aspx.designer.cs">
+      <DependentUpon>PlantillaABM.aspx</DependentUpon>
+    </Compile>
     <Compile Include="PlantillaVer.aspx.cs">
       <DependentUpon>PlantillaVer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="PlantillaVer.aspx.designer.cs">
       <DependentUpon>PlantillaVer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProductoABM.aspx.cs">
+      <DependentUpon>ProductoABM.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProductoABM.aspx.designer.cs">
+      <DependentUpon>ProductoABM.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProductoVer.aspx.cs">
+      <DependentUpon>ProductoVer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProductoVer.aspx.designer.cs">
+      <DependentUpon>ProductoVer.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -193,11 +217,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\logosuperior.PNG" />
-    <Content Include="Insumo.aspx" />
+    <Content Include="InsumoABM.aspx" />
     <Content Include="InsumoVer.aspx" />
     <Content Include="LogisticaProduccion.aspx" />
     <Content Include="Master.Master" />
-    <Content Include="Pedido.aspx" />
+    <Content Include="PedidoABM.aspx" />
     <Content Include="PedidoVer.aspx" />
     <Content Include="VerLogistica.aspx" />
   </ItemGroup>

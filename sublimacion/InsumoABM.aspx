@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Master.Master"  AutoEventWireup="true" CodeBehind="Insumo.aspx.cs" Inherits="sublimacion.Insumo" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Master.Master"  AutoEventWireup="true" CodeBehind="InsumoABM.aspx.cs" Inherits="sublimacion.InsumoABM" %>
 <%@ Register Src="~/controls/DatePicker.ascx" TagPrefix="ctrol" TagName="DatePicker" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="act" %>
 
@@ -19,7 +19,7 @@
         <table style="width:500px;"  border="0" cellspacing="0"   >
              <tr>
                  <td align="left" style="width:100px;" >
-                    <asp:Label ID="Label6" runat="server" Text="Nombre:"></asp:Label>
+                    <asp:Label ID="Label6" runat="server" Text="Nombre:" Font-Names="Calibri"></asp:Label>
                       <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="TxtNombre" Display="Dynamic" ErrorMessage="*" SetFocusOnError="true" ValidationGroup="add" />
                   </td>
                 <td style="width:200px;" >
@@ -29,7 +29,7 @@
             </tr>
             <tr>
                 <td align="left">
-                    <asp:Label ID="Label2" runat="server" Text="Nombre Fabricante:"></asp:Label>
+                    <asp:Label ID="Label2" runat="server" Text="Nombre Fabricante:" Font-Names="Calibri"></asp:Label>
                      <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TxtFabricante" Display="Dynamic" ErrorMessage="*" SetFocusOnError="true" ValidationGroup="add" />
                 </td>
                 <td>
@@ -39,7 +39,7 @@
             </tr>
             <tr>
                 <td align="left">
-                    <asp:Label ID="Label3" runat="server" Text="Costo:"></asp:Label>
+                    <asp:Label ID="Label3" runat="server" Text="Costo:" Font-Names="Calibri"></asp:Label>
                      <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="TxtCosto" Display="Dynamic" ErrorMessage="*" SetFocusOnError="true" ValidationGroup="add" />
                 </td>
                 <td>
@@ -50,7 +50,7 @@
             </tr>
             <tr>
                 <td align="left">
-                    <asp:Label ID="Label4" runat="server" Text="Stock:"></asp:Label>
+                    <asp:Label ID="Label4" runat="server" Text="Stock:" Font-Names="Calibri"></asp:Label>
                      <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="Txtstock" Display="Dynamic" ErrorMessage="*" SetFocusOnError="true" ValidationGroup="add" />
                 </td>
                 <td>
@@ -61,7 +61,7 @@
             </tr>
             <tr>
                 <td align="left">
-                    <asp:Label ID="Label5" runat="server" Text="Fecha Actualizacion:"></asp:Label>
+                    <asp:Label ID="Label5" runat="server" Text="Fecha Actualizacion:" Font-Names="Calibri"></asp:Label>
                      
                 </td>
                 <td>

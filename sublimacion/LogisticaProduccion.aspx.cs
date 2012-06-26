@@ -21,8 +21,8 @@ namespace sublimacion
     {
 
         Usuario user;
-        private Dictionary<long, BussinesObjects.BussinesObjects.Pedido> _dicPedidos;
-        private Dictionary<long, BussinesObjects.BussinesObjects.Pedido> _dicPlanificar;
+        private Dictionary<long, Pedido> _dicPedidos;
+        private Dictionary<long, Pedido> _dicPlanificar;
 
 
         protected void Page_Load(object sender, EventArgs e)
@@ -30,7 +30,7 @@ namespace sublimacion
             LblComentario.Text = "";
             if (!IsPostBack)
             {
-                _dicPlanificar = new Dictionary<long, sublimacion.BussinesObjects.BussinesObjects.Pedido>();
+                _dicPlanificar = new Dictionary<long, Pedido>();
                 TxtFechaInicio.Text = DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToLongTimeString();
 
             }
@@ -85,14 +85,14 @@ namespace sublimacion
         private void cargarGrilla()
         {
 
-            Dictionary<long, BussinesObjects.BussinesObjects.Pedido> _dicTemp = new Dictionary<long, sublimacion.BussinesObjects.BussinesObjects.Pedido>();
+            Dictionary<long,Pedido> _dicTemp = new Dictionary<long, Pedido>();
             _dicTemp = PedidoDAO.obtenerTodos();
-            _dicPedidos = new Dictionary<long, sublimacion.BussinesObjects.BussinesObjects.Pedido>();
+            _dicPedidos = new Dictionary<long, Pedido>();
 
-            if ((user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.JefeProduccion) || (user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.Administrador))
+            if ((user.Perfil == Usuario.PerfilesEnum.JefeProduccion) || (user.Perfil == Usuario.PerfilesEnum.Administrador))
             {
 
-                foreach (BussinesObjects.BussinesObjects.Pedido p in _dicTemp.Values.ToList())
+                foreach (Pedido p in _dicTemp.Values.ToList())
                 {
                     if (p.EstadosPedido.ContainsKey(3))
                     {
@@ -109,10 +109,10 @@ namespace sublimacion
             
 
 
-            List<BussinesObjects.BussinesObjects.Pedido> listP = _dicPedidos.Values.ToList();
+            List<Pedido> listP = _dicPedidos.Values.ToList();
 
 
-            listP.Sort(delegate(BussinesObjects.BussinesObjects.Pedido p1, BussinesObjects.BussinesObjects.Pedido p2)
+            listP.Sort(delegate(Pedido p1, Pedido p2)
             {
                 return p2.Prioridad.CompareTo(p1.Prioridad);
             });
@@ -137,12 +137,12 @@ namespace sublimacion
 
             if (Session["listaPedidos"] == null)
             {
-                _dicPlanificar = new Dictionary<long, sublimacion.BussinesObjects.BussinesObjects.Pedido>();
+                _dicPlanificar = new Dictionary<long, Pedido>();
                 Session["listaPedidos"] = _dicPlanificar;
             }
             else
             {
-                _dicPlanificar = (Dictionary<long, sublimacion.BussinesObjects.BussinesObjects.Pedido>)Session["listaPedidos"];
+                _dicPlanificar = (Dictionary<long, Pedido>)Session["listaPedidos"];
             }
 
 
@@ -154,7 +154,7 @@ namespace sublimacion
                 {
                     string id = (row.Cells[1].Text);
 
-                    BussinesObjects.BussinesObjects.Pedido i = PedidoDAO.obtenerPorId(id.Trim());
+                    Pedido i = PedidoDAO.obtenerPorId(id.Trim());
 
                     if (i != null && i.IdPedido != 0)
                     {
@@ -184,10 +184,10 @@ namespace sublimacion
         private void setearGrillaPlanificados()
         {
 
-            List<BussinesObjects.BussinesObjects.Pedido> listP = _dicPlanificar.Values.ToList();
+            List<Pedido> listP = _dicPlanificar.Values.ToList();
 
 
-            listP.Sort(delegate(BussinesObjects.BussinesObjects.Pedido p1, BussinesObjects.BussinesObjects.Pedido p2)
+            listP.Sort(delegate(Pedido p1, Pedido p2)
             {
                 return p2.Prioridad.CompareTo(p1.Prioridad);
             });
@@ -200,7 +200,7 @@ namespace sublimacion
 
         }
 
-        private float agregarPedidoAPlanificado(sublimacion.BussinesObjects.BussinesObjects.Pedido i)
+        private float agregarPedidoAPlanificado(Pedido i)
         {
             float tiempoTotal = 0;
             if (!_dicPlanificar.ContainsKey(i.IdPedido))
@@ -208,7 +208,7 @@ namespace sublimacion
                 _dicPlanificar.Add(i.IdPedido, i);
 
                
-                foreach (BussinesObjects.BussinesObjects.Pedido ped in _dicPlanificar.Values.ToList())
+                foreach (Pedido ped in _dicPlanificar.Values.ToList())
                 {
                     try 
 	                    {
@@ -233,12 +233,12 @@ namespace sublimacion
 
             if (Session["listaPedidos"] == null)
             {
-                _dicPlanificar = new Dictionary<long, sublimacion.BussinesObjects.BussinesObjects.Pedido>();
+                _dicPlanificar = new Dictionary<long, Pedido>();
                 Session["listaPedidos"] = _dicPlanificar;
             }
             else
             {
-                _dicPlanificar = (Dictionary<long, sublimacion.BussinesObjects.BussinesObjects.Pedido>)Session["listaPedidos"];
+                _dicPlanificar = (Dictionary<long, Pedido>)Session["listaPedidos"];
             }
             DateTime fechaInicio = DateTime.MinValue;
             DateTime fechaFin = DateTime.MinValue;
@@ -254,7 +254,7 @@ namespace sublimacion
                     PlanProdDAO.insertarPlan(plan);
                     if (plan.IdPlan != 0)
                     {
-                        foreach (BussinesObjects.BussinesObjects.Pedido pedido in _dicPlanificar.Values.ToList())
+                        foreach (Pedido pedido in _dicPlanificar.Values.ToList())
                         {
                             setearEstadoEnProduccion(pedido);
                             pedido.PlanDeProduccion = plan;
@@ -275,7 +275,7 @@ namespace sublimacion
             }
         }
 
-        private void setearEstadoEnProduccion(sublimacion.BussinesObjects.BussinesObjects.Pedido pedido)
+        private void setearEstadoEnProduccion(Pedido pedido)
         {
           Estado c= TipoEstadoDAO.obtenerEstadosPorId("6");
 
@@ -307,7 +307,7 @@ namespace sublimacion
             {
                 string id = (row.Cells[1].Text);
 
-                BussinesObjects.BussinesObjects.Pedido i = PedidoDAO.obtenerPorId(id.Trim());
+                Pedido i = PedidoDAO.obtenerPorId(id.Trim());
 
                 if (i != null && i.IdPedido != 0)
                 {

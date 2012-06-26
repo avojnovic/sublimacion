@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Runtime.CompilerServices;
-using sublimacion.BussinesObjects;
+using sublimacion.BussinesObjects.BussinesObjects;
 using Npgsql;
 
 namespace sublimacion.DataAccessObjects.DataAccessObjects
@@ -114,25 +114,25 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             switch (long.Parse(dr["idper"].ToString()))
             {
                 case 1:
-                    u.Perfil = sublimacion.BussinesObjects.Usuario.PerfilesEnum.Diseniador; 
+                    u.Perfil = Usuario.PerfilesEnum.Diseniador; 
                     break;
                 case 2:
-                    u.Perfil = sublimacion.BussinesObjects.Usuario.PerfilesEnum.Operario;
+                    u.Perfil =Usuario.PerfilesEnum.Operario;
                     break;
                 case 3:
-                    u.Perfil = sublimacion.BussinesObjects.Usuario.PerfilesEnum.Vendedor;
+                    u.Perfil = Usuario.PerfilesEnum.Vendedor;
                     break;
                 case 4:
-                    u.Perfil = sublimacion.BussinesObjects.Usuario.PerfilesEnum.JefeSuperior;
+                    u.Perfil = Usuario.PerfilesEnum.JefeSuperior;
                     break;
                 case 5:
-                    u.Perfil = sublimacion.BussinesObjects.Usuario.PerfilesEnum.JefeProduccion;
+                    u.Perfil = Usuario.PerfilesEnum.JefeProduccion;
                     break;
                 case 6:
-                    u.Perfil = sublimacion.BussinesObjects.Usuario.PerfilesEnum.Administrador;
+                    u.Perfil = Usuario.PerfilesEnum.Administrador;
                     break;
                 default:
-                    u.Perfil = sublimacion.BussinesObjects.Usuario.PerfilesEnum.Vendedor;
+                    u.Perfil = Usuario.PerfilesEnum.Vendedor;
                     break;
             }
 

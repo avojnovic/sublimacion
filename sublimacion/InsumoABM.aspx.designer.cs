@@ -10,7 +10,7 @@
 namespace sublimacion {
     
     
-    public partial class Insumo {
+    public partial class InsumoABM {
         
         /// <summary>
         /// Control LblMensaje.

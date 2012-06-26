@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace sublimacion.BussinesObjects
+namespace sublimacion.BussinesObjects.BussinesObjects
 {
     public class Insumo
     {

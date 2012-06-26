@@ -28,7 +28,7 @@
                     <asp:BoundField DataField="ClienteNombre" HeaderText="Cliente" SortExpression="Cliente" />
                    <asp:TemplateField  ItemStyle-Width="25px">
                     <ItemTemplate>  
-                    <a href="Pedido.aspx?id=<%# Eval("IdPedido") %>" >
+                    <a href="PedidoABM.aspx?id=<%# Eval("IdPedido") %>" >
                         <img alt="Abrir" src="../images/File-Open-icon.png" border="0"  width="16px" height="16px"/>
                       </a>
                      </ItemTemplate>

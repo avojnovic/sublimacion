@@ -10,7 +10,7 @@
 namespace sublimacion {
     
     
-    public partial class ClienteVer {
+    public partial class ProductoVer {
         
         /// <summary>
         /// Control ImageButton1.

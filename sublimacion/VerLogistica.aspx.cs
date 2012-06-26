@@ -20,13 +20,13 @@ namespace sublimacion
     public partial class VerLogistica : System.Web.UI.Page
     {
         Usuario user;
-        private Dictionary<long, BussinesObjects.BussinesObjects.Pedido> _dicPedidos;
+        private Dictionary<long, Pedido> _dicPedidos;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                _dicPedidos = new Dictionary<long, sublimacion.BussinesObjects.BussinesObjects.Pedido>();
+                _dicPedidos = new Dictionary<long, Pedido>();
                
             }
             user = (Usuario)Session["usuario"];
@@ -40,7 +40,7 @@ namespace sublimacion
 
             Dictionary<long, PlanDeProduccion> _listaPlan = new Dictionary<long, PlanDeProduccion>();
             _dicPedidos = PedidoDAO.obtenerTodosConIdPlanProd();
-            foreach (BussinesObjects.BussinesObjects.Pedido ped in _dicPedidos.Values.ToList())
+            foreach (Pedido ped in _dicPedidos.Values.ToList())
             {
                 if (!_listaPlan.ContainsKey(ped.PlanDeProduccion.IdPlan))
                 {
@@ -49,7 +49,7 @@ namespace sublimacion
             }
 
             List <PlanDeProduccion> listP = _listaPlan.Values.ToList();
-            listP.Sort(delegate(BussinesObjects.BussinesObjects.PlanDeProduccion p1, BussinesObjects.BussinesObjects.PlanDeProduccion p2)
+            listP.Sort(delegate(PlanDeProduccion p1, PlanDeProduccion p2)
             {
                 return p1.Fecha_inicio.CompareTo(p2.Fecha_inicio);
             });

@@ -1,9 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="PlantillaVer.aspx.cs" Inherits="sublimacion.PlantillaVer" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="ProductoVer.aspx.cs" Inherits="sublimacion.ProductoVer" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
- <br/>
+   <br/>
     <br/>   
     
      <asp:ImageButton ID="ImageButton1" Width="32px" Height="32px" ImageUrl="~/Images/New.png" runat="server" onclick="BtnNuevo_Click" ToolTip="Nuevo" />
@@ -15,14 +14,16 @@
             <PagerSettings PageButtonCount="5" />
             <RowStyle HorizontalAlign="Center" VerticalAlign="Middle" />
             <Columns>
-                <asp:BoundField DataField="IdPlantilla" HeaderText="Id" SortExpression="id" />
-                <asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="nombre" />
-                <asp:BoundField DataField="Medida_ancho" HeaderText="Ancho" SortExpression="Ancho" />
-                <asp:BoundField DataField="Medida_largo" HeaderText="Largo" SortExpression="Largo" />
+                <asp:BoundField DataField="IdProducto" HeaderText="ID" HeaderStyle-Font-Names="calibri" ReadOnly="True" SortExpression="id" />
+                <asp:BoundField DataField="Nombre" HeaderText="Nombre" HeaderStyle-Font-Names="calibri" SortExpression="nombre" />
+                <asp:BoundField DataField="Precio" HeaderText="Precio" HeaderStyle-Font-Names="calibri" SortExpression="precio" />
+                <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" HeaderStyle-Font-Names="calibri" SortExpression="cantidad" />
+                <asp:BoundField DataField="Costo" HeaderText="Costo" HeaderStyle-Font-Names="calibri" SortExpression="costo" />
+                <asp:BoundField DataField="Tiempo" HeaderText="Tiempo" HeaderStyle-Font-Names="calibri" SortExpression="tiempo" />
 
                 <asp:TemplateField  ItemStyle-Width="25px">
                  <ItemTemplate>  
-                    <a href="PlantillaABM.aspx?id=<%# Eval("IdPlantilla") %>" >
+                    <a href="ProductoABM.aspx?id=<%# Eval("IdProducto") %>" >
                         <img alt="Abrir" src="../images/File-Open-icon.png" border="0"  width="16px" height="16px"/>
                       </a>
                   </ItemTemplate>

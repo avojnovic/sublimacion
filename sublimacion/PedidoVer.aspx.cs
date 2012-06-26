@@ -20,7 +20,7 @@ namespace sublimacion
     public partial class PedidoVer : System.Web.UI.Page
     {
         Usuario user;
-        private Dictionary<long,BussinesObjects.BussinesObjects.Pedido> _dicPedidos;
+        private Dictionary<long, Pedido> _dicPedidos;
         Dictionary<long, Estado> _listaEstados = new Dictionary<long, Estado>();
         
         protected void Page_Load(object sender, EventArgs e)
@@ -33,7 +33,7 @@ namespace sublimacion
                 cargarCombos();
             }
 
-            if ((user.Perfil == sublimacion.BussinesObjects.Usuario.PerfilesEnum.JefeProduccion))
+            if ((user.Perfil == Usuario.PerfilesEnum.JefeProduccion))
             {
 
                 BtnImgNuevo.Visible = false;
@@ -76,13 +76,13 @@ namespace sublimacion
         private void cargarGrilla()
         {
 
-            Dictionary<long, BussinesObjects.BussinesObjects.Pedido> _dicTemp = new Dictionary<long, sublimacion.BussinesObjects.BussinesObjects.Pedido>();
+            Dictionary<long, Pedido> _dicTemp = new Dictionary<long, Pedido>();
             _dicPedidos = PedidoDAO.obtenerTodos();
            
-            List<BussinesObjects.BussinesObjects.Pedido> listP = _dicPedidos.Values.ToList();
+            List<Pedido> listP = _dicPedidos.Values.ToList();
 
 
-            listP.Sort(delegate(BussinesObjects.BussinesObjects.Pedido p1, BussinesObjects.BussinesObjects.Pedido p2)
+            listP.Sort(delegate(Pedido p1, Pedido p2)
             {
                 return p2.Prioridad.CompareTo(p1.Prioridad);
             });
