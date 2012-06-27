@@ -15,8 +15,11 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
         public static Dictionary<long, Usuario> obtenerTodos()
         {
 
-            string sql = @"SELECT u.id, u.usuario, u.contrasenia, u.nombre, u.apellido, u.telefono, u.mail, u.borrado, p.perfil, p.id as idper FROM usuario u
-              left join perfil p on u.id_perfil=p.id where u.borrado=false";
+            string sql = @"SELECT u.id as usu_id, u.usuario as usu_usuario, u.contrasenia as usu_contrasenia, u.nombre as usu_nombre,
+                      u.apellido as usu_apellido, u.telefono as usu_telefono, u.mail as usu_mail, u.borrado as usu_borrado, 
+                      u.id_perfil as usu_id_perfil
+            FROM usuario u
+              inner join perfil p on u.id_perfil=p.id where u.borrado=false";
             NpgsqlDb.Instancia.PrepareCommand(sql);
             NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
             Dictionary<long, Usuario> dicUsuario = new Dictionary<long, Usuario>();
@@ -39,35 +42,41 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
         {
 
             string sql = @"
-            SELECT u.id, u.usuario, u.contrasenia, u.nombre, u.apellido, u.telefono, u.mail, u.borrado, p.perfil, p.id as idper 
+            SELECT  u.id as usu_id, u.usuario as usu_usuario, u.contrasenia as usu_contrasenia, u.nombre as usu_nombre,
+                      u.apellido as usu_apellido, u.telefono as usu_telefono, u.mail as usu_mail, u.borrado as usu_borrado, 
+                      u.id_perfil as usu_id_perfil
             FROM usuario u
-            left join perfil p on u.id_perfil=p.id 
+            inner join perfil p on u.id_perfil=p.id 
             where u.borrado=false and u.usuario='{0}' and u.contrasenia='{1}' ";
 
-            sql=string.Format(sql,usuario, pass);
+            sql = string.Format(sql, usuario, pass);
 
 
             NpgsqlDb.Instancia.PrepareCommand(sql);
             NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
-            
-            
+
+
             Dictionary<long, Usuario> dicUsuario = new Dictionary<long, Usuario>();
-            Usuario u=null;
+            Usuario u = null;
 
             while (dr.Read())
             {
                 u = getUsuarioDelDataReader(dr);
 
             }
- 
+
             return u;
 
         }
         public static Usuario obtenerUsuarioPorId(string id)
         {
 
-            string sql = @"SELECT u.id, u.usuario, u.contrasenia, u.nombre, u.apellido, u.telefono, u.mail, u.borrado, p.perfil, p.id as idper FROM usuario u
-            left join perfil p on u.id_perfil=p.id where u.borrado=false and u.id='{0}' ";
+            string sql = @"SELECT 
+                        u.id as usu_id, u.usuario as usu_usuario, u.contrasenia as usu_contrasenia, u.nombre as usu_nombre,
+                      u.apellido as usu_apellido, u.telefono as usu_telefono, u.mail as usu_mail, u.borrado as usu_borrado, 
+                      u.id_perfil as usu_id_perfil
+            FROM usuario u
+            inner join perfil p on u.id_perfil=p.id where u.borrado=false and u.id='{0}' ";
 
             sql = string.Format(sql, id);
             NpgsqlDb.Instancia.PrepareCommand(sql);
@@ -84,40 +93,40 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
         }
 
-        private static  Usuario getUsuarioDelDataReader(NpgsqlDataReader dr)
+        public static Usuario getUsuarioDelDataReader(NpgsqlDataReader dr)
         {
             Usuario u = new Usuario();
 
 
-            if (!dr.IsDBNull(dr.GetOrdinal("id")))
-                u.Id = long.Parse(dr["id"].ToString());
+            if (!dr.IsDBNull(dr.GetOrdinal("usu_id")))
+                u.Id = long.Parse(dr["usu_id"].ToString());
 
-            if (!dr.IsDBNull(dr.GetOrdinal("usuario")))
-                u.User = dr.GetString(dr.GetOrdinal("usuario"));
+            if (!dr.IsDBNull(dr.GetOrdinal("usu_usuario")))
+                u.User = dr.GetString(dr.GetOrdinal("usu_usuario"));
 
-            if (!dr.IsDBNull(dr.GetOrdinal("contrasenia")))
-                u.Password = dr.GetString(dr.GetOrdinal("contrasenia"));
+            if (!dr.IsDBNull(dr.GetOrdinal("usu_contrasenia")))
+                u.Password = dr.GetString(dr.GetOrdinal("usu_contrasenia"));
 
-            if (!dr.IsDBNull(dr.GetOrdinal("nombre")))
-                u.Nombre = dr.GetString(dr.GetOrdinal("nombre"));
+            if (!dr.IsDBNull(dr.GetOrdinal("usu_nombre")))
+                u.Nombre = dr.GetString(dr.GetOrdinal("usu_nombre"));
 
-            if (!dr.IsDBNull(dr.GetOrdinal("apellido")))
-                u.Apellido = dr.GetString(dr.GetOrdinal("apellido"));
+            if (!dr.IsDBNull(dr.GetOrdinal("usu_apellido")))
+                u.Apellido = dr.GetString(dr.GetOrdinal("usu_apellido"));
 
-            if (!dr.IsDBNull(dr.GetOrdinal("telefono")))
-                u.Telefono = dr.GetString(dr.GetOrdinal("telefono"));
+            if (!dr.IsDBNull(dr.GetOrdinal("usu_telefono")))
+                u.Telefono = dr.GetString(dr.GetOrdinal("usu_telefono"));
 
-            if (!dr.IsDBNull(dr.GetOrdinal("mail")))
-                u.Email = dr.GetString(dr.GetOrdinal("mail"));
+            if (!dr.IsDBNull(dr.GetOrdinal("usu_mail")))
+                u.Email = dr.GetString(dr.GetOrdinal("usu_mail"));
 
 
-            switch (long.Parse(dr["idper"].ToString()))
+            switch (long.Parse(dr["usu_id_perfil"].ToString()))
             {
                 case 1:
-                    u.Perfil = Usuario.PerfilesEnum.Diseniador; 
+                    u.Perfil = Usuario.PerfilesEnum.Diseniador;
                     break;
                 case 2:
-                    u.Perfil =Usuario.PerfilesEnum.Operario;
+                    u.Perfil = Usuario.PerfilesEnum.Operario;
                     break;
                 case 3:
                     u.Perfil = Usuario.PerfilesEnum.Vendedor;

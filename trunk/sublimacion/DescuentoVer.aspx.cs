@@ -44,7 +44,7 @@ namespace sublimacion
                 dt.Columns.Add("productoId");
                 dt.Columns.Add("productoNombre");
                 dt.Columns.Add("Cantidad");
-                dt.Columns.Add("Descuento");
+                dt.Columns.Add("Descuento1");
                 dt.Columns.Add("Fecha");
               
 
