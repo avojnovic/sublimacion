@@ -61,11 +61,14 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CatalogoABM.aspx" />
     <Content Include="ClienteABM.aspx" />
     <Content Include="ClienteVer.aspx" />
     <Content Include="controls\DateComboPicker.ascx" />
     <Content Include="controls\DatePicker.ascx" />
     <Content Include="Default.aspx" />
+    <Content Include="DescuentoABM.aspx" />
+    <Content Include="DescuentoVer.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="PlantillaABM.aspx" />
     <Content Include="PlantillaVer.aspx" />
@@ -75,6 +78,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CatalogoABM.aspx.cs">
+      <DependentUpon>CatalogoABM.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CatalogoABM.aspx.designer.cs">
+      <DependentUpon>CatalogoABM.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ClienteABM.aspx.cs">
       <DependentUpon>ClienteABM.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -109,6 +119,20 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DescuentoABM.aspx.cs">
+      <DependentUpon>DescuentoABM.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DescuentoABM.aspx.designer.cs">
+      <DependentUpon>DescuentoABM.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DescuentoVer.aspx.cs">
+      <DependentUpon>DescuentoVer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DescuentoVer.aspx.designer.cs">
+      <DependentUpon>DescuentoVer.aspx</DependentUpon>
     </Compile>
     <Compile Include="InsumoABM.aspx.cs">
       <DependentUpon>InsumoABM.aspx</DependentUpon>
@@ -250,7 +274,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>1109</DevelopmentServerPort>
+          <DevelopmentServerPort>60667</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

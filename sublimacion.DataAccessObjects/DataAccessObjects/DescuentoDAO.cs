@@ -39,15 +39,15 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
         }
 
-        public static Descuento obtenerDescuentoPorId(string id)
+        public static Descuento obtenerDescuentoPorId(string idProducto, string cantidad)
         {
 
             string sql = "";
             sql = @"SELECT cantidad, descuento, fecha, p.idproducto, p.nombre, p.precio, p.borrado, p.costo,p.tiempo
                      FROM descuento d inner join producto p on d.id_producto=p.idproducto
-                        WHERE p.borrado=FALSE and d.id_producto='{0}'";
+                        WHERE p.borrado=FALSE and d.id_producto='{0}' and cantidad={1}";
 
-            sql = string.Format(sql, id);
+            sql = string.Format(sql, idProducto, cantidad);
             NpgsqlDb.Instancia.PrepareCommand(sql);
             NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
 
@@ -69,7 +69,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             i.Producto=ProductoDAO.getProductosDelDataReader(dr);
 
             if (!dr.IsDBNull(dr.GetOrdinal("cantidad")))
-                i.Cantidad = dr.GetDecimal(dr.GetOrdinal("cantidad"));
+                i.Cantidad = dr.GetInt32(dr.GetOrdinal("cantidad"));
 
             if (!dr.IsDBNull(dr.GetOrdinal("descuento")))
                 i.Descuento1 = dr.GetDecimal(dr.GetOrdinal("descuento"));

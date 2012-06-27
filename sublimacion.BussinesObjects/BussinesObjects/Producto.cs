@@ -65,7 +65,18 @@ namespace sublimacion.BussinesObjects.BussinesObjects
 
         public string ParaPedido
         {
-            get { return Nombre +" - "+Cantidad.ToString(); }
+            get { return Nombre + " - " + Cantidad.ToString(); }
+        }
+
+       //Agregar propiedad que genere automaticamente Costo
+        public string CostoAutomatico
+        {
+            get { return  " - " ; }
+        }
+        //Agregar propiedad que genere automaticamente Stock
+        public string StockAutomatico
+        {
+            get { return " - "; }
         }
 
     }

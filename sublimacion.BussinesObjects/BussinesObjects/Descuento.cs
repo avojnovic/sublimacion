@@ -15,10 +15,21 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             set { _producto = value; }
         }
 
+        public string productoNombre
+        {
+            get { return _producto.Nombre; }
+            
+        }
 
-        private decimal _cantidad;
+        public long productoId
+        {
+            get { return _producto.Idproducto; }
 
-        public decimal Cantidad
+        }
+
+        private int _cantidad;
+
+        public int Cantidad
         {
             get { return _cantidad; }
             set { _cantidad = value; }
