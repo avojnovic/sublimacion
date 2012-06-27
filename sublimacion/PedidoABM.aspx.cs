@@ -55,8 +55,12 @@ namespace sublimacion
                 cargarCombos();
                 cargarPedido();
 
-            }
+                Session["Productos"] = _listaProductos;
 
+                cargarGrilla();
+                setearGrillaSiEstaVacia();
+            }
+         
 
             if (_pedido != null)
             {
@@ -67,33 +71,34 @@ namespace sublimacion
             {
                 _modoApertura = ModosEdicionEnum.Nuevo;
                 BtnBorrar.Visible = false;
-
+                 Usuario u=(Usuario)Session["usuario"];
+                 TxtUsuario.Text = u.NombreCompleto;
+                 TxtFecha.Text = DateTime.Now.ToShortDateString();
             }
 
 
             if (user.Perfil == Usuario.PerfilesEnum.JefeProduccion)
             {
-                TxtCantidad.ReadOnly = true;
+               
                 TxtComentario.ReadOnly = true;
                 TxtFecha.ReadOnly = true;
                 TxtUbicacion.ReadOnly = true;
                 TxtUsuario.ReadOnly = true;
                 CmbCliente.Enabled = false;
                 CmbEstado.Enabled = false;
-                ListBoxProductos.Enabled = false;
-                ListBoxProductosAgregados.Enabled = false;
-                BtnAgregarProducto.Enabled = false;
-                LblProductosDisp.Enabled = false;
+
+                GridViewProductos.Enabled = false;
+      
             }
+           
         }
+
+ 
 
         private void cargarCombos()
         {
 
-            ListBoxProductos.DataSource = _listaProductos.Values.ToList();
-            ListBoxProductos.DataTextField = "Nombre";
-            ListBoxProductos.DataValueField = "Idproducto";
-            ListBoxProductos.DataBind();
+           
 
             CmbEstado.DataSource = _listaEstados.Values.ToList();
             CmbEstado.DataTextField = "Descripcion";
@@ -134,15 +139,13 @@ namespace sublimacion
 
                 CmbCliente.SelectedValue = _pedido.Cliente.IdCliente.ToString();
 
-
-
-                ListBoxProductosAgregados.DataValueField = "Idproducto";
-                ListBoxProductosAgregados.DataTextField = "ParaPedido";
-                ListBoxProductosAgregados.DataSource = _pedido.LineaPedido.Keys.ToList();
-                ListBoxProductosAgregados.DataBind();
-
-                if (ListBoxProductosAgregados.Items.Count > 0)
-                    ListBoxProductosAgregados.SelectedIndex = 0;
+               
+                foreach (Producto p in _pedido.LineaPedido.Keys.ToList())
+                {
+                    if(_listaProductos.ContainsKey(p.Idproducto))
+                    _listaProductos[p.Idproducto].Cantidad = _pedido.LineaPedido[p];
+    
+                }
 
             }
             else
@@ -262,19 +265,15 @@ namespace sublimacion
 
 
 
-
-             _listaProductosAgregados = new Dictionary<Producto, int>();
-
-             for (int i = 0; i < ListBoxProductosAgregados.Items.Count; i++)
+             Dictionary<long, Producto> dt = (Dictionary<long, Producto>)Session["Productos"];
+             foreach (Producto p in dt.Values.ToList())
              {
-                 string text = ListBoxProductosAgregados.Items[i].Text;
-                 int cantidad = int.Parse(text.Substring(text.IndexOf(" - ") + 3));
-                 _listaProductos[long.Parse(ListBoxProductosAgregados.Items[i].Value)].Cantidad = cantidad;
-                 _listaProductosAgregados.Add(_listaProductos[long.Parse(ListBoxProductosAgregados.Items[i].Value)], cantidad);
-
+                 if(p.Cantidad>0)
+                     _pedido.LineaPedido.Add(p, p.Cantidad);
              }
 
-            _pedido.LineaPedido=_listaProductosAgregados;
+
+            
 
 
 
@@ -295,49 +294,70 @@ namespace sublimacion
             }
         }
 
-        protected void BtnAgregarProducto_Click(object sender, EventArgs e)
+
+
+        protected void GridViewProductos_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-
-            int cant = int.Parse(TxtCantidad.Text.Trim());
-
-
-            _listaProductosAgregados = new Dictionary<Producto, int>();
-
-            for (int i = 0; i < ListBoxProductosAgregados.Items.Count; i++)
-            {
-                string text=ListBoxProductosAgregados.Items[i].Text;
-                int cantidad = int.Parse(text.Substring(text.IndexOf(" - ")+3));
-                _listaProductos[long.Parse(ListBoxProductosAgregados.Items[i].Value)].Cantidad = cantidad;
-                 _listaProductosAgregados.Add( _listaProductos[long.Parse( ListBoxProductosAgregados.Items[i].Value)],cantidad);
-               
-            }
-
-
-            bool agregar = true;
-            foreach (Producto pi in _listaProductosAgregados.Keys.ToList())
-            {
-                if (pi.Idproducto == _listaProductos[long.Parse(ListBoxProductos.SelectedValue)].Idproducto)
-                    agregar = false;
-            }
-            _listaProductos[long.Parse(ListBoxProductos.SelectedValue)].Cantidad = cant;
-
-            if (agregar)
-                _listaProductosAgregados.Add(_listaProductos[long.Parse(ListBoxProductos.SelectedValue)], cant);
-
-
-            ListBoxProductosAgregados.DataValueField = "Idproducto";
-            ListBoxProductosAgregados.DataTextField = "ParaPedido";
-            ListBoxProductosAgregados.DataSource = _listaProductosAgregados.Keys.ToList();
-            ListBoxProductosAgregados.DataBind();
-
-
-            TxtCantidad.Text = "";
-
-            if (ListBoxProductosAgregados.Items.Count > 0)
-                ListBoxProductosAgregados.SelectedIndex = 0;
-            
+            GridViewProductos.PageIndex = e.NewPageIndex;
+            GridViewProductos.DataBind();
         }
 
+
+        protected void GridViewProductos_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            GridViewProductos.EditIndex = e.NewEditIndex;
+            cargarGrilla();
+        }
+
+        protected void GridViewProductos_OnRowCancelingEdit(Object sender, GridViewCancelEditEventArgs e)
+        {
+            GridViewProductos.EditIndex = -1;
+            cargarGrilla();
+        }
+
+
+        protected void GridViewProductos_OnRowUpdating(object sender, GridViewUpdateEventArgs  e)
+        {
+
+            int index = GridViewProductos.EditIndex;
+            GridViewRow row = GridViewProductos.Rows[index];
+           
+             Label id= (Label)row.FindControl("LblIdproducto");
+             TextBox cantidad = (TextBox)row.FindControl("TxtCantidad");
+             Dictionary<long, Producto> dt = (Dictionary<long, Producto>)Session["Productos"];
+
+             dt[long.Parse(id.Text)].Cantidad = int.Parse(cantidad.Text);
+             Session["Productos"] = dt;
+           
+            GridViewProductos.EditIndex = -1;
+            cargarGrilla();
+        }
+        
+
+        private void cargarGrilla()
+        {
+            Dictionary<long, Producto> dt = (Dictionary<long, Producto>)Session["Productos"];
+            GridViewProductos.DataSource =dt.Values.ToList();
+            GridViewProductos.DataBind();
+        }
+        private void setearGrillaSiEstaVacia()
+        {
+
+            if (GridViewProductos.Rows.Count == 0)
+            {
+                DataTable dt = new DataTable();
+                dt.Columns.Add("Idproducto");
+                dt.Columns.Add("Nombre");
+                dt.Columns.Add("Cantidad");
+    
+
+                dt.Rows.Add(new object[] { "","",""});
+
+                GridViewProductos.DataSource = dt;
+                GridViewProductos.DataBind();
+            }
+
+        }
 
     }
 }

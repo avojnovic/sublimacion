@@ -88,6 +88,10 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             Administrador = 6
         }
 
+        public string NombreCompleto
+        {
+            get { return Nombre + " " + Apellido; }
+        }
 
 
     }
