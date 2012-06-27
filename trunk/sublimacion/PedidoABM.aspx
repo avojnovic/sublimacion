@@ -129,6 +129,7 @@
             </tr>
        
     </table>
+    </center>
       </asp:Panel>
          <act:RoundedCornersExtender ID="RoundedCornersExtender2" runat="server" TargetControlID="panel1" Radius="8" Color="#DDDDDD" Corners="All" Enabled="true"/>
   
