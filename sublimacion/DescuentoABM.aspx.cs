@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using sublimacion.BussinesObjects.BussinesObjects;
 using sublimacion.DataAccessObjects.DataAccessObjects;
+using System.Globalization;
 
 namespace sublimacion
 {
@@ -119,11 +120,17 @@ namespace sublimacion
             if (_descuento == null)
                 _descuento = new Descuento();
 
-            
 
+           
+            
             _descuento.Producto = _listaProductos[long.Parse(this.CmbProducto.SelectedValue)];
             _descuento.Cantidad = int.Parse(TxtCantidad.Text);
-            _descuento.Descuento1 = decimal.Parse(TxtDescuento.Text.Trim().Replace('.', ','));
+
+            CultureInfo ci = System.Threading.Thread.CurrentThread.CurrentUICulture;
+            string des = TxtDescuento.Text.Trim().Replace(".", ci.NumberFormat.CurrencyDecimalSeparator);
+            des = TxtDescuento.Text.Trim().Replace(",", ci.NumberFormat.CurrencyDecimalSeparator);
+
+            _descuento.Descuento1 = decimal.Parse(des);
             _descuento.Fecha = DateTime.Now;
 
 

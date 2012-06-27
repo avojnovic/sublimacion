@@ -10,11 +10,11 @@ using System.Data;
 
 namespace sublimacion.DataAccessObjects.DataAccessObjects
 {
-   public static class ClienteDAO
+    public static class ClienteDAO
     {
-      
-       
-        public static Dictionary<long,Cliente> obtenerClienteTodos()
+
+
+        public static Dictionary<long, Cliente> obtenerClienteTodos()
         {
 
             string sql = "";
@@ -22,11 +22,11 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
                 FROM cliente
                 where borrado=false";
 
-           
+
             NpgsqlDb.Instancia.PrepareCommand(sql);
             NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
             Dictionary<long, Cliente> dicCliente = new Dictionary<long, Cliente>();
-           
+
             while (dr.Read())
             {
                 Cliente u;
@@ -34,7 +34,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
 
                 if (!dicCliente.ContainsKey(u.IdCliente))
-                    dicCliente.Add(u.IdCliente,u);
+                    dicCliente.Add(u.IdCliente, u);
 
             }
 
@@ -49,7 +49,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             sql = @"SELECT idcliente, nombre, apellido, dni, direccion, telefono, mail, fecha, borrado
                 FROM cliente
                 where borrado=false and idcliente='{0}'";
-           
+
             sql = string.Format(sql, id);
             NpgsqlDb.Instancia.PrepareCommand(sql);
             NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
@@ -70,7 +70,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
             Cliente c = new Cliente();
 
-          
+
             if (!dr.IsDBNull(dr.GetOrdinal("idcliente")))
                 c.IdCliente = long.Parse(dr["idcliente"].ToString());
 
@@ -90,15 +90,15 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
                 c.Telefono = dr.GetString(dr.GetOrdinal("telefono"));
 
             if (!dr.IsDBNull(dr.GetOrdinal("mail")))
-               c.Mail = dr.GetString(dr.GetOrdinal("mail"));
+                c.Mail = dr.GetString(dr.GetOrdinal("mail"));
 
-              if (!dr.IsDBNull(dr.GetOrdinal("fecha")))
-              c.Fecha = dr.GetDateTime(dr.GetOrdinal("fecha"));
+            if (!dr.IsDBNull(dr.GetOrdinal("fecha")))
+                c.Fecha = dr.GetDateTime(dr.GetOrdinal("fecha"));
 
-             if (!dr.IsDBNull(dr.GetOrdinal("borrado")))
-              c.Borrado = dr.GetBoolean(dr.GetOrdinal("borrado"));
+            if (!dr.IsDBNull(dr.GetOrdinal("borrado")))
+                c.Borrado = dr.GetBoolean(dr.GetOrdinal("borrado"));
 
-             return c;
+            return c;
         }
 
         public static void insertarCliente(Cliente i)
@@ -114,9 +114,9 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
             i.Fecha = DateTime.Now;
             NpgsqlDb.Instancia.AddCommandParameter(":fecha", NpgsqlDbType.Date, ParameterDirection.Input, false, i.Fecha);
-           
+
             parametrosQuery(i);
-            
+
 
             try
             {
