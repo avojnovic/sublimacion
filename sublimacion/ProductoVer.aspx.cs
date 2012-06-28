@@ -37,8 +37,8 @@ namespace sublimacion
                 dt.Columns.Add("IdProducto");
                 dt.Columns.Add("Nombre");
                 dt.Columns.Add("Precio");
-                dt.Columns.Add("Cantidad");
-                dt.Columns.Add("Costo");
+                dt.Columns.Add("StockAutomatico");
+                dt.Columns.Add("CostoAutomatico");
                 dt.Columns.Add("Tiempo");
                 
 
