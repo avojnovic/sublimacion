@@ -35,13 +35,7 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             get { return _borrado; }
             set { _borrado = value; }
         }
-        private decimal _costo;
 
-        public decimal Costo
-        {
-            get { return _costo; }
-            set { _costo = value; }
-        }
         private decimal _tiempo;
 
         public decimal Tiempo
@@ -77,6 +71,14 @@ namespace sublimacion.BussinesObjects.BussinesObjects
         public string StockAutomatico
         {
             get { return " - "; }
+        }
+
+        private Dictionary<long, Insumo> _insumos;
+
+        public Dictionary<long, Insumo> Insumos
+        {
+            get { return _insumos; }
+            set { _insumos = value; }
         }
 
     }

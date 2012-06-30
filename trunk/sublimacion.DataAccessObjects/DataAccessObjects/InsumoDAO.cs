@@ -121,7 +121,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
         }
 
-        private static Insumo getInsumosDelDataReader(NpgsqlDataReader dr)
+        public static Insumo getInsumosDelDataReader(NpgsqlDataReader dr)
         {
             Insumo i = new Insumo();
 
