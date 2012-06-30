@@ -18,7 +18,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
         {
 
             string sql = "";
-            sql += @"SELECT idproducto, nombre, precio, borrado, costo, tiempo
+            sql += @"SELECT idproducto, nombre, precio, borrado, tiempo
                 FROM producto where borrado=False";
 
             NpgsqlDb.Instancia.PrepareCommand(sql);
@@ -43,7 +43,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
         {
 
             string sql = "";
-            sql += @"SELECT idproducto, nombre, precio, borrado, costo, tiempo
+            sql += @"SELECT idproducto, nombre, precio, borrado, tiempo
                 FROM producto where borrado=False and  idproducto="+id;
 
             NpgsqlDb.Instancia.PrepareCommand(sql);
@@ -76,16 +76,43 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             if (!dr.IsDBNull(dr.GetOrdinal("borrado")))
                 i.Borrado = dr.GetBoolean(dr.GetOrdinal("borrado"));
 
-            if (!dr.IsDBNull(dr.GetOrdinal("costo")))
-                i.Costo = dr.GetDecimal(dr.GetOrdinal("costo"));
-
+     
 
            if (!dr.IsDBNull(dr.GetOrdinal("tiempo")))
                i.Tiempo = dr.GetDecimal(dr.GetOrdinal("tiempo"));
 
 
+           i.Insumos = obtenerTodosInsumos(i.Idproducto);
+
             return i;
         }
+
+       private static Dictionary<long, Insumo> obtenerTodosInsumos(long p)
+       {
+
+           string sql = "";
+           sql += @"SELECT idinsumo, nombre, nombre_fab, costo, borrado, stock, fecha_act_stock, cantidad 
+                    FROM producto_insumo pi
+                left join insumo i on i.idinsumo= pi.id_insumo    where pi.id_producto=" + p.ToString();
+
+           NpgsqlDb.Instancia.PrepareCommand(sql);
+           NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
+
+           Dictionary<long, Insumo> insumos = new Dictionary<long, Insumo>();
+
+           while (dr.Read())
+           {
+               Insumo i = InsumoDAO.getInsumosDelDataReader(dr);
+               i.Cantidad = dr.GetInt32(dr.GetOrdinal("cantidad"));
+               insumos.Add(i.Idinsumo, i);
+
+           }
+
+           return insumos;
+
+       }
+
+
 
        public static void insertarProducto(Producto i)
        {
@@ -93,8 +120,8 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
            string queryStr;
 
 
-           queryStr = @"INSERT INTO producto( nombre, precio, borrado, costo, tiempo)
-                VALUES (:nombre, :precio, :borrado, :costo, :tiempo)";
+           queryStr = @"INSERT INTO producto( nombre, precio, borrado,  tiempo)
+                VALUES (:nombre, :precio, :borrado, :tiempo)";
 
 
 
@@ -112,17 +139,30 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
                throw Ex;
            }
 
+           queryStr = "SELECT currval('producto_idproducto_seq')";
+           NpgsqlDb.Instancia.PrepareCommand(queryStr);
+           NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
+           while (dr.Read())
+           {
+               if (!dr.IsDBNull(0))
+                   i.Idproducto= long.Parse(dr[0].ToString());
+
+           }
+
+           guardarInsumosEnProd(i);
 
        }
 
-       public static void actualizarCatalogo(Producto i)
+     
+
+       public static void actualizarProducto(Producto i)
        {
 
            string queryStr;
 
 
            queryStr = @"UPDATE producto
-                    SET nombre=:nombre, precio=:precio, borrado=:borrado, costo=:costo, tiempo=:tiempo
+                    SET nombre=:nombre, precio=:precio, borrado=:borrado, tiempo=:tiempo
                     WHERE idproducto=:idproducto";
 
      
@@ -142,6 +182,46 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
            {
                throw Ex;
            }
+
+           guardarInsumosEnProd(i);
+       }
+
+
+       private static void guardarInsumosEnProd(Producto i)
+       {
+           //Borro e inserto nuevamente
+           string sql = @"delete from producto_insumo where id_producto=" + i.Idproducto;
+           NpgsqlDb.Instancia.PrepareCommand(sql);
+           try
+           {
+               NpgsqlDb.Instancia.ExecuteNonQuery();
+
+           }
+           catch (System.OverflowException Ex)
+           {
+               throw Ex;
+           }
+
+           if (i.Insumos != null)
+           {
+               foreach (Insumo ins in i.Insumos.Values.ToList())
+               {
+                   sql = @"INSERT INTO producto_insumo(id_producto, id_insumo, cantidad) VALUES (:id_producto, :id_insumo, :cantidad)";
+                   NpgsqlDb.Instancia.PrepareCommand(sql);
+                   NpgsqlDb.Instancia.AddCommandParameter(":id_producto", NpgsqlDbType.Bigint, ParameterDirection.Input, true, i.Idproducto);
+                   NpgsqlDb.Instancia.AddCommandParameter(":id_insumo", NpgsqlDbType.Bigint, ParameterDirection.Input, true, ins.Idinsumo);
+                   NpgsqlDb.Instancia.AddCommandParameter(":cantidad", NpgsqlDbType.Integer, ParameterDirection.Input, true, ins.Cantidad);
+                   try
+                   {
+                       NpgsqlDb.Instancia.ExecuteNonQuery();
+
+                   }
+                   catch (System.OverflowException Ex)
+                   {
+                       throw Ex;
+                   }
+               }
+           }
        }
 
        private static void parametrosQuery(Producto i)
@@ -149,7 +229,6 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
            NpgsqlDb.Instancia.AddCommandParameter(":nombre", NpgsqlDbType.Varchar, ParameterDirection.Input, false, i.Nombre);
            NpgsqlDb.Instancia.AddCommandParameter(":precio", NpgsqlDbType.Numeric, ParameterDirection.Input, false, i.Precio);
            NpgsqlDb.Instancia.AddCommandParameter(":borrado", NpgsqlDbType.Boolean, ParameterDirection.Input, false, i.Borrado);
-           NpgsqlDb.Instancia.AddCommandParameter(":costo", NpgsqlDbType.Numeric, ParameterDirection.Input, false, i.Costo);
            NpgsqlDb.Instancia.AddCommandParameter(":tiempo", NpgsqlDbType.Numeric, ParameterDirection.Input, false, i.Tiempo);
 
              

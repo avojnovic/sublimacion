@@ -106,7 +106,7 @@ namespace sublimacion
         private void setearObjeto()
         {
             if (_cliente == null)
-                _cliente = new BussinesObjects.BussinesObjects.Cliente();
+                _cliente = new Cliente();
 
 
             _cliente.Nombre = TxtNombre.Text;

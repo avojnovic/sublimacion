@@ -64,6 +64,14 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             set { _borrado = value; }
         }
 
+        private int _cantidad;
+
+        public int Cantidad
+        {
+            get { return _cantidad; }
+            set { _cantidad = value; }
+        }
+
 
         public string IdInsumoStr
         {
