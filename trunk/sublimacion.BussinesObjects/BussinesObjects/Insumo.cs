@@ -32,9 +32,9 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             set { _nombreFab = value; }
         }
 
-        private float _costo;
+        private decimal _costo;
 
-        public float Costo
+        public decimal Costo
         {
             get { return _costo; }
             set { _costo = value; }

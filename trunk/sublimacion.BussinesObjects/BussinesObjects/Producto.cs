@@ -63,14 +63,44 @@ namespace sublimacion.BussinesObjects.BussinesObjects
         }
 
        //Agregar propiedad que genere automaticamente Costo
-        public string CostoAutomatico
+        public decimal CostoAutomatico
         {
-            get { return  " - " ; }
+
+            get
+            {
+                decimal costo = 0;
+                foreach (Insumo i in _insumos.Values)
+                {
+                    costo = costo + (i.Costo * i.Cantidad);
+
+                }
+                    return costo;
+            }
         }
         //Agregar propiedad que genere automaticamente Stock
         public string StockAutomatico
         {
-            get { return " - "; }
+            get {
+                /*string desc="";
+                int necesito = 0;
+                int minimo = 0;
+                foreach (Insumo i in _insumos.Values)
+                {
+                    necesito = necesito + (i.Stock - i.Cantidad);
+
+                    if (necesito <= 0)
+                    {
+                        desc = "SIN STOCK";
+                        break;
+                    }
+                    else
+                    {
+                        if (necesito < minimo)
+                            minimo = necesito;
+                    }
+                }*/
+                return " - ";
+                }
         }
 
         private Dictionary<long, Insumo> _insumos;

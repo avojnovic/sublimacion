@@ -135,7 +135,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
                 i.NombreFab = dr.GetString(dr.GetOrdinal("nombre_fab"));
 
             if (!dr.IsDBNull(dr.GetOrdinal("costo")))
-                 i.Costo = float.Parse(dr["costo"].ToString());
+                 i.Costo = decimal.Parse(dr["costo"].ToString());
 
             if (!dr.IsDBNull(dr.GetOrdinal("borrado")))
                 i.Borrado = dr.GetBoolean(dr.GetOrdinal("borrado"));

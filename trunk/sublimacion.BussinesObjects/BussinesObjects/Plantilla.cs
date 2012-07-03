@@ -39,6 +39,15 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             set { _medida_largo = value; }
         }
 
+        private bool _pertenece;
+
+        public bool Pertenece
+        {
+            get { return _pertenece; }
+            set { _pertenece = value; }
+        }
+
+
         private bool _borrado;
 
         public bool Borrado

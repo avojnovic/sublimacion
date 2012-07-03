@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CatalogoABM.aspx" />
+    <Content Include="CatalogoVer.aspx" />
     <Content Include="ClienteABM.aspx" />
     <Content Include="ClienteVer.aspx" />
     <Content Include="controls\DateComboPicker.ascx" />
@@ -90,6 +91,13 @@
     </Compile>
     <Compile Include="CatalogoABM.aspx.designer.cs">
       <DependentUpon>CatalogoABM.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CatalogoVer.aspx.cs">
+      <DependentUpon>CatalogoVer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CatalogoVer.aspx.designer.cs">
+      <DependentUpon>CatalogoVer.aspx</DependentUpon>
     </Compile>
     <Compile Include="ClienteABM.aspx.cs">
       <DependentUpon>ClienteABM.aspx</DependentUpon>

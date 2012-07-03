@@ -16,7 +16,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
       {
 
           string sql = "";
-          sql = @"SELECT idcatalogo, nombre, fecha, borrado
+          sql = @"SELECT idcatalogo, nombre, fecha, id_producto, borrado
                 FROM catalogo
                 where borrado=false";
 
@@ -44,7 +44,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
       {
 
           string sql = "";
-          sql = @"SELECT idcatalogo, nombre, fecha, borrado
+          sql = @"SELECT idcatalogo, nombre, fecha, id_producto, borrado
                 FROM catalogo
                 where borrado=false and idcatalogo='{0}'";
 
@@ -72,11 +72,16 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
           if (!dr.IsDBNull(dr.GetOrdinal("nombre")))
               i.Nombre = dr.GetString(dr.GetOrdinal("nombre"));
-
-
+          
           if (!dr.IsDBNull(dr.GetOrdinal("fecha")))
               i.Fecha = dr.GetDateTime(dr.GetOrdinal("fecha"));
 
+
+          if (!dr.IsDBNull(dr.GetOrdinal("id_producto")))
+              i.Producto = ProductoDAO.obtenerProductoPorId((dr.GetInt64(dr.GetOrdinal(("id_producto")))).ToString());
+
+          if(i.Producto!=null)
+             i.Plantilla = obtenerPlantilladeCatalogo(i);
 
           i.Borrado = false;
 
@@ -90,12 +95,13 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
           string queryStr;
 
 
-          queryStr = @"INSERT INTO catalogo( nombre, fecha, borrado)
-                VALUES (:nombre, :fecha, :borrado)";
+          queryStr = @"INSERT INTO catalogo( nombre, fecha, borrado, id_producto)
+                VALUES (:nombre, :fecha, :borrado, :id_producto)";
 
           NpgsqlDb.Instancia.PrepareCommand(queryStr);
 
           parametrosQuery(i);
+         
 
           try
           {
@@ -107,6 +113,17 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
               throw Ex;
           }
 
+          queryStr = "SELECT currval('catalogo_idcatalogo_seq')";
+          NpgsqlDb.Instancia.PrepareCommand(queryStr);
+          NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
+          while (dr.Read())
+          {
+              if (!dr.IsDBNull(0))
+                  i.IdCatalogo = long.Parse(dr[0].ToString());
+
+          }
+
+          guardarPlantillasEnCata(i);
 
       }
 
@@ -118,7 +135,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
           queryStr = @"UPDATE catalogo
                         SET nombre=:nombre, fecha=:fecha, borrado=:borrado
-                    WHERE idcatalogo=:idcatalogo";
+                    WHERE idcatalogo=:idcatalogo and id_producto=:id_producto";
 
           NpgsqlDb.Instancia.PrepareCommand(queryStr);
           NpgsqlDb.Instancia.AddCommandParameter(":idcatalogo", NpgsqlDbType.Bigint, ParameterDirection.Input, false, i.IdCatalogo);
@@ -134,6 +151,9 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
           {
               throw Ex;
           }
+
+     
+          guardarPlantillasEnCata(i);
       }
 
       private static void parametrosQuery(Catalogo i)
@@ -141,10 +161,73 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
           NpgsqlDb.Instancia.AddCommandParameter(":nombre", NpgsqlDbType.Varchar, ParameterDirection.Input, false, i.Nombre);
           NpgsqlDb.Instancia.AddCommandParameter(":fecha", NpgsqlDbType.Date, ParameterDirection.Input, false, i.Fecha);
           NpgsqlDb.Instancia.AddCommandParameter(":borrado", NpgsqlDbType.Boolean, ParameterDirection.Input, false, i.Borrado);
+          NpgsqlDb.Instancia.AddCommandParameter(":id_producto", NpgsqlDbType.Bigint, ParameterDirection.Input, false, i.Producto.Idproducto);
 
       }
 
-     
+      private static Dictionary<long, Plantilla> obtenerPlantilladeCatalogo (Catalogo i)
+      {
+
+          string sql = "";
+          sql = @"SELECT  p.idplantilla, p.nombre, p.medida_ancho, p.medida_largo, p.borrado
+                FROM plantilla p
+                inner join plantilla_catalogo pc on p.idplantilla = pc.id_plantilla
+                where p.borrado=false and pc.id_catalogo="+i.IdCatalogo.ToString()+" and pc.id_producto="+i.Producto.Idproducto.ToString();
+
+
+          NpgsqlDb.Instancia.PrepareCommand(sql);
+          NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
+          Dictionary<long, Plantilla> dic = new Dictionary<long, Plantilla>();
+
+          while (dr.Read())
+          {
+              Plantilla u;
+              u = PlantillaDAO.getPlantillaDelDataReader(dr);
+
+              if (!dic.ContainsKey(u.IdPlantilla))
+                  dic.Add(u.IdPlantilla, u);
+
+          }
+
+          return dic;
+      }
+
+      private static void guardarPlantillasEnCata(Catalogo i)
+      {
+          //Borro e inserto nuevamente
+          string sql = @"delete from plantilla_catalogo where id_catalogo=" + i.IdCatalogo.ToString() + " and id_producto=" + i.Producto.Idproducto.ToString();
+          NpgsqlDb.Instancia.PrepareCommand(sql);
+          try
+          {
+              NpgsqlDb.Instancia.ExecuteNonQuery();
+
+          }
+          catch (System.OverflowException Ex)
+          {
+              throw Ex;
+          }
+
+          if (i.Plantilla != null)
+          {
+              foreach (Plantilla pla in i.Plantilla.Values.ToList())
+              {
+                  sql = @"INSERT INTO plantilla_catalogo(id_catalogo, id_producto, id_plantilla) VALUES (:id_catalogo, :id_producto, :id_plantilla)";
+                  NpgsqlDb.Instancia.PrepareCommand(sql);
+                  NpgsqlDb.Instancia.AddCommandParameter(":id_catalogo", NpgsqlDbType.Bigint, ParameterDirection.Input, true, i.IdCatalogo);
+                  NpgsqlDb.Instancia.AddCommandParameter(":id_producto", NpgsqlDbType.Bigint, ParameterDirection.Input, true, i.Producto.Idproducto);
+                  NpgsqlDb.Instancia.AddCommandParameter(":id_plantilla", NpgsqlDbType.Bigint, ParameterDirection.Input, true, pla.IdPlantilla);
+                  try
+                  {
+                      NpgsqlDb.Instancia.ExecuteNonQuery();
+
+                  }
+                  catch (System.OverflowException Ex)
+                  {
+                      throw Ex;
+                  }
+              }
+          }
+      }
 
     }
 }
