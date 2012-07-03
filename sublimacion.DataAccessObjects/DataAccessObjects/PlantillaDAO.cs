@@ -62,7 +62,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
         }
 
-        private static Plantilla getPlantillaDelDataReader(NpgsqlDataReader dr)
+        public static Plantilla getPlantillaDelDataReader(NpgsqlDataReader dr)
         {
 
             Plantilla c = new Plantilla();

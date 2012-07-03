@@ -59,7 +59,6 @@ namespace sublimacion
 
         }
 
-      
         private void cargarProducto()
         {
             if (_producto != null)
@@ -81,8 +80,6 @@ namespace sublimacion
                 _modoApertura = ModosEdicionEnum.Nuevo;
             }
         }
-
-       
 
         private void setearObjeto()
         {
@@ -115,6 +112,7 @@ namespace sublimacion
             GridViewInsumos.DataSource = dt.Values.ToList();
             GridViewInsumos.DataBind();
         }
+
         private void setearGrillaSiEstaVacia()
         {
 
@@ -139,8 +137,7 @@ namespace sublimacion
             GridViewInsumos.PageIndex = e.NewPageIndex;
             GridViewInsumos.DataBind();
         }
-
-
+        
         protected void GridViewInsumos_RowEditing(object sender, GridViewEditEventArgs e)
         {
             GridViewInsumos.EditIndex = e.NewEditIndex;
@@ -152,8 +149,7 @@ namespace sublimacion
             GridViewInsumos.EditIndex = -1;
             cargarGrilla();
         }
-
-
+        
         protected void GridViewInsumos_OnRowUpdating(object sender, GridViewUpdateEventArgs e)
         {
 
@@ -170,7 +166,6 @@ namespace sublimacion
             GridViewInsumos.EditIndex = -1;
             cargarGrilla();
         }
-
 
         protected void BtnGuardar_Click(object sender, EventArgs e)
         {
@@ -196,7 +191,6 @@ namespace sublimacion
 
         }
 
-        
         protected void BtnSalir_Click(object sender, EventArgs e)
         {
             Response.Redirect("ProductoVer.aspx");

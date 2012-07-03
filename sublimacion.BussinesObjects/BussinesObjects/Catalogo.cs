@@ -29,6 +29,28 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             get { return _fecha; }
             set { _fecha = value; }
         }
+
+        private Producto _producto;
+
+        public Producto Producto
+        {
+            get { return _producto; }
+            set { _producto = value; }
+        }
+
+        public string NombreProducto
+        {
+            get { return _producto.Nombre; }
+        }
+
+        private Dictionary<long, Plantilla> _plantilla;
+
+        public Dictionary<long, Plantilla> Plantilla
+        {
+            get { return _plantilla; }
+            set { _plantilla = value; }
+        }
+
         private bool _borrado;
 
         public bool Borrado

@@ -101,7 +101,7 @@ namespace sublimacion
                 _insumo = new Insumo();
 
             _insumo.Nombre = TxtNombre.Text;
-            _insumo.Costo = float.Parse(TxtCosto.Text.Trim().Replace(',', '.'));
+            _insumo.Costo = decimal.Parse(TxtCosto.Text.Trim().Replace(',', '.'));
             _insumo.NombreFab = TxtFabricante.Text.Trim();
             _insumo.FechaAct = DateTime.Now;
             _insumo.Stock = int.Parse(Txtstock.Text.Trim());
