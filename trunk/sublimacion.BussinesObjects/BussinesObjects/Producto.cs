@@ -5,7 +5,7 @@ using System.Text;
 
 namespace sublimacion.BussinesObjects.BussinesObjects
 {
-   public class Producto
+    public class Producto
     {
         private long _idproducto;
 
@@ -62,7 +62,7 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             get { return Nombre + " - " + Cantidad.ToString(); }
         }
 
-       //Agregar propiedad que genere automaticamente Costo
+        //Agregar propiedad que genere automaticamente Costo
         public decimal CostoAutomatico
         {
 
@@ -74,33 +74,27 @@ namespace sublimacion.BussinesObjects.BussinesObjects
                     costo = costo + (i.Costo * i.Cantidad);
 
                 }
-                    return costo;
+                return costo;
             }
         }
         //Agregar propiedad que genere automaticamente Stock
         public string StockAutomatico
         {
-            get {
-                /*string desc="";
-                int necesito = 0;
-                int minimo = 0;
+            get
+            {
+                List<decimal> _listaStock = new List<decimal>();
                 foreach (Insumo i in _insumos.Values)
                 {
-                    necesito = necesito + (i.Stock - i.Cantidad);
-
-                    if (necesito <= 0)
-                    {
-                        desc = "SIN STOCK";
-                        break;
-                    }
-                    else
-                    {
-                        if (necesito < minimo)
-                            minimo = necesito;
-                    }
-                }*/
-                return " - ";
+                    _listaStock.Add(i.Stock / i.Cantidad);
                 }
+
+                _listaStock.Sort();
+
+                if (_listaStock.Count() > 0)
+                    return _listaStock[0].ToString();
+                else
+                    return "0";
+            }
         }
 
         private Dictionary<long, Insumo> _insumos;

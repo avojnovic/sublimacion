@@ -47,6 +47,7 @@ namespace sublimacion
             else
             {
                 _modoApertura = ModosEdicionEnum.Nuevo;
+                TxtFecha.Text = DateTime.Now.ToShortDateString();
                 BtnBorrar.Visible = false;
             }
 
