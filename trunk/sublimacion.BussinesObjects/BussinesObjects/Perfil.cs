@@ -31,7 +31,14 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             set { _descripcion = value; }
         }
 
-        
+        private bool _borrado;
+
+        public bool Borrado
+        {
+            get { return _borrado; }
+            set { _borrado = value; }
+        }
+
 
     }
 }

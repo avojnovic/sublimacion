@@ -236,7 +236,25 @@ namespace sublimacion
             }
 
 
+            if ((user.Perfil == Usuario.PerfilesEnum.Administrador) )
+            {
 
+                MenuItem itIns = new MenuItem("Usuario");
+
+                MenuItem itPeE = new MenuItem("Ver");
+                itPeE.Value = "Ver";
+                itPeE.NavigateUrl = "UsuarioVer.aspx";
+                itIns.ChildItems.Add(itPeE);
+
+                MenuItem itInsN = new MenuItem("Nuevo");
+                itInsN.Value = "Nuevo";
+                itInsN.NavigateUrl = "UsuarioABM.aspx";
+                itIns.ChildItems.Add(itInsN);
+
+
+
+                divMenu.Items.Add(itIns);
+            }
 
 
 

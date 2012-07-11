@@ -5,6 +5,8 @@ using System.Text;
 using System.Runtime.CompilerServices;
 using sublimacion.BussinesObjects.BussinesObjects;
 using Npgsql;
+using System.Data;
+using NpgsqlTypes;
 
 namespace sublimacion.DataAccessObjects.DataAccessObjects
 {
@@ -148,5 +150,72 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
             return u;
         }
+
+        public static void insertarUsuario(Usuario i)
+        {
+
+            string queryStr;
+
+
+            queryStr = @"INSERT INTO usuario ( usuario, contrasenia, nombre, apellido, telefono, mail, borrado, 
+            id_perfil)
+                VALUES (:usuario, :contrasenia, :nombre, :apellido, :telefono, :mail, :borrado, :id_perfil)";
+
+            NpgsqlDb.Instancia.PrepareCommand(queryStr);
+            
+            parametrosQuery(i);
+
+
+            try
+            {
+                NpgsqlDb.Instancia.ExecuteNonQuery();
+
+            }
+            catch (System.OverflowException Ex)
+            {
+                throw Ex;
+            }
+        }
+
+
+        public static void actualizarUsuario(Usuario i)
+        {
+            string queryStr;
+
+
+            queryStr = @"UPDATE usuario
+                        SET usuario=:usuario, contrasenia=:contrasenia, nombre=:nombre, apellido=:apellido, telefono=:telefono, mail=:mail,  id_perfil=:id_perfil, borrado=:borrado
+                    WHERE id=:id";
+
+            NpgsqlDb.Instancia.PrepareCommand(queryStr);
+            NpgsqlDb.Instancia.AddCommandParameter(":id", NpgsqlDbType.Bigint, ParameterDirection.Input, false, i.Id);
+
+            parametrosQuery(i);
+
+            try
+            {
+                NpgsqlDb.Instancia.ExecuteNonQuery();
+
+            }
+            catch (System.OverflowException Ex)
+            {
+                throw Ex;
+            }
+        }
+
+        private static void parametrosQuery(Usuario i)
+        {
+            NpgsqlDb.Instancia.AddCommandParameter(":nombre", NpgsqlDbType.Varchar, ParameterDirection.Input, false, i.Nombre);
+            NpgsqlDb.Instancia.AddCommandParameter(":apellido", NpgsqlDbType.Varchar, ParameterDirection.Input, false, i.Apellido);
+            NpgsqlDb.Instancia.AddCommandParameter(":usuario", NpgsqlDbType.Varchar, ParameterDirection.Input, false, i.User);
+            NpgsqlDb.Instancia.AddCommandParameter(":contrasenia", NpgsqlDbType.Varchar, ParameterDirection.Input, false, i.Password);
+            NpgsqlDb.Instancia.AddCommandParameter(":telefono", NpgsqlDbType.Varchar, ParameterDirection.Input, false, i.Telefono);
+            NpgsqlDb.Instancia.AddCommandParameter(":mail", NpgsqlDbType.Varchar, ParameterDirection.Input, false, i.Email);
+            NpgsqlDb.Instancia.AddCommandParameter(":id_perfil", NpgsqlDbType.Bigint, ParameterDirection.Input, false, i.Perfil);
+            NpgsqlDb.Instancia.AddCommandParameter(":borrado", NpgsqlDbType.Boolean, ParameterDirection.Input, false, i.Borrado);
+
+        }
+
+
     }
 }
