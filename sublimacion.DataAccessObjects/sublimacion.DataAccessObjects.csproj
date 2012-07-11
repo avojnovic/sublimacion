@@ -66,6 +66,7 @@
     <Compile Include="DataAccessObjects\ClienteDAO.cs" />
     <Compile Include="DataAccessObjects\DescuentoDAO.cs" />
     <Compile Include="DataAccessObjects\OrdenTrabajoDAO.cs" />
+    <Compile Include="DataAccessObjects\PerfilDAO.cs" />
     <Compile Include="DataAccessObjects\PlantillaDAO.cs" />
     <Compile Include="DataAccessObjects\TipoEstadoDAO.cs" />
     <Compile Include="DataAccessObjects\InsumoDAO.cs" />

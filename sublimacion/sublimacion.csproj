@@ -82,6 +82,8 @@
     <Content Include="ProductoABM.aspx" />
     <Content Include="ProductoVer.aspx" />
     <Content Include="style.css" />
+    <Content Include="UsuarioABM.aspx" />
+    <Content Include="UsuarioVer.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -230,6 +232,20 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="UsuarioABM.aspx.cs">
+      <DependentUpon>UsuarioABM.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UsuarioABM.aspx.designer.cs">
+      <DependentUpon>UsuarioABM.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UsuarioVer.aspx.cs">
+      <DependentUpon>UsuarioVer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UsuarioVer.aspx.designer.cs">
+      <DependentUpon>UsuarioVer.aspx</DependentUpon>
     </Compile>
     <Compile Include="VerLogistica.aspx.cs">
       <DependentUpon>VerLogistica.aspx</DependentUpon>
