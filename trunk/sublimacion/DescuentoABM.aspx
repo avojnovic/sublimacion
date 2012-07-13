@@ -19,7 +19,7 @@
 
 <tr>
             <td align="left">
-                <asp:Label ID="Label1" runat="server" Text="Producto"></asp:Label>
+                <asp:Label ID="Label1" runat="server" Text="Producto" Font-Names="Calibri"></asp:Label>
                  <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="CmbProducto" Display="Dynamic" ErrorMessage="*" SetFocusOnError="true" ValidationGroup="add" />
             </td>
             <td>
