@@ -7,7 +7,7 @@
 <div>
         <br />
         <br />
-        <asp:GridView ID="GridViewPlanif"  runat="server" AutoGenerateColumns="False" GridLines="None" AllowPaging="true" HorizontalAlign="Center" Width="100%" PageSize="20"
+        <asp:GridView ID="GridViewPlanif"  Font-Names="calibri" runat="server" AutoGenerateColumns="False" GridLines="None" AllowPaging="true" HorizontalAlign="Center" Width="100%" PageSize="20"
           CssClass="mGrid"  PagerStyle-CssClass="pgr"  AlternatingRowStyle-CssClass="alt" onpageindexchanging="GridViewPlanif_PageIndexChanging">
                 <PagerSettings PageButtonCount="5" />
                 <RowStyle HorizontalAlign="Center" VerticalAlign="Middle" />

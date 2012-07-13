@@ -77,6 +77,7 @@ namespace sublimacion.BussinesObjects.BussinesObjects
                 return costo;
             }
         }
+
         //Agregar propiedad que genere automaticamente Stock
         public string StockAutomatico
         {

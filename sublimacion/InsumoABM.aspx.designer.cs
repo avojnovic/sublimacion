@@ -175,13 +175,13 @@ namespace sublimacion {
         protected global::System.Web.UI.WebControls.TextBox TxtFecha;
         
         /// <summary>
-        /// Control ImageButton1.
+        /// Control BtnGuardar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton ImageButton1;
+        protected global::System.Web.UI.WebControls.ImageButton BtnGuardar;
         
         /// <summary>
         /// Control BtnBorrar.
@@ -193,13 +193,13 @@ namespace sublimacion {
         protected global::System.Web.UI.WebControls.ImageButton BtnBorrar;
         
         /// <summary>
-        /// Control ImageButton2.
+        /// Control BtnSalir.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton ImageButton2;
+        protected global::System.Web.UI.WebControls.ImageButton BtnSalir;
         
         /// <summary>
         /// Control RoundedCornersExtender2.

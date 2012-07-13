@@ -44,7 +44,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
             string sql = "";
             sql = @"SELECT  idplantilla, nombre, medida_ancho, medida_largo, borrado
-                FROM plantilla;
+                FROM plantilla
                 where borrado=false and idplantilla='{0}'";
 
             sql = string.Format(sql, id);
