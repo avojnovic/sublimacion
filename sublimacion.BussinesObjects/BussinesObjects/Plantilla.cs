@@ -55,6 +55,12 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             get { return _borrado; }
             set { _borrado = value; }
         }
+
+
+        public override string ToString()
+        {
+               return Nombre;
+        }
  
     }
 }

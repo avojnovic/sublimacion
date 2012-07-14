@@ -43,6 +43,11 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             get { return _producto.Nombre; }
         }
 
+        public override string ToString()
+        {
+            return  Nombre;
+        }
+
         private Dictionary<long, Plantilla> _plantilla;
 
         public Dictionary<long, Plantilla> Plantilla

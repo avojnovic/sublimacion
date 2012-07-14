@@ -293,13 +293,14 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             {
                 foreach (Producto prod in p.LineaPedido.Keys.ToList())
                 {
-                    sql = @"INSERT INTO linea_pedido(cantidad, subtotal, id_producto, id_pedido) VALUES (:cantidad, :subtotal, :id_producto, :id_pedido)";
+                    sql = @"INSERT INTO linea_pedido(cantidad, subtotal, id_producto, id_pedido,id_plantilla,id_catalogo) VALUES (:cantidad, :subtotal, :id_producto, :id_pedido, :id_plantilla,:id_catalogo)";
                     NpgsqlDb.Instancia.PrepareCommand(sql);
                     NpgsqlDb.Instancia.AddCommandParameter(":cantidad", NpgsqlDbType.Integer, ParameterDirection.Input, true, p.LineaPedido[prod]);
                     NpgsqlDb.Instancia.AddCommandParameter(":subtotal", NpgsqlDbType.Numeric, ParameterDirection.Input, true, p.LineaPedido[prod] * prod.Precio);
                     NpgsqlDb.Instancia.AddCommandParameter(":id_producto", NpgsqlDbType.Bigint, ParameterDirection.Input, true, prod.Idproducto);
                     NpgsqlDb.Instancia.AddCommandParameter(":id_pedido", NpgsqlDbType.Bigint, ParameterDirection.Input, true, p.IdPedido);
-
+                    NpgsqlDb.Instancia.AddCommandParameter(":id_plantilla", NpgsqlDbType.Bigint, ParameterDirection.Input, true, prod.Plantilla.IdPlantilla);
+                    NpgsqlDb.Instancia.AddCommandParameter(":id_catalogo", NpgsqlDbType.Bigint, ParameterDirection.Input, true, prod.Catalogo.IdCatalogo);
                     try
                     {
                         NpgsqlDb.Instancia.ExecuteNonQuery();
@@ -444,10 +445,16 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             string sql = "";
 
             sql = @"SELECT lp.id_producto,lp.cantidad, lp.subtotal,
-                p.idproducto, p.nombre, p.precio, p.borrado, p.costo, p.tiempo
+                p.idproducto, p.nombre, p.precio, p.borrado, p.costo, p.tiempo,
+                pl.idplantilla as pl_idplantilla, pl.nombre as pl_nombre,
+                pl.medida_ancho as pl_medida_ancho, pl.medida_largo as pl_medida_largo, pl.borrado as pl_borrado,
+                ct.idcatalogo as ct_idcatalogo, ct.nombre as ct_nombre, ct.fecha as ct_fecha, ct.id_producto as ct_id_producto, ct.borrado as ct_borrado
                 FROM linea_pedido lp
                 inner join producto p on p.idproducto=lp.id_producto
-                where p.borrado=false and id_pedido=" + id + ";";
+                inner join plantilla pl on pl.idplantilla=lp.id_plantilla
+                inner join catalogo ct on ct.idcatalogo=lp.id_catalogo
+    
+                where p.borrado=false and pl.borrado=false and ct.borrado=false and id_pedido=" + id + ";";
 
             NpgsqlDb.Instancia.PrepareCommand(sql);
             NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
@@ -466,6 +473,37 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
                 int cant = 0;
                 if (!dr.IsDBNull(dr.GetOrdinal("cantidad")))
                     cant = dr.GetInt32(dr.GetOrdinal("cantidad"));
+        //PLANTILLA
+                p.Plantilla = new Plantilla();
+
+                if (!dr.IsDBNull(dr.GetOrdinal("pl_idplantilla")))
+                    p.Plantilla.IdPlantilla = long.Parse(dr["pl_idplantilla"].ToString());
+
+                if (!dr.IsDBNull(dr.GetOrdinal("pl_nombre")))
+                    p.Plantilla.Nombre = dr.GetString(dr.GetOrdinal("pl_nombre"));
+
+                if (!dr.IsDBNull(dr.GetOrdinal("pl_medida_ancho")))
+                    p.Plantilla.Medida_ancho = dr.GetDecimal(dr.GetOrdinal("pl_medida_ancho"));
+
+                if (!dr.IsDBNull(dr.GetOrdinal("pl_medida_largo")))
+                    p.Plantilla.Medida_largo = dr.GetDecimal(dr.GetOrdinal("pl_medida_largo"));
+
+                if (!dr.IsDBNull(dr.GetOrdinal("pl_borrado")))
+                    p.Plantilla.Borrado = dr.GetBoolean(dr.GetOrdinal("pl_borrado"));
+        //CATALOGO
+
+                p.Catalogo = new Catalogo();
+
+                if (!dr.IsDBNull(dr.GetOrdinal("ct_idcatalogo")))
+                    p.Catalogo.IdCatalogo = dr.GetInt64(dr.GetOrdinal("ct_idcatalogo"));
+
+                if (!dr.IsDBNull(dr.GetOrdinal("ct_nombre")))
+                    p.Catalogo.Nombre = dr.GetString(dr.GetOrdinal("ct_nombre"));
+
+                if (!dr.IsDBNull(dr.GetOrdinal("ct_fecha")))
+                    p.Catalogo.Fecha = dr.GetDateTime(dr.GetOrdinal("ct_fecha"));
+
+
 
 
                 p.Cantidad = cant;

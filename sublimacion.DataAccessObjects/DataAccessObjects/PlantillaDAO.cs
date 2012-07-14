@@ -39,6 +39,36 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
         }
 
+        public static Dictionary<long, Plantilla> obtenerPlantillaPorCatalogo(string id)
+        {
+
+            string sql = "";
+            sql = @"SELECT  idplantilla, nombre, medida_ancho, medida_largo, borrado
+                from plantilla
+                where idplantilla in
+                (select id_plantilla
+                from  plantilla_catalogo 
+                where id_catalogo={0}) 
+                and borrado=false";
+
+            sql = string.Format(sql, id);
+            NpgsqlDb.Instancia.PrepareCommand(sql);
+            NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
+            Dictionary<long, Plantilla> dic = new Dictionary<long, Plantilla>();
+
+            while (dr.Read())
+            {
+                Plantilla u;
+                u = getPlantillaDelDataReader(dr);
+
+                if (!dic.ContainsKey(u.IdPlantilla))
+                    dic.Add(u.IdPlantilla, u);
+
+            }
+
+            return dic;
+
+        }
         public static Plantilla obtenerPlantillaPorId(string id)
         {
 

@@ -143,7 +143,10 @@ namespace sublimacion
                 foreach (Producto p in _pedido.LineaPedido.Keys.ToList())
                 {
                     if (_listaProductos.ContainsKey(p.Idproducto))
-                        _listaProductos[p.Idproducto].Cantidad = _pedido.LineaPedido[p];
+                    {
+                        _listaProductos[p.Idproducto] = p;
+
+                    }
 
                 }
 
@@ -281,6 +284,7 @@ namespace sublimacion
 
 
 
+
         protected void BtnSalir_Click(object sender, EventArgs e)
         {
 
@@ -334,6 +338,66 @@ namespace sublimacion
         }
 
 
+        protected void DDLCatalogo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           
+            DropDownList ddl = sender as DropDownList;
+
+            CargarPlantillas(ddl);
+
+        }
+
+        private void CargarPlantillas(DropDownList ddl)
+        {
+            foreach (GridViewRow row in GridViewProductos.Rows)
+            {
+
+                Control ctrl = row.FindControl("DDLCatalogo") as DropDownList;
+                if (ctrl != null)
+                {
+                    DropDownList ddlCata = (DropDownList)ctrl;
+
+                    if (ddl.ClientID == ddlCata.ClientID)
+                    {
+
+                        DropDownList ddlPlant = row.FindControl("DDLPlantilla") as DropDownList;
+
+                        Dictionary<long, Plantilla> _pl = PlantillaDAO.obtenerPlantillaPorCatalogo(ddlCata.SelectedValue);
+
+                        if (_pl.Values.Count > 0)
+                        {
+
+                            ddlPlant.DataSource = _pl.Values.ToList();
+                            ddlPlant.DataBind();
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+        protected void GridViewProductos_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+
+            Label id = (Label)e.Row.FindControl("LblIdproducto");
+            DropDownList ddl = (DropDownList)e.Row.FindControl("DDLCatalogo");
+            if (ddl != null && id != null && id.Text.Trim() != "")
+            {
+                Dictionary<long, Catalogo> _ct = CatalogoDAO.obtenerCatalogoPorIdProducto(id.Text);
+
+                if (_ct.Values.Count > 0)
+                {
+
+                    ddl.DataSource = _ct.Values.ToList();
+                    ddl.DataBind();
+
+                    CargarPlantillas(ddl);
+                }
+            }
+
+        }
+
+
         private void cargarGrilla()
         {
             Dictionary<long, Producto> dt = (Dictionary<long, Producto>)Session["Productos"];
@@ -358,6 +422,7 @@ namespace sublimacion
             }
 
         }
+
 
     }
 }

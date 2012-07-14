@@ -40,6 +40,34 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
       }
 
+      public static Dictionary<long, Catalogo> obtenerCatalogoPorIdProducto(string id)
+      {
+
+          string sql = "";
+          sql = @"SELECT idcatalogo, nombre, fecha, id_producto, borrado
+                FROM catalogo
+                where borrado=false and id_producto={0}";
+
+          sql = string.Format(sql, id);
+          NpgsqlDb.Instancia.PrepareCommand(sql);
+          NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
+          Dictionary<long, Catalogo> dicCatalogo = new Dictionary<long, Catalogo>();
+
+          while (dr.Read())
+          {
+              Catalogo u;
+              u = getCatalogoDelDataReader(dr);
+
+
+              if (!dicCatalogo.ContainsKey(u.IdCatalogo))
+                  dicCatalogo.Add(u.IdCatalogo, u);
+
+          }
+
+          return dicCatalogo;
+
+      }
+
       public static Catalogo obtenerCatalogoPorId(string id)
       {
 
@@ -62,6 +90,8 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
           return u;
 
       }
+
+     
 
       private static Catalogo getCatalogoDelDataReader(NpgsqlDataReader dr)
       {
