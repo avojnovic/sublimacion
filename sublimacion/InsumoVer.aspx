@@ -19,7 +19,7 @@
                 <asp:BoundField DataField="NombreFab" HeaderText="Fabricante" HeaderStyle-Font-Names="calibri" SortExpression="fabricante" />
                 <asp:BoundField DataField="Costo" HeaderText="Costo" HeaderStyle-Font-Names="calibri" SortExpression="costo" />
                 <asp:BoundField DataField="Stock" HeaderText="Stock" HeaderStyle-Font-Names="calibri" SortExpression="stock" />
-                <asp:BoundField DataField="FechaAct" HeaderText="Fecha Actualizacion" HeaderStyle-Font-Names="calibri" SortExpression="fechaAct" />
+                <asp:BoundField DataField="FechaActVer" HeaderText="Fecha Actualizacion" HeaderStyle-Font-Names="calibri" SortExpression="fechaAct" />
                
                 <asp:TemplateField  ItemStyle-Width="25px">
                  <ItemTemplate>  

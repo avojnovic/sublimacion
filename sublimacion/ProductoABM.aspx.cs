@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using sublimacion.BussinesObjects.BussinesObjects;
 using sublimacion.DataAccessObjects.DataAccessObjects;
 using System.Data;
+using Fwk.Utils;
 
 namespace sublimacion
 {
@@ -65,8 +66,8 @@ namespace sublimacion
             {
 
                 TxtNombre.Text = _producto.Nombre;
-                TxtPrecio.Text = _producto.Precio.ToString();
-                TxtTiempo.Text = _producto.Tiempo.ToString();
+                TxtPrecio.Text = _producto.Precio.ToString().Replace(".", ",");
+                TxtTiempo.Text = _producto.Tiempo.ToString().Replace(".",",");
 
                 foreach (Insumo i in _producto.Insumos.Values.ToList())
                 {
@@ -88,10 +89,10 @@ namespace sublimacion
 
 
             _producto.Nombre = TxtNombre.Text;
-            _producto.Precio = decimal.Parse(TxtPrecio.Text);
-            _producto.Tiempo = decimal.Parse(TxtTiempo.Text);
+            _producto.Precio = Utils.convertToDecimal(TxtPrecio.Text);
+            _producto.Tiempo = Utils.convertToDecimal(TxtTiempo.Text);
           
-            //corregir el temita de los decimales :P
+        
 
             _producto.Insumos= new Dictionary<long,Insumo>();
 

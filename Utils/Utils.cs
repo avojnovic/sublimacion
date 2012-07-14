@@ -7,11 +7,12 @@ using System.Net.Mail;
 using System.IO;
 using System.Data;
 using System.Text.RegularExpressions;
+using System.Globalization;
 
 
 namespace Fwk.Utils
 {
-    public class Utils
+    public static class Utils
     {
         public static void FillCboMes(DropDownList ddl)
         {
@@ -356,6 +357,20 @@ namespace Fwk.Utils
             }
             return totalHS;
         }
+
+        public static decimal convertToDecimal(string dec)
+        {
+
+
+            CultureInfo ci = System.Threading.Thread.CurrentThread.CurrentUICulture;
+
+            dec = dec.Trim().Replace(".", ci.NumberFormat.CurrencyDecimalSeparator);
+            dec = dec.Trim().Replace(",", ci.NumberFormat.CurrencyDecimalSeparator);
+         
+
+            return decimal.Parse(dec);
+        }
+
         public static int GetHoursForDay(DateTime init, string period, bool isLast, bool isFirst)
         {
             int hours = 0;

@@ -6,6 +6,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using sublimacion.BussinesObjects.BussinesObjects;
 using sublimacion.DataAccessObjects.DataAccessObjects;
+using System.Globalization;
+using Fwk.Utils;
 
 namespace sublimacion
 {
@@ -54,8 +56,10 @@ namespace sublimacion
             {
 
                 TxtNombre.Text = _plantilla.Nombre;
-                TxtAncho.Text = _plantilla.Medida_ancho.ToString();
-                TxtLargo.Text = _plantilla.Medida_largo.ToString();
+
+
+                TxtAncho.Text = _plantilla.Medida_ancho.ToString().Replace(".",",");
+                TxtLargo.Text = _plantilla.Medida_largo.ToString().Replace(".",",");
                 
             }
             else
@@ -95,8 +99,10 @@ namespace sublimacion
                 _plantilla = new Plantilla();
 
             _plantilla.Nombre = TxtNombre.Text;
-            _plantilla.Medida_largo = decimal.Parse(TxtLargo.Text);
-            _plantilla.Medida_ancho = decimal.Parse(TxtAncho.Text);
+
+            _plantilla.Medida_largo = Utils.convertToDecimal(TxtLargo.Text);
+            _plantilla.Medida_ancho = Utils.convertToDecimal(TxtAncho.Text);
+        
           
 
         }

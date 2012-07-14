@@ -63,7 +63,7 @@
                                     </asp:TemplateField>
                                     <asp:TemplateField HeaderText="Agregar">
                                         <ItemTemplate>
-                                            <asp:CheckBox ID="checkBoxPlantilla" runat="server"></asp:CheckBox>
+                                            <asp:CheckBox ID="checkBoxPlantilla" runat="server" ></asp:CheckBox>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                 </Columns>

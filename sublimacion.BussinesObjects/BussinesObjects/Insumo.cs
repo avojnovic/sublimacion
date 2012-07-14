@@ -56,6 +56,11 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             set { _fechaAct = value; }
         }
 
+        public string FechaActVer
+        {
+            get { return FechaAct.ToShortDateString(); }
+        }
+
         private bool _borrado;
 
         public bool Borrado

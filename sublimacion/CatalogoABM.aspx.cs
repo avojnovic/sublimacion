@@ -42,9 +42,15 @@ namespace sublimacion
 
             if (!IsPostBack)
             {
+                Session["Plantilla"] = _listaPlantilla;
+
+                cargarGrilla();
+                setearGrillaSiEstaVacia();
+
+
                 cargarCatalogo();
 
-                Session["Plantilla"] = _listaPlantilla;
+               
 
                 ComboProducto.DataValueField = "Idproducto";
                 ComboProducto.DataTextField = "Nombre";
@@ -52,8 +58,7 @@ namespace sublimacion
                 ComboProducto.DataSource = _dicProductos.Values.ToList();
                 ComboProducto.DataBind();
 
-                cargarGrilla();
-                setearGrillaSiEstaVacia();
+              
 
             }
 
@@ -87,13 +92,9 @@ namespace sublimacion
 
                 if (_catalogo.Plantilla != null)
                 {
-                    foreach (Plantilla p in _catalogo.Plantilla.Values.ToList())
-                    {
-                        if (_listaPlantilla.ContainsKey(p.IdPlantilla))
-                            _listaPlantilla[p.IdPlantilla].Pertenece = _catalogo.Plantilla[p.IdPlantilla].Pertenece;
-
-                    }
+                    GridViewCheckBoxSetear(_catalogo.Plantilla);
                 }
+
 
 
             }
@@ -102,6 +103,56 @@ namespace sublimacion
                 _modoApertura = ModosEdicionEnum.Nuevo;
                 TxtFecha.Text = DateTime.Now.ToShortDateString();
             }
+        }
+
+        public void GridViewCheckBoxGuardar()
+        {
+
+            Dictionary<long, Plantilla> dp = (Dictionary<long, Plantilla>)Session["Plantilla"];
+
+
+
+            for (int i = 0; i < GridViewPlantillas.Rows.Count; i++)
+            {
+                GridViewRow row = GridViewPlantillas.Rows[i];
+                bool isChecked = ((CheckBox)row.FindControl("checkBoxPlantilla")).Checked;
+
+                if (isChecked)
+                {
+                    Label id = ((Label)row.FindControl("LblIdPlantilla"));
+
+                    dp[long.Parse(id.Text)].Pertenece = true;
+                    _catalogo.Plantilla.Add(dp[long.Parse(id.Text)].IdPlantilla, dp[long.Parse(id.Text)]);
+
+                }
+            }
+        }
+
+        public void GridViewCheckBoxSetear(Dictionary<long,Plantilla> _dic)
+        {
+
+
+            foreach (Plantilla p in _dic.Values.ToList())
+            {
+                for (int i = 0; i < GridViewPlantillas.Rows.Count; i++)
+                {
+                    GridViewRow row = GridViewPlantillas.Rows[i];
+
+                    Label id = ((Label)row.FindControl("LblIdPlantilla"));
+
+
+                    if (id.Text.Trim()==p.IdPlantilla.ToString())
+                    {
+                        if (p.Pertenece)
+                        {
+                            ((CheckBox)row.FindControl("checkBoxPlantilla")).Checked=p.Pertenece;
+                        }
+                        break;
+                    }
+                }
+            }
+
+            
         }
 
         private void setearObjeto()
@@ -119,14 +170,7 @@ namespace sublimacion
             _catalogo.Plantilla = new Dictionary<long, Plantilla>();
 
 
-           Dictionary<long, Plantilla> dp = (Dictionary<long, Plantilla>)Session["Plantilla"];
-
-            foreach (Plantilla p in dp.Values.ToList())
-            {
-                if (p.Pertenece == true)
-                    _catalogo.Plantilla.Add(p.IdPlantilla, p);
-
-            }
+            GridViewCheckBoxGuardar();
         }
 
 

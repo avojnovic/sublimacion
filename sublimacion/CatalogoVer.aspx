@@ -16,7 +16,7 @@
             <Columns>
                 <asp:BoundField DataField="IdCatalogo" HeaderText="ID" HeaderStyle-Font-Names="calibri" ReadOnly="True" SortExpression="id" />
                 <asp:BoundField DataField="Nombre" HeaderText="Nombre" HeaderStyle-Font-Names="calibri" SortExpression="nombre" />
-                <asp:BoundField DataField="Fecha" HeaderText="Fecha" HeaderStyle-Font-Names="calibri" SortExpression="fecha" />
+                <asp:BoundField DataField="FechaVer" HeaderText="Fecha" HeaderStyle-Font-Names="calibri" SortExpression="fecha" />
                 <asp:BoundField DataField="NombreProducto" HeaderText="Producto" HeaderStyle-Font-Names="calibri" SortExpression="producto" />
                 
 
