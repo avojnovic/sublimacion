@@ -30,6 +30,12 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             set { _fecha = value; }
         }
 
+        public string FechaVer
+        {
+            get { return Fecha.ToShortDateString(); }
+
+        }
+
         private Producto _producto;
 
         public Producto Producto

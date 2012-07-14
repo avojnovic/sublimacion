@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using sublimacion.BussinesObjects.BussinesObjects;
 using sublimacion.DataAccessObjects.DataAccessObjects;
 using System.Globalization;
+using Fwk.Utils;
 
 namespace sublimacion
 {
@@ -19,7 +20,7 @@ namespace sublimacion
 
         protected void Page_Load(object sender, EventArgs e)
         {
-           
+
             string id = Request.QueryString["productoId"];
             string cantidad = Request.QueryString["cantidad"];
 
@@ -44,12 +45,12 @@ namespace sublimacion
             LblMensaje.Text = "";
             if (!IsPostBack)
             {
-                cargarCombo(); 
+                cargarCombo();
                 cargarDescuento();
-                
+
             }
 
-                   
+
 
 
         }
@@ -58,14 +59,14 @@ namespace sublimacion
         {
             if (_descuento != null)
             {
-                TxtCantidad.Text= _descuento.Cantidad.ToString();
-                TxtDescuento.Text = _descuento.Descuento1.ToString();
+                TxtCantidad.Text = _descuento.Cantidad.ToString();
+                TxtDescuento.Text = _descuento.Descuento1.ToString().Replace(".", ",");
                 TxtFecha.Text = _descuento.Fecha.ToShortDateString();
 
                 Producto pro = new Producto();
                 CmbProducto.SelectedValue = pro.Idproducto.ToString();
 
-               
+
             }
             else
             {
@@ -81,56 +82,53 @@ namespace sublimacion
             CmbProducto.DataValueField = "Idproducto";
             CmbProducto.DataBind();
 
-            
+
         }
 
 
         protected void BtnGuardar_Click(object sender, EventArgs e)
         {
 
-          
-                if (_modoApertura == ModosEdicionEnum.Nuevo)
+
+            if (_modoApertura == ModosEdicionEnum.Nuevo)
+            {
+                setearObjeto();
+                Descuento des = DescuentoDAO.obtenerDescuentoPorId(_descuento.Producto.Idproducto.ToString(), _descuento.Cantidad.ToString());
+
+                if (des == null)
+                    DescuentoDAO.insertarDescuento(_descuento);
+                else
+                    DescuentoDAO.actualizarDescuento(_descuento);
+
+            }
+            else
+            {
+                if (_modoApertura == ModosEdicionEnum.Modificar)
                 {
                     setearObjeto();
-                    Descuento des = DescuentoDAO.obtenerDescuentoPorId(_descuento.Producto.Idproducto.ToString(), _descuento.Cantidad.ToString());
-
-                    if (des== null )
-                        DescuentoDAO.insertarDescuento(_descuento);
-                    else
-                        DescuentoDAO.actualizarDescuento(_descuento);
-
+                    DescuentoDAO.actualizarDescuento(_descuento);
                 }
-                else
-                {
-                    if (_modoApertura == ModosEdicionEnum.Modificar)
-                    {
-                        setearObjeto();
-                        DescuentoDAO.actualizarDescuento(_descuento);
-                    }
-                }
+            }
 
 
-                Response.Redirect("DescuentoVer.aspx");
-           
+            Response.Redirect("DescuentoVer.aspx");
+
         }
 
-       
+
         private void setearObjeto()
         {
             if (_descuento == null)
                 _descuento = new Descuento();
 
 
-           
-            
+
+
             _descuento.Producto = _listaProductos[long.Parse(this.CmbProducto.SelectedValue)];
             _descuento.Cantidad = int.Parse(TxtCantidad.Text);
 
-            CultureInfo ci = System.Threading.Thread.CurrentThread.CurrentUICulture;
-            string des = TxtDescuento.Text.Trim().Replace(".", ci.NumberFormat.CurrencyDecimalSeparator);
-            des = TxtDescuento.Text.Trim().Replace(",", ci.NumberFormat.CurrencyDecimalSeparator);
+            _descuento.Descuento1 = Utils.convertToDecimal(TxtDescuento.Text);
 
-            _descuento.Descuento1 = decimal.Parse(des);
             _descuento.Fecha = DateTime.Now;
 
 
@@ -142,8 +140,8 @@ namespace sublimacion
             Response.Redirect("DescuentoVer.aspx");
         }
 
-     
 
-    
+
+
     }
 }

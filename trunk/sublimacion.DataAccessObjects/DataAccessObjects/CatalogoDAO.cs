@@ -110,7 +110,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
           if (!dr.IsDBNull(dr.GetOrdinal("id_producto")))
               i.Producto = ProductoDAO.obtenerProductoPorId((dr.GetInt64(dr.GetOrdinal(("id_producto")))).ToString());
 
-          if(i.Producto!=null)
+       
              i.Plantilla = obtenerPlantilladeCatalogo(i);
 
           i.Borrado = false;
@@ -213,7 +213,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
           {
               Plantilla u;
               u = PlantillaDAO.getPlantillaDelDataReader(dr);
-
+              u.Pertenece = true;
               if (!dic.ContainsKey(u.IdPlantilla))
                   dic.Add(u.IdPlantilla, u);
 

@@ -23,7 +23,7 @@
                 <asp:BoundField DataField="Direccion" HeaderText="Direccion" HeaderStyle-Font-Names="calibri" SortExpression="Direccion" />
                 <asp:BoundField DataField="Telefono" HeaderText="Telefono" HeaderStyle-Font-Names="calibri" SortExpression="Telefono" />
                <asp:BoundField DataField="Mail" HeaderText="Mail" HeaderStyle-Font-Names="calibri" SortExpression="Mail" />
-               <asp:BoundField DataField="Fecha" HeaderText="Fecha" HeaderStyle-Font-Names="calibri" SortExpression="Fecha" />
+               <asp:BoundField DataField="FechaVer" HeaderText="Fecha" HeaderStyle-Font-Names="calibri" SortExpression="Fecha" />
                 <asp:TemplateField  ItemStyle-Width="25px">
                  <ItemTemplate>  
                     <a href="ClienteABM.aspx?id=<%# Eval("IdCliente") %>" >

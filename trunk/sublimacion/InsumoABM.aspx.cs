@@ -13,6 +13,7 @@ using System.Xml.Linq;
 using sublimacion.BussinesObjects;
 using sublimacion.DataAccessObjects.DataAccessObjects;
 using sublimacion.BussinesObjects.BussinesObjects;
+using Fwk.Utils;
 
 namespace sublimacion
 {
@@ -59,7 +60,7 @@ namespace sublimacion
             if (_insumo != null)
             {
 
-                TxtCosto.Text = _insumo.Costo.ToString();
+                TxtCosto.Text = _insumo.Costo.ToString().Replace(".", ",");
                 TxtFabricante.Text = _insumo.NombreFab;
                 TxtFecha.Text = _insumo.FechaAct.ToShortDateString();
                 TxtNombre.Text = _insumo.Nombre;
@@ -102,11 +103,14 @@ namespace sublimacion
                 _insumo = new Insumo();
 
             _insumo.Nombre = TxtNombre.Text;
-            _insumo.Costo = decimal.Parse(TxtCosto.Text.Trim().Replace(',', '.'));
+            _insumo.Costo = Utils.convertToDecimal(TxtCosto.Text);
+       
             _insumo.NombreFab = TxtFabricante.Text.Trim();
             _insumo.FechaAct = DateTime.Now;
             _insumo.Stock = int.Parse(Txtstock.Text.Trim());
 
+
+          
         }
 
         protected void BtnSalir_Click(object sender, EventArgs e)
