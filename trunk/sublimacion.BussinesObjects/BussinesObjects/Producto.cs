@@ -52,6 +52,43 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             set { _cantidad = value; }
         }
 
+        private Plantilla _plantilla;
+
+        public Plantilla Plantilla
+        {
+            get { return _plantilla; }
+            set { _plantilla = value; }
+        }
+
+        public string PlantillaNombre
+        {
+            get {
+                if (Plantilla != null)
+                    return Plantilla.Nombre;
+                else
+                    return "";
+            }
+        }
+        private Catalogo _catalogo;
+
+        public Catalogo Catalogo
+        {
+            get { return _catalogo; }
+            set { _catalogo = value; }
+        }
+        public string CatalogoNombre
+        {
+            get {
+
+                if (Catalogo != null)
+                    return Catalogo.Nombre;
+                else
+                    return "";
+               
+            
+            }
+        }
+
         public override string ToString()
         {
             return Nombre;
