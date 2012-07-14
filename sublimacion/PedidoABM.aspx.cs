@@ -26,7 +26,12 @@ namespace sublimacion
 
         Dictionary<long, Estado> _listaEstados = new Dictionary<long, Estado>();
         Dictionary<long, Cliente> _listaClientes = new Dictionary<long, Cliente>();
+
         Dictionary<long, Producto> _listaProductos = new Dictionary<long, Producto>();
+        Dictionary<long, Catalogo> _listaCatalogo = new Dictionary<long, Catalogo>();
+        Dictionary<long, Plantilla> _listaPlantilla = new Dictionary<long, Plantilla>();
+
+
         Dictionary<Producto, int> _listaProductosAgregados = new Dictionary<Producto, int>();
         Usuario user;
 
@@ -43,7 +48,7 @@ namespace sublimacion
             _listaEstados = TipoEstadoDAO.obtenerEstados();
             _listaClientes = ClienteDAO.obtenerClienteTodos();
             _listaProductos = ProductoDAO.obtenerProductoTodos();
-
+            
 
 
             LblComentario.Text = "";
@@ -55,9 +60,6 @@ namespace sublimacion
                 cargarCombos();
                 cargarPedido();
 
-                Session["Productos"] = _listaProductos;
-
-                cargarGrilla();
                 setearGrillaSiEstaVacia();
             }
 
@@ -111,6 +113,55 @@ namespace sublimacion
             CmbCliente.DataTextField = "NombreCompleto";
             CmbCliente.DataValueField = "IdCliente";
             CmbCliente.DataBind();
+
+
+            DDLProducto.DataSource = _listaProductos.Values.ToList();
+            DDLProducto.DataTextField = "Nombre";
+            DDLProducto.DataValueField = "Idproducto";
+            DDLProducto.DataBind();
+
+            CargarCatalogos();
+
+        }
+
+        protected void DDLProducto_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DDLPlantilla.Items.Clear();
+            DDLCatalogo.Items.Clear();
+
+            CargarCatalogos();
+        }
+
+        private void CargarCatalogos()
+        {
+            if (DDLProducto.SelectedValue != null && DDLProducto.SelectedValue != "")
+            {
+                _listaCatalogo = CatalogoDAO.obtenerCatalogoPorIdProducto(DDLProducto.SelectedValue.Trim());
+                DDLCatalogo.DataSource = _listaCatalogo.Values.ToList();
+                DDLCatalogo.DataTextField = "Nombre";
+                DDLCatalogo.DataValueField = "IdCatalogo";
+                DDLCatalogo.DataBind();
+
+                CargarPlantilla();
+            }
+        }
+
+        protected void DDLCatalogo_SelectedIndexChanged1(object sender, EventArgs e)
+        {
+            DDLPlantilla.Items.Clear();
+            CargarPlantilla();
+        }
+
+        private void CargarPlantilla()
+        {
+            if (DDLCatalogo.SelectedValue != null && DDLCatalogo.SelectedValue!="")
+            {
+                _listaPlantilla = PlantillaDAO.obtenerPlantillaPorCatalogo(DDLCatalogo.SelectedValue.Trim());
+                DDLPlantilla.DataSource = _listaPlantilla.Values.ToList();
+                DDLPlantilla.DataTextField = "Nombre";
+                DDLPlantilla.DataValueField = "IdPlantilla";
+                DDLPlantilla.DataBind();
+            }
         }
 
         private void cargarPedido()
@@ -140,15 +191,10 @@ namespace sublimacion
                 CmbCliente.SelectedValue = _pedido.Cliente.IdCliente.ToString();
 
 
-                foreach (Producto p in _pedido.LineaPedido.Keys.ToList())
-                {
-                    if (_listaProductos.ContainsKey(p.Idproducto))
-                    {
-                        _listaProductos[p.Idproducto] = p;
-
-                    }
-
-                }
+                Session["Productos"] = _pedido.LineaPedido;
+               
+                GridViewProductos.DataSource = _pedido.LineaPedido;
+                GridViewProductos.DataBind();
 
             }
             else
@@ -264,16 +310,14 @@ namespace sublimacion
 
             }
 
-            _pedido.LineaPedido = new Dictionary<Producto, int>();
+            _pedido.LineaPedido = new List<Producto>();
 
 
 
-            Dictionary<long, Producto> dt = (Dictionary<long, Producto>)Session["Productos"];
-            foreach (Producto p in dt.Values.ToList())
-            {
-                if (p.Cantidad > 0)
-                    _pedido.LineaPedido.Add(p, p.Cantidad);
-            }
+            List<Producto> dt = (List<Producto>)Session["Productos"];
+
+            _pedido.LineaPedido = dt;
+            
 
 
 
@@ -283,7 +327,27 @@ namespace sublimacion
         }
 
 
+      
+        private void setearGrillaSiEstaVacia()
+        {
 
+            if (GridViewProductos.Rows.Count == 0)
+            {
+                DataTable dt = new DataTable();
+                dt.Columns.Add("Idproducto");
+                dt.Columns.Add("Nombre");
+                dt.Columns.Add("CatalogoNombre");
+                dt.Columns.Add("PlantillaNombre");
+                dt.Columns.Add("Cantidad");
+
+
+                dt.Rows.Add(new object[] { "", "", "", "", "" });
+
+                GridViewProductos.DataSource = dt;
+                GridViewProductos.DataBind();
+            }
+
+        }
 
         protected void BtnSalir_Click(object sender, EventArgs e)
         {
@@ -298,8 +362,70 @@ namespace sublimacion
             }
         }
 
+        protected void BtnAgregar_Click(object sender, EventArgs e)
+        {
+            List<Producto> dt = (List<Producto>)Session["Productos"];
 
+            if (dt == null)
+            {
+                dt = new List<Producto>();
+            }
 
+            Producto p = ProductoDAO.obtenerProductoPorId(DDLProducto.SelectedValue.Trim());
+            p.Catalogo=CatalogoDAO.obtenerCatalogoPorId(DDLCatalogo.SelectedValue.Trim());
+            p.Plantilla = PlantillaDAO.obtenerPlantillaPorId(DDLPlantilla.SelectedValue.Trim());
+            p.Cantidad = int.Parse(TxtCantidad.Text);
+
+            dt.Add(p);
+            Session["Productos"] = dt;
+
+            GridViewProductos.DataSource = dt;
+            GridViewProductos.DataBind();
+
+        }
+
+        protected void GridViewProductos_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Borrar")
+            {
+                // Retrieve the row index stored in the 
+                // CommandArgument property.
+                int index = Convert.ToInt32(e.CommandArgument);
+
+                // Retrieve the row that contains the button 
+                // from the Rows collection.
+                GridViewRow row = GridViewProductos.Rows[index];
+
+                
+                Label Id = row.FindControl("LblIdproducto") as Label;
+                Label Cata = row.FindControl("LblCata") as Label;
+                Label Plant = row.FindControl("LblPlant") as Label;
+                Label Cant = row.FindControl("LblCant") as Label;
+             
+                
+                if (Id.Text.Trim() != "")
+                {
+                    List<Producto> dt = (List<Producto>)Session["Productos"];
+                    List<Producto> dtN = new List<Producto>();
+                    foreach (Producto p in dt)
+                    {
+                        if (p.Idproducto.ToString() == Id.Text.Trim() && p.CatalogoNombre == Cata.Text && p.PlantillaNombre == Plant.Text && p.Cantidad.ToString() == Cant.Text)
+                        {
+
+                        }
+                        else
+                        {
+                            dtN.Add(p);
+                        }
+                    }
+
+                    Session["Productos"] = dtN;
+                    GridViewProductos.DataSource = dtN;
+                    GridViewProductos.DataBind();
+                }
+            }
+
+        }
         protected void GridViewProductos_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             GridViewProductos.PageIndex = e.NewPageIndex;
@@ -307,36 +433,7 @@ namespace sublimacion
         }
 
 
-        protected void GridViewProductos_RowEditing(object sender, GridViewEditEventArgs e)
-        {
-            GridViewProductos.EditIndex = e.NewEditIndex;
-            cargarGrilla();
-        }
-
-        protected void GridViewProductos_OnRowCancelingEdit(Object sender, GridViewCancelEditEventArgs e)
-        {
-            GridViewProductos.EditIndex = -1;
-            cargarGrilla();
-        }
-
-
-        protected void GridViewProductos_OnRowUpdating(object sender, GridViewUpdateEventArgs e)
-        {
-
-            int index = GridViewProductos.EditIndex;
-            GridViewRow row = GridViewProductos.Rows[index];
-
-            Label id = (Label)row.FindControl("LblIdproducto");
-            TextBox cantidad = (TextBox)row.FindControl("TxtCantidad");
-            Dictionary<long, Producto> dt = (Dictionary<long, Producto>)Session["Productos"];
-
-            dt[long.Parse(id.Text)].Cantidad = int.Parse(cantidad.Text);
-            Session["Productos"] = dt;
-
-            GridViewProductos.EditIndex = -1;
-            cargarGrilla();
-        }
-
+       
 
         protected void DDLCatalogo_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -376,52 +473,12 @@ namespace sublimacion
             }
         }
 
-        protected void GridViewProductos_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-
-            Label id = (Label)e.Row.FindControl("LblIdproducto");
-            DropDownList ddl = (DropDownList)e.Row.FindControl("DDLCatalogo");
-            if (ddl != null && id != null && id.Text.Trim() != "")
-            {
-                Dictionary<long, Catalogo> _ct = CatalogoDAO.obtenerCatalogoPorIdProducto(id.Text);
-
-                if (_ct.Values.Count > 0)
-                {
-
-                    ddl.DataSource = _ct.Values.ToList();
-                    ddl.DataBind();
-
-                    CargarPlantillas(ddl);
-                }
-            }
-
-        }
+     
 
 
-        private void cargarGrilla()
-        {
-            Dictionary<long, Producto> dt = (Dictionary<long, Producto>)Session["Productos"];
-            GridViewProductos.DataSource = dt.Values.ToList();
-            GridViewProductos.DataBind();
-        }
-        private void setearGrillaSiEstaVacia()
-        {
+       
 
-            if (GridViewProductos.Rows.Count == 0)
-            {
-                DataTable dt = new DataTable();
-                dt.Columns.Add("Idproducto");
-                dt.Columns.Add("Nombre");
-                dt.Columns.Add("Cantidad");
-
-
-                dt.Rows.Add(new object[] { "", "", "" });
-
-                GridViewProductos.DataSource = dt;
-                GridViewProductos.DataBind();
-            }
-
-        }
+      
 
 
     }

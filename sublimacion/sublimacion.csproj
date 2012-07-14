@@ -81,6 +81,7 @@
     <Content Include="PlantillaVer.aspx" />
     <Content Include="ProductoABM.aspx" />
     <Content Include="ProductoVer.aspx" />
+    <Content Include="RegistrarDisenio.aspx" />
     <Content Include="style.css" />
     <Content Include="UsuarioABM.aspx" />
     <Content Include="UsuarioVer.aspx" />
@@ -232,6 +233,13 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RegistrarDisenio.aspx.cs">
+      <DependentUpon>RegistrarDisenio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegistrarDisenio.aspx.designer.cs">
+      <DependentUpon>RegistrarDisenio.aspx</DependentUpon>
     </Compile>
     <Compile Include="UsuarioABM.aspx.cs">
       <DependentUpon>UsuarioABM.aspx</DependentUpon>

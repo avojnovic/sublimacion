@@ -135,7 +135,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
 
             queryStr = @"UPDATE cliente
-                        SET nombre=:nombre, apellido=:apelido, dni=:dni, direccion=:direccion, telefono=:telefono, mail=:mail, borrado=:borrado
+                        SET nombre=:nombre, apellido=:apellido, dni=:dni, direccion=:direccion, telefono=:telefono, mail=:mail, borrado=:borrado
                     WHERE idcliente=:idcliente";
 
             NpgsqlDb.Instancia.PrepareCommand(queryStr);

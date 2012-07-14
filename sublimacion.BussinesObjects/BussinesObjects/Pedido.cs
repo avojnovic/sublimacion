@@ -99,9 +99,9 @@ namespace sublimacion.BussinesObjects.BussinesObjects
         }
 
 
-        private Dictionary<Producto, int> _lineaPedido;
+        private List<Producto> _lineaPedido;
 
-        public Dictionary<Producto, int> LineaPedido
+        public List<Producto> LineaPedido
         {
             get { return _lineaPedido; }
             set { _lineaPedido = value; }
@@ -143,11 +143,11 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             get
             {
                 decimal tiempo = 0;
-                if (LineaPedido != null && LineaPedido.Keys.ToList().Count > 0)
+                if (LineaPedido != null && LineaPedido.Count > 0)
                 {
-                    foreach (Producto p in LineaPedido.Keys.ToList())
+                    foreach (Producto p in LineaPedido)
                     {
-                        tiempo += p.Tiempo * LineaPedido[p];
+                        tiempo += p.Tiempo * p.Cantidad;
                     }
                 }
 
@@ -160,11 +160,11 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             get
             {
                 decimal costo = 0;
-                if (LineaPedido != null && LineaPedido.Keys.ToList().Count > 0)
+                if (LineaPedido != null && LineaPedido.Count > 0)
                 {
-                    foreach (Producto p in LineaPedido.Keys.ToList())
+                    foreach (Producto p in LineaPedido)
                     {
-                        costo += p.Precio * LineaPedido[p];
+                        costo += p.Precio * p.Cantidad;
                     }
                 }
 
