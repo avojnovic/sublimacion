@@ -291,12 +291,12 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
             if (p.LineaPedido != null)
             {
-                foreach (Producto prod in p.LineaPedido.Keys.ToList())
+                foreach (Producto prod in p.LineaPedido)
                 {
                     sql = @"INSERT INTO linea_pedido(cantidad, subtotal, id_producto, id_pedido,id_plantilla,id_catalogo) VALUES (:cantidad, :subtotal, :id_producto, :id_pedido, :id_plantilla,:id_catalogo)";
                     NpgsqlDb.Instancia.PrepareCommand(sql);
-                    NpgsqlDb.Instancia.AddCommandParameter(":cantidad", NpgsqlDbType.Integer, ParameterDirection.Input, true, p.LineaPedido[prod]);
-                    NpgsqlDb.Instancia.AddCommandParameter(":subtotal", NpgsqlDbType.Numeric, ParameterDirection.Input, true, p.LineaPedido[prod] * prod.Precio);
+                    NpgsqlDb.Instancia.AddCommandParameter(":cantidad", NpgsqlDbType.Integer, ParameterDirection.Input, true, prod.Cantidad);
+                    NpgsqlDb.Instancia.AddCommandParameter(":subtotal", NpgsqlDbType.Numeric, ParameterDirection.Input, true, prod.Cantidad * prod.Precio);
                     NpgsqlDb.Instancia.AddCommandParameter(":id_producto", NpgsqlDbType.Bigint, ParameterDirection.Input, true, prod.Idproducto);
                     NpgsqlDb.Instancia.AddCommandParameter(":id_pedido", NpgsqlDbType.Bigint, ParameterDirection.Input, true, p.IdPedido);
                     NpgsqlDb.Instancia.AddCommandParameter(":id_plantilla", NpgsqlDbType.Bigint, ParameterDirection.Input, true, prod.Plantilla.IdPlantilla);
@@ -440,7 +440,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
 
 
-        private static Dictionary<Producto, int> obtenerLineasDePedido(string id)
+        private static List<Producto> obtenerLineasDePedido(string id)
         {
             string sql = "";
 
@@ -458,7 +458,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
             NpgsqlDb.Instancia.PrepareCommand(sql);
             NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
-            Dictionary<Producto, int> _dicLinea = new Dictionary<Producto, int>();
+            List<Producto> _dicLinea = new List<Producto>();
 
             while (dr.Read())
             {
@@ -508,8 +508,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
                 p.Cantidad = cant;
 
-                if (!_dicLinea.ContainsKey(p))
-                    _dicLinea.Add(p, cant);
+                  _dicLinea.Add(p);
             }
 
             return _dicLinea;

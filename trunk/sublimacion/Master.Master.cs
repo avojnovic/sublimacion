@@ -147,14 +147,24 @@ namespace sublimacion
                 itDe.ChildItems.Add(itDeN);
                 
                 divMenu.Items.Add(itDe);
-                
-                //ACEPTAR DISENIO
-                MenuItem itAcep = new MenuItem("Aceptar Diseño");
+            }
 
+            if ((user.Perfil == Usuario.PerfilesEnum.Vendedor) || (user.Perfil == Usuario.PerfilesEnum.Administrador) || (user.Perfil == Usuario.PerfilesEnum.Diseniador))
+            {
+                //ACEPTAR DISENIO
+                MenuItem itDiseno = new MenuItem("Diseño");
+
+                MenuItem itAcep = new MenuItem("Aceptar Diseño");
                 itAcep.Value = "AceptarDisenio";
                 itAcep.NavigateUrl = "AceptarDisenio.aspx";
+                itDiseno.ChildItems.Add(itAcep);
 
-                divMenu.Items.Add(itAcep);
+                MenuItem itReg = new MenuItem("Registrar Diseño");
+                itReg.Value = "RegistrarDisenio";
+                itReg.NavigateUrl = "RegistrarDisenio.aspx";
+                itDiseno.ChildItems.Add(itReg);
+
+                divMenu.Items.Add(itDiseno);
 
 
             }

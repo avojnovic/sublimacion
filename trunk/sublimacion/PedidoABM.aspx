@@ -32,16 +32,6 @@
                 </tr>
                 <tr>
                     <td align="left">
-                        <asp:Label ID="Label3" runat="server" Text="Comentario" Font-Names="calibri"></asp:Label>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="TxtComentario"
-                            Display="Dynamic" ErrorMessage="*" SetFocusOnError="true" ValidationGroup="add" />
-                    </td>
-                    <td>
-                        <asp:TextBox ID="TxtComentario" runat="server" Width="100%"></asp:TextBox>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="left">
                         <asp:Label ID="Label4" runat="server" Text="Prioridad" Font-Names="calibri"></asp:Label>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="TxtPrioridad"
                             Display="Dynamic" ErrorMessage="*" SetFocusOnError="true" ValidationGroup="add" />
@@ -81,21 +71,76 @@
                         <asp:TextBox ID="TxtUsuario" runat="server" Width="100%" ReadOnly="True"></asp:TextBox>
                     </td>
                 </tr>
+                <tr>
+                    <td align="left">
+                        <asp:Label ID="Label3" runat="server" Text="Comentario" Font-Names="calibri"></asp:Label>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="TxtComentario"
+                            Display="Dynamic" ErrorMessage="*" SetFocusOnError="true" ValidationGroup="add" />
+                    </td>
+                    <td>
+                        <asp:TextBox ID="TxtComentario" runat="server" TextMode="MultiLine" Width="100%"></asp:TextBox>
+                    </td>
+                </tr>
             </table>
         </asp:Panel>
         <act:RoundedCornersExtender ID="RoundedCornersExtender2" runat="server" TargetControlID="panel1"
             Radius="8" Color="#DDDDDD" Corners="All" Enabled="true" />
         <br />
         <table>
+         <tr>
+                <td>
+                      <asp:Label ID="Label7" runat="server" Text="Producto" Font-Names="calibri"></asp:Label>
+                </td>
+                <td>
+                     <asp:Label ID="Label8" runat="server" Text="Catalogo" Font-Names="calibri"></asp:Label>
+                </td>
+                <td>
+                     <asp:Label ID="Label10" runat="server" Text="Plantilla" Font-Names="calibri"></asp:Label>
+                </td>
+                <td>
+                     <asp:Label ID="Label11" runat="server" Text="Cantidad" Font-Names="calibri"></asp:Label>
+                </td>
+                <td>
+                   
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <asp:DropDownList ID="DDLProducto"  runat="server" AutoPostBack="true" onselectedindexchanged="DDLProducto_SelectedIndexChanged" />
+                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="DDLProducto"
+                            Display="Dynamic" ErrorMessage="*" SetFocusOnError="true"  ValidationGroup="lineaPedidoAdd" />
+                </td>
+                <td>
+                    <asp:DropDownList ID="DDLCatalogo" runat="server" AutoPostBack="true" onselectedindexchanged="DDLCatalogo_SelectedIndexChanged1" />
+                     <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="DDLCatalogo"
+                            Display="Dynamic" ErrorMessage="*" SetFocusOnError="true"  ValidationGroup="lineaPedidoAdd" />
+                </td>
+                <td>
+                    <asp:DropDownList ID="DDLPlantilla" ValidationGroup="lineaPedidoAdd" runat="server" />
+                     <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ControlToValidate="DDLPlantilla"
+                            Display="Dynamic" ErrorMessage="*" SetFocusOnError="true"  ValidationGroup="lineaPedidoAdd" />
+                </td>
+                <td>
+                    <asp:TextBox ID="TxtCantidad"  ValidationGroup="lineaPedidoAdd" runat="server" />
+                     <act:MaskedEditExtender ID="MaskedEditExtender1" runat="server" Mask="999" MaskType="Number"
+                            TargetControlID="TxtCantidad">
+                        </act:MaskedEditExtender>
+                       <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" ControlToValidate="TxtCantidad"
+                            Display="Dynamic" ErrorMessage="*" SetFocusOnError="true"  ValidationGroup="lineaPedidoAdd" />
+                </td>
+                <td>
+                    <asp:Button ID="BtnAgregar" runat="server"   ValidationGroup="lineaPedidoAdd" OnClick="BtnAgregar_Click" />
+                </td>
+            </tr>
+            <tr>
+                <br/>
+            </tr>
             <tr>
                 <td colspan="2">
                     <asp:GridView ID="GridViewProductos" Font-Names="calibri" runat="server" GridLines="None"
                         AllowPaging="true" Width="400px" HorizontalAlign="Center" PageSize="20" CssClass="mGrid"
                         PagerStyle-CssClass="pgr" AlternatingRowStyle-CssClass="alt" AutoGenerateColumns="false"
-                        AutoGenerateEditButton="true" OnRowEditing="GridViewProductos_RowEditing" OnPageIndexChanging="GridViewProductos_PageIndexChanging"
-                        OnRowUpdating="GridViewProductos_OnRowUpdating" 
-                        OnRowCancelingEdit="GridViewProductos_OnRowCancelingEdit" 
-                        onrowdatabound="GridViewProductos_RowDataBound">
+                        OnPageIndexChanging="GridViewProductos_PageIndexChanging" OnRowCommand="GridViewProductos_RowCommand" >
                         <PagerSettings PageButtonCount="5" />
                         <RowStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                         <Columns>
@@ -111,35 +156,29 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Catalogo">
                                 <ItemTemplate>
-                                 <asp:Label ID="LblCata" Font-Names="calibri" runat="server"  Text='<%#Eval("CatalogoNombre") %>'></asp:Label>
-                                    
+                                    <asp:Label ID="LblCata" Font-Names="calibri" runat="server" Text='<%#Eval("CatalogoNombre") %>'></asp:Label>
                                 </ItemTemplate>
-                                <EditItemTemplate>
-                                    <asp:DropDownList ID="DDLCatalogo" DataTextField="Nombre" DataValueField="IdCatalogo" runat="server" AutoPostBack="true" 
-                                                    OnSelectedIndexChanged="DDLCatalogo_SelectedIndexChanged">
-                                    </asp:DropDownList>
-                                </EditItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Plantilla">
                                 <ItemTemplate>
-                                       <asp:Label ID="LblPlant" Font-Names="calibri" runat="server" Text='<%#Eval("PlantillaNombre") %>'></asp:Label>
+                                    <asp:Label ID="LblPlant" Font-Names="calibri" runat="server" Text='<%#Eval("PlantillaNombre") %>'></asp:Label>
                                 </ItemTemplate>
-                                <EditItemTemplate>
-                                    <asp:DropDownList ID="DDLPlantilla" DataTextField="Nombre" DataValueField="IdPlantilla" runat="server">
-                                    </asp:DropDownList>
-                                </EditItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Cantidad">
                                 <ItemTemplate>
-                                    <%# Eval("Cantidad") %>
+                                    <asp:Label ID="LblCant" Font-Names="calibri" runat="server" Text='<%#Eval("Cantidad") %>'></asp:Label>
                                 </ItemTemplate>
-                                <EditItemTemplate>
-                                    <asp:TextBox ID="TxtCantidad" runat="server" Font-Names="calibri" Text='<%# Eval("Cantidad") %>'></asp:TextBox>
-                                    <act:MaskedEditExtender ID="MaskedEditExtender1" runat="server" Mask="99999" MaskType="Number"
-                                        TargetControlID="TxtCantidad">
-                                    </act:MaskedEditExtender>
-                                </EditItemTemplate>
                             </asp:TemplateField>
+
+                            <asp:TemplateField>
+                              <ItemTemplate>
+                                <asp:Button ID="BtnBorrar" runat="server" 
+                                  CommandName="Borrar" 
+                                  CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"
+                                  Text="Borrar" />
+                              </ItemTemplate> 
+                            </asp:TemplateField>
+
                         </Columns>
                         <SelectedRowStyle BackColor="Silver" HorizontalAlign="Center" VerticalAlign="Middle" />
                         <HeaderStyle BackColor="Silver" Font-Bold="True" ForeColor="White" />
