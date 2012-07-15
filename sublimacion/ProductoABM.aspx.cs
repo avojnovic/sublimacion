@@ -25,7 +25,7 @@ namespace sublimacion
 
             string id = Request.QueryString["id"];
 
-            if (id != null)
+            if (id != null && id != "")
             {
                 _producto = ProductoDAO.obtenerProductoPorId(id);
 

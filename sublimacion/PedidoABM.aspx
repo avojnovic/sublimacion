@@ -81,6 +81,14 @@
                         <asp:TextBox ID="TxtComentario" runat="server" TextMode="MultiLine" Width="100%"></asp:TextBox>
                     </td>
                 </tr>
+                  <tr>
+                  <td align="left">
+                        <asp:Label ID="Label12" runat="server" Text="Precio Total" Font-Names="calibri"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:Label ID="lblPrecioFinal" runat="server" ForeColor="Red" Font-Names="calibri" Font-Bold="true"></asp:Label>
+                    </td>
+            </tr>
             </table>
         </asp:Panel>
         <act:RoundedCornersExtender ID="RoundedCornersExtender2" runat="server" TargetControlID="panel1"
@@ -129,7 +137,9 @@
                             Display="Dynamic" ErrorMessage="*" SetFocusOnError="true"  ValidationGroup="lineaPedidoAdd" />
                 </td>
                 <td>
-                    <asp:Button ID="BtnAgregar" runat="server"   ValidationGroup="lineaPedidoAdd" OnClick="BtnAgregar_Click" />
+
+                   <asp:ImageButton ID="BtnAgregar" Width="32px" ValidationGroup="lineaPedidoAdd"  Height="32px" ImageUrl="~/Images/add.png"
+                            runat="server" OnClick="BtnAgregar_Click" ToolTip="Agregar" />
                 </td>
             </tr>
             <tr>
@@ -185,6 +195,9 @@
                     </asp:GridView>
                 </td>
             </tr>
+          
+
+
         </table>
         <asp:Panel runat="server" ID="panel2" Visible="true" Width="800px" Style="background-color: #DDDDDD">
             <table>

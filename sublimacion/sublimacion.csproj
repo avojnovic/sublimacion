@@ -70,6 +70,7 @@
     <Content Include="Default.aspx" />
     <Content Include="DescuentoABM.aspx" />
     <Content Include="DescuentoVer.aspx" />
+    <Content Include="favicon.ico" />
     <Content Include="Images\File-Open-icon.png" />
     <Content Include="Images\New.png" />
     <Content Include="Images\ok.png" />
