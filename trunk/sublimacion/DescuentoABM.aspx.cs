@@ -27,7 +27,7 @@ namespace sublimacion
             TxtFecha.ReadOnly = true;
 
 
-            if (id != null && cantidad != null)
+            if (id != null && cantidad != null && id!="")
             {
                 _modoApertura = ModosEdicionEnum.Modificar;
                 TxtCantidad.ReadOnly = true;

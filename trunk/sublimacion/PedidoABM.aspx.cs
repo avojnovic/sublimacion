@@ -39,7 +39,7 @@ namespace sublimacion
         {
             string id = Request.QueryString["id"];
 
-            if (id != null)
+            if (id != null && id!="")
             {
                 _pedido = PedidoDAO.obtenerPorId(id);
             }
@@ -146,6 +146,18 @@ namespace sublimacion
             }
         }
 
+        private void calcularPrecio()
+        {
+            List<Producto> dt = (List<Producto>)Session["Productos"];
+
+            decimal precio = 0;
+            foreach (Producto p in dt)
+            {
+                precio += p.Cantidad * p.Precio;
+            }
+
+            lblPrecioFinal.Text = precio.ToString();
+        }
         protected void DDLCatalogo_SelectedIndexChanged1(object sender, EventArgs e)
         {
             DDLPlantilla.Items.Clear();
@@ -195,6 +207,8 @@ namespace sublimacion
                
                 GridViewProductos.DataSource = _pedido.LineaPedido;
                 GridViewProductos.DataBind();
+
+                calcularPrecio();
 
             }
             else
@@ -382,6 +396,8 @@ namespace sublimacion
             GridViewProductos.DataSource = dt;
             GridViewProductos.DataBind();
 
+            calcularPrecio();
+
         }
 
         protected void GridViewProductos_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -422,6 +438,8 @@ namespace sublimacion
                     Session["Productos"] = dtN;
                     GridViewProductos.DataSource = dtN;
                     GridViewProductos.DataBind();
+
+                    calcularPrecio();
                 }
             }
 

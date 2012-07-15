@@ -27,7 +27,7 @@ namespace sublimacion
             string id = Request.QueryString["id"];
             TxtFecha.ReadOnly = true;
 
-            if (id != null)
+            if (id != null  && id!="")
             {
                 
                 _catalogo = CatalogoDAO.obtenerCatalogoPorId(id);

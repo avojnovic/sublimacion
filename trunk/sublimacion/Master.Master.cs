@@ -88,13 +88,7 @@ namespace sublimacion
                 
                 divMenu.Items.Add(itPla);
 
-                //REGISTRAR DISENIO
-                MenuItem itReg = new MenuItem("Registrar Diseño");
-
-                itReg.Value = "RegistrarDisenio";
-                itReg.NavigateUrl = "RegistrarDisenio.aspx";
-
-                divMenu.Items.Add(itReg);
+               
 
             }
 

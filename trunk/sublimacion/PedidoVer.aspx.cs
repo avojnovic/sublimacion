@@ -105,7 +105,7 @@ namespace sublimacion
         protected void BtnNuevo_Click(object sender, EventArgs e)
         {
 
-            Response.Redirect("Pedido.aspx");
+            Response.Redirect("PedidoABM.aspx");
         }
 
        
