@@ -1,6 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="PedidoVer.aspx.cs"
     Inherits="sublimacion.PedidoVer" %>
-
+     
+     
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -11,7 +12,7 @@
         runat="server" OnClick="BtnNuevo_Click" ToolTip="Nuevo" />
     <br />
     <asp:Label ID="LblEstado" runat="server" Text="Estado" Visible="true"></asp:Label>
-    <asp:DropDownList ID="CmbEstados" runat="server" Height="16px" Width="162px" 
+    <asp:DropDownList ID="CmbEstados" runat="server" Width="200px" 
         Visible="true" onselectedindexchanged="CmbEstados_SelectedIndexChanged" AutoPostBack="true">
     </asp:DropDownList>
     <div>
