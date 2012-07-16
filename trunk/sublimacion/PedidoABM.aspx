@@ -130,7 +130,7 @@
                             Display="Dynamic" ErrorMessage="*" SetFocusOnError="true" ValidationGroup="lineaPedidoAdd" />
                     </td>
                     <td>
-                        <asp:TextBox ID="TxtCantidad" ValidationGroup="lineaPedidoAdd" runat="server" />
+                        <asp:TextBox ID="TxtCantidad" ValidationGroup="lineaPedidoAdd" runat="server" Width="30px" />
                         <act:MaskedEditExtender ID="MaskedEditExtender1" runat="server" Mask="999" MaskType="Number"
                             TargetControlID="TxtCantidad">
                         </act:MaskedEditExtender>
@@ -194,10 +194,15 @@
                                         <asp:Label ID="LblArchivo" Font-Names="calibri" runat="server" Text='<%#Eval("ArchivoClienteNombreMostrable") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
+                                 <asp:TemplateField>
+                                    <ItemTemplate>
+                                        <asp:Button ID="BtnVerAdjunto" runat="server" CommandName="VerAdjunto"  CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"  Text="Abrir" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:Button ID="BtnBorrar" runat="server" CommandName="Borrar" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"
-                                            Text="Borrar" />
+                                        <asp:Button ID="BtnBorrar" runat="server" CommandName="Borrar" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" Text="Borrar" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
