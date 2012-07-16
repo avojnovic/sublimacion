@@ -22,6 +22,8 @@ namespace sublimacion
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            txtBuscar.Attributes.Add("onkeydown", "if(event.which || event.keyCode){if ((event.which == 13) || (event.keyCode == 13)) {document.getElementById('" +BtnBuscar.UniqueID + "').click();return false;}} else {return true}; ");
             if (!IsPostBack)
             {
                 _Clientes = ClienteDAO.obtenerClienteTodos().Values.ToList();
@@ -53,12 +55,13 @@ namespace sublimacion
                 dt.Columns.Add("Direccion");
                 dt.Columns.Add("Telefono");
                 dt.Columns.Add("Mail");
-                dt.Columns.Add("Fecha");
+                dt.Columns.Add("FechaVer");
+                dt.Columns.Add("IdCliente");
                 
                     
 
 
-                dt.Rows.Add(new object[] { "", "", "", "", "", "","","" });
+                dt.Rows.Add(new object[] { "", "", "", "", "", "","","","" });
 
                 GridView1.DataSource = dt;
                 GridView1.DataBind();

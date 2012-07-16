@@ -1,12 +1,17 @@
 ﻿<%@ Page Language="C#"  MasterPageFile="~/Master.Master"  AutoEventWireup="true" CodeBehind="ClienteVer.aspx.cs" Inherits="sublimacion.ClienteVer" %>
 
 
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <br/>
-    <br/>   
-    
+    <br/>  
+     
+  <script type="text/Javascript">
+
+ </script>
+ <asp:Panel defaultbutton="BtnBuscar" runat="server">
      <asp:ImageButton ID="ImageButton1" Width="32px" Height="32px" ImageUrl="~/Images/New.png" runat="server" onclick="BtnNuevo_Click" ToolTip="Nuevo" />
   <br/>
   <asp:TextBox ID="txtBuscar" runat="server" Width="200px" ></asp:TextBox>
@@ -40,6 +45,6 @@
             <HeaderStyle BackColor="Silver" Font-Bold="True" ForeColor="White" />
            
         </asp:GridView>
-
+</asp:Panel>
 
 </asp:Content>
