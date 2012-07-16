@@ -126,7 +126,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
 
           queryStr = @"INSERT INTO catalogo( nombre, fecha, borrado, id_producto)
-                VALUES (:nombre, :fecha, :borrado, :id_producto)";
+                VALUES (:nombre, :fecha, :borrado, :id_producto); SELECT currval('catalogo_idcatalogo_seq')";
 
           NpgsqlDb.Instancia.PrepareCommand(queryStr);
 
@@ -135,22 +135,12 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
           try
           {
-              NpgsqlDb.Instancia.ExecuteNonQuery();
+              i.IdCatalogo=NpgsqlDb.Instancia.ExecuteScalar();
 
           }
           catch (System.OverflowException Ex)
           {
               throw Ex;
-          }
-
-          queryStr = "SELECT currval('catalogo_idcatalogo_seq')";
-          NpgsqlDb.Instancia.PrepareCommand(queryStr);
-          NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
-          while (dr.Read())
-          {
-              if (!dr.IsDBNull(0))
-                  i.IdCatalogo = long.Parse(dr[0].ToString());
-
           }
 
           guardarPlantillasEnCata(i);

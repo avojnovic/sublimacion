@@ -1,0 +1,19 @@
+DESARROLLO
+
+MARGVM01
+
+maveram
+cccc,1
+---------------------------
+
+PROD
+
+MARG21
+
+
+-------------------------
+WEB APP
+ \\marg25\d$
+
+  la5000app-intralas
+  Mon##123

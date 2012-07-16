@@ -18,7 +18,8 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             string sql = "";
             sql = @"SELECT  idplantilla, nombre, medida_ancho, medida_largo, borrado
                 FROM plantilla
-                where borrado=false";
+                where borrado=false
+                order by nombre";
 
 
             NpgsqlDb.Instancia.PrepareCommand(sql);
@@ -49,7 +50,8 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
                 (select id_plantilla
                 from  plantilla_catalogo 
                 where id_catalogo={0}) 
-                and borrado=false";
+                and borrado=false
+                order by nombre";
 
             sql = string.Format(sql, id);
             NpgsqlDb.Instancia.PrepareCommand(sql);

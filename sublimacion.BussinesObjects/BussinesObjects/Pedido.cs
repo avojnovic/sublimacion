@@ -99,9 +99,9 @@ namespace sublimacion.BussinesObjects.BussinesObjects
         }
 
 
-        private List<Producto> _lineaPedido;
+        private List<LineaPedido> _lineaPedido;
 
-        public List<Producto> LineaPedido
+        public List<LineaPedido> LineaPedido
         {
             get { return _lineaPedido; }
             set { _lineaPedido = value; }
@@ -110,17 +110,6 @@ namespace sublimacion.BussinesObjects.BussinesObjects
         public string Estado
         {
             get {
-
-                //DateTime? t = DateTime.MinValue;
-                Estado est = new Estado();
-                //foreach (EstadosPedido e in EstadosPedido.Values.ToList())
-                //{
-                //    if (e.Fecha_inicio > t)
-                //    {
-                //        t = e.Fecha_inicio;
-                //        est = e.Estado;
-                //    }
-                //}
 
 
                 foreach (EstadosPedido e in EstadosPedido.Values.ToList())
@@ -133,10 +122,27 @@ namespace sublimacion.BussinesObjects.BussinesObjects
 
                 return "";
 
+            }
+        }
 
+        public long EstadoId
+        {
+            get
+            {
+
+                foreach (EstadosPedido e in EstadosPedido.Values.ToList())
+                {
+                    if (e.Fecha_fin == null)
+                    {
+                        return e.Estado.Id;
+                    }
+                }
+
+                return 0;
 
             }
         }
+
 
         public string CostoTotalTiempo
         {
@@ -145,9 +151,9 @@ namespace sublimacion.BussinesObjects.BussinesObjects
                 decimal tiempo = 0;
                 if (LineaPedido != null && LineaPedido.Count > 0)
                 {
-                    foreach (Producto p in LineaPedido)
+                    foreach (LineaPedido p in LineaPedido)
                     {
-                        tiempo += p.Tiempo * p.Cantidad;
+                        tiempo += p.Producto.Tiempo * p.Cantidad;
                     }
                 }
 
@@ -162,9 +168,9 @@ namespace sublimacion.BussinesObjects.BussinesObjects
                 decimal costo = 0;
                 if (LineaPedido != null && LineaPedido.Count > 0)
                 {
-                    foreach (Producto p in LineaPedido)
+                    foreach (LineaPedido p in LineaPedido)
                     {
-                        costo += p.Precio * p.Cantidad;
+                        costo += p.Producto.Precio * p.Cantidad;
                     }
                 }
 

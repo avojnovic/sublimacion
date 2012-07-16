@@ -19,7 +19,7 @@ namespace sublimacion
     public partial class ClienteABM : System.Web.UI.Page
     {
         Cliente _cliente;
-
+        string id;
 
         ModosEdicionEnum _modoApertura = new ModosEdicionEnum();
 
@@ -27,12 +27,16 @@ namespace sublimacion
         {
             BtnBorrar.Attributes.Add("OnClick", "javascript:if(confirm('Esta seguro que desea borrar el Cliente')== false) return false;");
 
-            string id = Request.QueryString["id"];
+            id = Request.QueryString["id"];
 
-            if (id != null  && id!="")
+            if (id != null && id != "")
             {
                 _cliente = ClienteDAO.obtenerClientePorId(id);
-
+               
+            }
+            else
+            {
+                BtnVerPedidos.Visible = false; 
             }
 
             LblMensaje.Text = "";
@@ -133,6 +137,11 @@ namespace sublimacion
             Response.Redirect("ClienteVer.aspx");
 
         }
+
+        protected void BtnVerPedidos_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("PedidoVer.aspx?idCliente="+id);
+         }
 
     }
 }

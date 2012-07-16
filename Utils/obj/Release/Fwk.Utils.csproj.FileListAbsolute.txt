@@ -8,3 +8,8 @@ C:\Users\Usuario\Documents\Nuelia\TPCampoSublimacion\Utils\bin\Release\Fwk.Utils
 C:\Users\Usuario\Documents\Nuelia\TPCampoSublimacion\Utils\obj\Release\ResolveAssemblyReference.cache
 C:\Users\Usuario\Documents\Nuelia\TPCampoSublimacion\Utils\obj\Release\Fwk.Utils.dll
 C:\Users\Usuario\Documents\Nuelia\TPCampoSublimacion\Utils\obj\Release\Fwk.Utils.pdb
+C:\Projects\Sublimacion\Utils\bin\Release\Fwk.Utils.dll
+C:\Projects\Sublimacion\Utils\bin\Release\Fwk.Utils.pdb
+C:\Projects\Sublimacion\Utils\obj\Release\ResolveAssemblyReference.cache
+C:\Projects\Sublimacion\Utils\obj\Release\Fwk.Utils.dll
+C:\Projects\Sublimacion\Utils\obj\Release\Fwk.Utils.pdb

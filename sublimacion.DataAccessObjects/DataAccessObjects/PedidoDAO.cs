@@ -13,30 +13,72 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
     public static class PedidoDAO
     {
 
-
         public static Dictionary<long, Pedido> obtenerTodos()
         {
 
             string sql = "";
             sql = @"
-                    		SELECT p.idpedido, p.fecha, p.borrado, p.comentario, p.prioridad, p.ubicacion, p.id_usuario, p.id_cliente,
+                   SELECT p.idpedido, p.fecha, p.borrado, p.comentario, p.prioridad, p.ubicacion, p.id_usuario, p.id_cliente,
                    p.id_orden_trab, o.fecha_comienzo as fco,o.fecha_finalizacion as ffo, o.tiempo_estimado,
                    p.id_plan_prod, pl.fecha_inicio as fip ,pl.fecha_fin as ffp,
                    c.idcliente as cli_idcliente, c.nombre as cli_nombre, c.apellido as cli_apellido, c.dni as cli_dni,
-                    c.direccion as cli_direccion, c.telefono as cli_telefono, c.mail as cli_mail, c.fecha as cli_fecha,
-                     c.borrado as cli_borrado,
-                     u.id as usu_id, u.usuario as usu_usuario, u.contrasenia as usu_contrasenia, u.nombre as usu_nombre,
-                      u.apellido as usu_apellido, u.telefono as usu_telefono, u.mail as usu_mail, u.borrado as usu_borrado, 
-                      u.id_perfil as usu_id_perfil
+                   c.direccion as cli_direccion, c.telefono as cli_telefono, c.mail as cli_mail, c.fecha as cli_fecha,
+                   c.borrado as cli_borrado,
+                   u.id as usu_id, u.usuario as usu_usuario, u.contrasenia as usu_contrasenia, u.nombre as usu_nombre,
+                   u.apellido as usu_apellido, u.telefono as usu_telefono, u.mail as usu_mail, u.borrado as usu_borrado, 
+                   u.id_perfil as usu_id_perfil
                   FROM pedido p
                   left join cliente C on p.id_cliente=c.idcliente
                   left join usuario u on u.id=p.id_usuario
                   left join orden_de_trabajo o on o.idorden=p.id_orden_trab
                   left join plan_produccion pl on pl.idplan=p.id_plan_prod 
                   where p.borrado=false and c.borrado=false and u.borrado=false
-
+                  order by p.idpedido
                 ";
 
+            NpgsqlDb.Instancia.PrepareCommand(sql);
+            NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
+            Dictionary<long, Pedido> dicPedidos = new Dictionary<long, Pedido>();
+
+            while (dr.Read())
+            {
+                Pedido p = getPedidosDelDataReader(dr);
+
+
+
+                if (!dicPedidos.ContainsKey(p.IdPedido))
+                    dicPedidos.Add(p.IdPedido, p);
+            }
+
+            return dicPedidos;
+
+        }
+
+        public static Dictionary<long, Pedido> obtenerTodosPorCliente(string id)
+        {
+
+            string sql = "";
+            sql = @"
+                   SELECT p.idpedido, p.fecha, p.borrado, p.comentario, p.prioridad, p.ubicacion, p.id_usuario, p.id_cliente,
+                   p.id_orden_trab, o.fecha_comienzo as fco,o.fecha_finalizacion as ffo, o.tiempo_estimado,
+                   p.id_plan_prod, pl.fecha_inicio as fip ,pl.fecha_fin as ffp,
+                   c.idcliente as cli_idcliente, c.nombre as cli_nombre, c.apellido as cli_apellido, c.dni as cli_dni,
+                   c.direccion as cli_direccion, c.telefono as cli_telefono, c.mail as cli_mail, c.fecha as cli_fecha,
+                   c.borrado as cli_borrado,
+                   u.id as usu_id, u.usuario as usu_usuario, u.contrasenia as usu_contrasenia, u.nombre as usu_nombre,
+                   u.apellido as usu_apellido, u.telefono as usu_telefono, u.mail as usu_mail, u.borrado as usu_borrado, 
+                   u.id_perfil as usu_id_perfil
+                  FROM pedido p
+                  left join cliente C on p.id_cliente=c.idcliente
+                  left join usuario u on u.id=p.id_usuario
+                  left join orden_de_trabajo o on o.idorden=p.id_orden_trab
+                  left join plan_produccion pl on pl.idplan=p.id_plan_prod 
+                  where p.borrado=false and c.borrado=false and u.borrado=false
+                   and c.idcliente={0}
+                  order by p.idpedido
+                ";
+
+            sql = string.Format(sql, id);
             NpgsqlDb.Instancia.PrepareCommand(sql);
             NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
             Dictionary<long, Pedido> dicPedidos = new Dictionary<long, Pedido>();
@@ -74,7 +116,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
                   left join orden_de_trabajo o on o.idorden=p.id_orden_trab
                   left join plan_produccion pl on pl.idplan=p.id_plan_prod 
                   where p.borrado=false and c.borrado=false and u.borrado=false and  p.id_plan_prod is not NULL
-
+                order by p.idpedido
                 ";
 
             NpgsqlDb.Instancia.PrepareCommand(sql);
@@ -126,6 +168,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             return p;
 
         }
+
         public static void insertarPedido(Pedido p)
         {
 
@@ -136,14 +179,15 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
              fecha, borrado, comentario, prioridad, ubicacion, id_usuario, 
             id_orden_trab, id_plan_prod, id_cliente)
                 VALUES ( :fecha, :borrado, :comentario, :prioridad, :ubicacion, :id_usuario, 
-                        :id_orden_trab, :id_plan_prod, :id_cliente);";
+                        :id_orden_trab, :id_plan_prod, :id_cliente); SELECT currval('pedido_idpedido_seq');";
 
             NpgsqlDb.Instancia.PrepareCommand(queryStr);
             PrepararParametros(p);
 
+
             try
             {
-                NpgsqlDb.Instancia.ExecuteNonQuery();
+              p.IdPedido =  NpgsqlDb.Instancia.ExecuteScalar();
 
             }
             catch (System.OverflowException Ex)
@@ -151,23 +195,11 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
                 throw Ex;
             }
 
-            queryStr = "SELECT currval('pedido_idpedido_seq')";
-            NpgsqlDb.Instancia.PrepareCommand(queryStr);
-            NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
-            while (dr.Read())
-            {
-                if (!dr.IsDBNull(0))
-                    p.IdPedido = long.Parse(dr[0].ToString());
-
-            }
 
             actualizarEstados(p);
             actualizarLineasPedido(p);
 
         }
-
-
-
 
         public static void actualizarPedido(Pedido p)
         {
@@ -273,7 +305,6 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             }
         }
 
-
         private static void actualizarLineasPedido(Pedido p)
         {
             //Borro e inserto nuevamente
@@ -291,16 +322,20 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
             if (p.LineaPedido != null)
             {
-                foreach (Producto prod in p.LineaPedido)
+                foreach (LineaPedido linea in p.LineaPedido)
                 {
-                    sql = @"INSERT INTO linea_pedido(cantidad, subtotal, id_producto, id_pedido,id_plantilla,id_catalogo) VALUES (:cantidad, :subtotal, :id_producto, :id_pedido, :id_plantilla,:id_catalogo)";
+                    sql = @"INSERT INTO linea_pedido(cantidad, subtotal, id_producto, id_pedido,id_plantilla,id_catalogo,archivo_cliente,archivo_disenio)
+                             VALUES (:cantidad, :subtotal, :id_producto, :id_pedido, :id_plantilla,:id_catalogo,:archivo_cliente,:archivo_disenio)";
                     NpgsqlDb.Instancia.PrepareCommand(sql);
-                    NpgsqlDb.Instancia.AddCommandParameter(":cantidad", NpgsqlDbType.Integer, ParameterDirection.Input, true, prod.Cantidad);
-                    NpgsqlDb.Instancia.AddCommandParameter(":subtotal", NpgsqlDbType.Numeric, ParameterDirection.Input, true, prod.Cantidad * prod.Precio);
-                    NpgsqlDb.Instancia.AddCommandParameter(":id_producto", NpgsqlDbType.Bigint, ParameterDirection.Input, true, prod.Idproducto);
+                    NpgsqlDb.Instancia.AddCommandParameter(":cantidad", NpgsqlDbType.Integer, ParameterDirection.Input, true, linea.Cantidad);
+                    NpgsqlDb.Instancia.AddCommandParameter(":subtotal", NpgsqlDbType.Numeric, ParameterDirection.Input, true, linea.Cantidad * linea.Producto.Precio);
+                    NpgsqlDb.Instancia.AddCommandParameter(":id_producto", NpgsqlDbType.Bigint, ParameterDirection.Input, true, linea.Producto.Idproducto);
                     NpgsqlDb.Instancia.AddCommandParameter(":id_pedido", NpgsqlDbType.Bigint, ParameterDirection.Input, true, p.IdPedido);
-                    NpgsqlDb.Instancia.AddCommandParameter(":id_plantilla", NpgsqlDbType.Bigint, ParameterDirection.Input, true, prod.Plantilla.IdPlantilla);
-                    NpgsqlDb.Instancia.AddCommandParameter(":id_catalogo", NpgsqlDbType.Bigint, ParameterDirection.Input, true, prod.Catalogo.IdCatalogo);
+                    NpgsqlDb.Instancia.AddCommandParameter(":id_plantilla", NpgsqlDbType.Bigint, ParameterDirection.Input, true, linea.Plantilla.IdPlantilla);
+                    NpgsqlDb.Instancia.AddCommandParameter(":id_catalogo", NpgsqlDbType.Bigint, ParameterDirection.Input, true, linea.Catalogo.IdCatalogo);
+                    NpgsqlDb.Instancia.AddCommandParameter(":archivo_cliente", NpgsqlDbType.Varchar, ParameterDirection.Input, true, linea.ArchivoCliente);
+                    NpgsqlDb.Instancia.AddCommandParameter(":archivo_disenio", NpgsqlDbType.Varchar, ParameterDirection.Input, true, linea.ArchivoDisenio);
+                    
                     try
                     {
                         NpgsqlDb.Instancia.ExecuteNonQuery();
@@ -345,9 +380,6 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
                 NpgsqlDb.Instancia.AddCommandParameter(":id_cliente", NpgsqlDbType.Bigint, ParameterDirection.Input, true, p.Cliente.IdCliente);
 
         }
-
-
-
 
         private static Pedido getPedidosDelDataReader(NpgsqlDataReader dr)
         {
@@ -438,13 +470,11 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             return p;
         }
 
-
-
-        private static List<Producto> obtenerLineasDePedido(string id)
+        private static List<LineaPedido> obtenerLineasDePedido(string id)
         {
             string sql = "";
 
-            sql = @"SELECT lp.id_producto,lp.cantidad, lp.subtotal,
+            sql = @"SELECT lp.id_producto,lp.cantidad, lp.subtotal, lp.archivo_cliente,lp.archivo_disenio,
                 p.idproducto, p.nombre, p.precio, p.borrado, p.costo, p.tiempo,
                 pl.idplantilla as pl_idplantilla, pl.nombre as pl_nombre,
                 pl.medida_ancho as pl_medida_ancho, pl.medida_largo as pl_medida_largo, pl.borrado as pl_borrado,
@@ -458,22 +488,21 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
             NpgsqlDb.Instancia.PrepareCommand(sql);
             NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
-            List<Producto> _dicLinea = new List<Producto>();
+            List<LineaPedido> _dicLinea = new List<LineaPedido>();
 
             while (dr.Read())
             {
-
-
+                LineaPedido p = new LineaPedido();
+        
+                //PRODUCTO
                 string idP = "";
                 if (!dr.IsDBNull(dr.GetOrdinal("id_producto")))
                     idP = dr.GetInt64(dr.GetOrdinal("id_producto")).ToString();
 
-                Producto p = ProductoDAO.getProductosDelDataReader(dr);
+                p.Producto = ProductoDAO.getProductosDelDataReader(dr);
 
-                int cant = 0;
-                if (!dr.IsDBNull(dr.GetOrdinal("cantidad")))
-                    cant = dr.GetInt32(dr.GetOrdinal("cantidad"));
-        //PLANTILLA
+             
+                //PLANTILLA
                 p.Plantilla = new Plantilla();
 
                 if (!dr.IsDBNull(dr.GetOrdinal("pl_idplantilla")))
@@ -490,7 +519,8 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
                 if (!dr.IsDBNull(dr.GetOrdinal("pl_borrado")))
                     p.Plantilla.Borrado = dr.GetBoolean(dr.GetOrdinal("pl_borrado"));
-        //CATALOGO
+                
+                //CATALOGO
 
                 p.Catalogo = new Catalogo();
 
@@ -504,16 +534,21 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
                     p.Catalogo.Fecha = dr.GetDateTime(dr.GetOrdinal("ct_fecha"));
 
 
+                //LINEA
+                if (!dr.IsDBNull(dr.GetOrdinal("cantidad")))
+                     p.Cantidad = dr.GetInt32(dr.GetOrdinal("cantidad"));
 
+                if (!dr.IsDBNull(dr.GetOrdinal("archivo_cliente")))
+                    p.ArchivoCliente = dr.GetString(dr.GetOrdinal("archivo_cliente"));
 
-                p.Cantidad = cant;
+                if (!dr.IsDBNull(dr.GetOrdinal("archivo_disenio")))
+                    p.ArchivoDisenio = dr.GetString(dr.GetOrdinal("archivo_disenio"));
 
                   _dicLinea.Add(p);
             }
 
             return _dicLinea;
         }
-
 
         public static Dictionary<long, EstadosPedido> obtenerEstadosDelPedido(string id)
         {

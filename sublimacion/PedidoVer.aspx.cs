@@ -22,16 +22,30 @@ namespace sublimacion
         Usuario user;
         private Dictionary<long, Pedido> _dicPedidos;
         Dictionary<long, Estado> _listaEstados = new Dictionary<long, Estado>();
-        
+        Cliente _cli;
+        string idCliente;
         protected void Page_Load(object sender, EventArgs e)
         {
             user = (Usuario)Session["usuario"];
-            cargarGrilla();
+             
+            idCliente = Request.QueryString["idCliente"];
+
+            if (idCliente != null && idCliente != "")
+            {
+                _cli = ClienteDAO.obtenerClientePorId(idCliente);
+                LblCliente.Text = _cli.NombreCompleto + " - DNI: " + _cli.Dni.ToString();
+            }
+            else
+            {
+                LblCliente.Text = "";
+            }
 
             if (!IsPostBack)
             {
                 cargarCombos();
             }
+
+            cargarGrilla();
 
             if ((user.Perfil == Usuario.PerfilesEnum.JefeProduccion))
             {
@@ -39,14 +53,24 @@ namespace sublimacion
                 BtnImgNuevo.Visible = false;
             }
 
-            setearGrillaSiEstaVacia();
+          
         }
 
         private void cargarCombos()
         {
             _listaEstados = TipoEstadoDAO.obtenerEstados();
+            Estado e = new Estado();
+            e.Id=-1;
+            e.Descripcion="Todos";
+            _listaEstados.Add(e.Id,e);
+
             CmbEstados.DataSource = _listaEstados.Values.ToList();
+            CmbEstados.DataValueField = "Id";
+            CmbEstados.DataTextField = "Descripcion";
             CmbEstados.DataBind();
+
+            CmbEstados.SelectedValue = "-1";
+
         }
 
         private void setearGrillaSiEstaVacia()
@@ -77,9 +101,24 @@ namespace sublimacion
         {
 
             Dictionary<long, Pedido> _dicTemp = new Dictionary<long, Pedido>();
-            _dicPedidos = PedidoDAO.obtenerTodos();
+
+            if (idCliente != null && idCliente != "")
+                _dicPedidos = PedidoDAO.obtenerTodosPorCliente(idCliente);
+            else
+                _dicPedidos = PedidoDAO.obtenerTodos();
            
             List<Pedido> listP = _dicPedidos.Values.ToList();
+
+            long idEstado= long.Parse(CmbEstados.SelectedValue);
+
+            if (idEstado != -1)
+            {
+                var newList = (from x in listP
+                              where x.EstadoId == idEstado
+                              select x).ToList();
+
+                listP = (List<Pedido>)newList;
+            }
 
 
             listP.Sort(delegate(Pedido p1, Pedido p2)
@@ -91,6 +130,8 @@ namespace sublimacion
             GridView1.DataSource = listP;
 
             GridView1.DataBind();
+
+            setearGrillaSiEstaVacia();
         }
       
 
@@ -106,6 +147,11 @@ namespace sublimacion
         {
 
             Response.Redirect("PedidoABM.aspx");
+        }
+
+        protected void CmbEstados_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cargarGrilla();
         }
 
        

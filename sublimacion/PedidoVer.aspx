@@ -5,11 +5,14 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <br />
+      <asp:Label ID="LblCliente" runat="server" Text="" Visible="true"></asp:Label>
     <br />
     <asp:ImageButton ID="BtnImgNuevo" Width="32px" Height="32px" ImageUrl="~/Images/New.png"
         runat="server" OnClick="BtnNuevo_Click" ToolTip="Nuevo" />
-    <asp:Label ID="LblEstado" runat="server" Text="Estado" Visible="false"></asp:Label>
-    <asp:DropDownList ID="CmbEstados" runat="server" Height="16px" Width="162px" Visible="false">
+    <br />
+    <asp:Label ID="LblEstado" runat="server" Text="Estado" Visible="true"></asp:Label>
+    <asp:DropDownList ID="CmbEstados" runat="server" Height="16px" Width="162px" 
+        Visible="true" onselectedindexchanged="CmbEstados_SelectedIndexChanged" AutoPostBack="true">
     </asp:DropDownList>
     <div>
         <asp:GridView ID="GridView1"  Font-Names="calibri" runat="server" AutoGenerateColumns="False" GridLines="None"
