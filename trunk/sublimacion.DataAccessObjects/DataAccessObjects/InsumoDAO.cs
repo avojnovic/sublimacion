@@ -79,8 +79,10 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
         public static Dictionary<long, Insumo> obtenerInsumoTodos()
         {
 
-            string sql = "";
-            sql += "SELECT idinsumo, nombre, nombre_fab, costo, borrado, stock, fecha_act_stock FROM insumo where borrado=False";
+            string sql =@"SELECT idinsumo, nombre, nombre_fab, costo, borrado, stock, fecha_act_stock 
+                        FROM insumo 
+                        where borrado=False
+                        order by nombre";
           
             NpgsqlDb.Instancia.PrepareCommand(sql);
             NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
@@ -104,8 +106,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
         public static Insumo obtenerInsumoPorId(string id)
         {
 
-            string sql = "";
-            sql += "SELECT idinsumo, nombre, nombre_fab, costo, borrado, stock, fecha_act_stock FROM insumo where borrado=False and idinsumo=" + id + " ";
+            string sql = "SELECT idinsumo, nombre, nombre_fab, costo, borrado, stock, fecha_act_stock FROM insumo where borrado=False and idinsumo=" + id + " ";
 
             NpgsqlDb.Instancia.PrepareCommand(sql);
             NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();

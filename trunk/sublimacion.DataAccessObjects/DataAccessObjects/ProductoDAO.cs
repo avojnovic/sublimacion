@@ -19,7 +19,8 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
             string sql = "";
             sql += @"SELECT idproducto, nombre, precio, borrado, tiempo
-                FROM producto where borrado=False";
+                FROM producto where borrado=False
+                order by nombre";
 
             NpgsqlDb.Instancia.PrepareCommand(sql);
             NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
@@ -93,7 +94,8 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
            string sql = "";
            sql += @"SELECT idinsumo, nombre, nombre_fab, costo, borrado, stock, fecha_act_stock, cantidad 
                     FROM producto_insumo pi
-                left join insumo i on i.idinsumo= pi.id_insumo    where pi.id_producto=" + p.ToString();
+                left join insumo i on i.idinsumo= pi.id_insumo    
+                where pi.id_producto=" + p.ToString() + " order by nombre";
 
            NpgsqlDb.Instancia.PrepareCommand(sql);
            NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
@@ -121,7 +123,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
 
            queryStr = @"INSERT INTO producto( nombre, precio, borrado,  tiempo)
-                VALUES (:nombre, :precio, :borrado, :tiempo)";
+                VALUES (:nombre, :precio, :borrado, :tiempo);SELECT currval('producto_idproducto_seq')";
 
 
 
@@ -131,22 +133,12 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
            try
            {
-               NpgsqlDb.Instancia.ExecuteNonQuery();
+               i.Idproducto = NpgsqlDb.Instancia.ExecuteScalar();
 
            }
            catch (System.OverflowException Ex)
            {
                throw Ex;
-           }
-
-           queryStr = "SELECT currval('producto_idproducto_seq')";
-           NpgsqlDb.Instancia.PrepareCommand(queryStr);
-           NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
-           while (dr.Read())
-           {
-               if (!dr.IsDBNull(0))
-                   i.Idproducto= long.Parse(dr[0].ToString());
-
            }
 
            guardarInsumosEnProd(i);

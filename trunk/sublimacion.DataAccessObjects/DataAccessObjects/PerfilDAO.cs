@@ -14,7 +14,8 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
             string sql = "";
             sql = @"SELECT id, perfil, descripcion, borrado
-                FROM perfil";
+                FROM perfil
+                order by descripcion";
 
 
             NpgsqlDb.Instancia.PrepareCommand(sql);

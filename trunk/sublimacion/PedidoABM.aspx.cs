@@ -95,8 +95,6 @@ namespace sublimacion
 
         }
 
-
-
         private void cargarCombos()
         {
 
@@ -148,12 +146,12 @@ namespace sublimacion
 
         private void calcularPrecio()
         {
-            List<Producto> dt = (List<Producto>)Session["Productos"];
+            List<LineaPedido> dt = (List<LineaPedido>)Session["Productos"];
 
             decimal precio = 0;
-            foreach (Producto p in dt)
+            foreach (LineaPedido p in dt)
             {
-                precio += p.Cantidad * p.Precio;
+                precio += p.Cantidad * p.Producto.Precio;
             }
 
             lblPrecioFinal.Text = precio.ToString();
@@ -324,11 +322,11 @@ namespace sublimacion
 
             }
 
-            _pedido.LineaPedido = new List<Producto>();
+            _pedido.LineaPedido = new List<LineaPedido>();
 
 
 
-            List<Producto> dt = (List<Producto>)Session["Productos"];
+            List<LineaPedido> dt = (List<LineaPedido>)Session["Productos"];
 
             _pedido.LineaPedido = dt;
             
@@ -353,9 +351,10 @@ namespace sublimacion
                 dt.Columns.Add("CatalogoNombre");
                 dt.Columns.Add("PlantillaNombre");
                 dt.Columns.Add("Cantidad");
+                dt.Columns.Add("ArchivoClienteNombreMostrable");
 
 
-                dt.Rows.Add(new object[] { "", "", "", "", "" });
+                dt.Rows.Add(new object[] { "", "", "", "", "","" });
 
                 GridViewProductos.DataSource = dt;
                 GridViewProductos.DataBind();
@@ -376,19 +375,45 @@ namespace sublimacion
             }
         }
 
+
+        protected void BtnSeleccionarArchivo_Click(object sender, EventArgs e)
+        {
+
+
+        }
+
         protected void BtnAgregar_Click(object sender, EventArgs e)
         {
-            List<Producto> dt = (List<Producto>)Session["Productos"];
+
+
+            List<LineaPedido> dt = (List<LineaPedido>)Session["Productos"];
 
             if (dt == null)
             {
-                dt = new List<Producto>();
+                dt = new List<LineaPedido>();
             }
-
-            Producto p = ProductoDAO.obtenerProductoPorId(DDLProducto.SelectedValue.Trim());
+            LineaPedido p = new LineaPedido();
+            p.Producto = ProductoDAO.obtenerProductoPorId(DDLProducto.SelectedValue.Trim());
             p.Catalogo=CatalogoDAO.obtenerCatalogoPorId(DDLCatalogo.SelectedValue.Trim());
             p.Plantilla = PlantillaDAO.obtenerPlantillaPorId(DDLPlantilla.SelectedValue.Trim());
             p.Cantidad = int.Parse(TxtCantidad.Text);
+
+            if ((FileUsuario.PostedFile != null) && (FileUsuario.PostedFile.ContentLength > 0))
+            {
+                string fn = DateTime.Now.ToString("yyyyMMddhhmmssffff") + System.IO.Path.GetFileName(FileUsuario.PostedFile.FileName);
+                p.ArchivoCliente = fn;
+                string SaveLocation = Server.MapPath("Data") + "\\" +fn;
+                try
+                {
+                    FileUsuario.PostedFile.SaveAs(SaveLocation);
+                   
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
 
             dt.Add(p);
             Session["Productos"] = dt;
@@ -421,11 +446,11 @@ namespace sublimacion
                 
                 if (Id.Text.Trim() != "")
                 {
-                    List<Producto> dt = (List<Producto>)Session["Productos"];
-                    List<Producto> dtN = new List<Producto>();
-                    foreach (Producto p in dt)
+                    List<LineaPedido> dt = (List<LineaPedido>)Session["Productos"];
+                    List<LineaPedido> dtN = new List<LineaPedido>();
+                    foreach (LineaPedido p in dt)
                     {
-                        if (p.Idproducto.ToString() == Id.Text.Trim() && p.CatalogoNombre == Cata.Text && p.PlantillaNombre == Plant.Text && p.Cantidad.ToString() == Cant.Text)
+                        if (p.Producto.Idproducto.ToString() == Id.Text.Trim() && p.CatalogoNombre == Cata.Text && p.PlantillaNombre == Plant.Text && p.Cantidad.ToString() == Cant.Text)
                         {
 
                         }

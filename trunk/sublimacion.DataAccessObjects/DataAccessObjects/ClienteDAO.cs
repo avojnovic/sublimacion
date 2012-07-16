@@ -20,7 +20,8 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             string sql = "";
             sql = @"SELECT idcliente, nombre, apellido, dni, direccion, telefono, mail, fecha, borrado
                 FROM cliente
-                where borrado=false";
+                where borrado=false
+                order by nombre,apellido";
 
 
             NpgsqlDb.Instancia.PrepareCommand(sql);

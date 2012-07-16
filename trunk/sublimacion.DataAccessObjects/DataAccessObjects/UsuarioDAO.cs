@@ -20,8 +20,9 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             string sql = @"SELECT u.id as usu_id, u.usuario as usu_usuario, u.contrasenia as usu_contrasenia, u.nombre as usu_nombre,
                       u.apellido as usu_apellido, u.telefono as usu_telefono, u.mail as usu_mail, u.borrado as usu_borrado, 
                       u.id_perfil as usu_id_perfil
-            FROM usuario u
-              inner join perfil p on u.id_perfil=p.id where u.borrado=false";
+                        FROM usuario u
+                       inner join perfil p on u.id_perfil=p.id where u.borrado=false
+                        order by u.nombre,u.apellido";
             NpgsqlDb.Instancia.PrepareCommand(sql);
             NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
             Dictionary<long, Usuario> dicUsuario = new Dictionary<long, Usuario>();

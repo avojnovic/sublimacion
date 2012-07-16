@@ -18,23 +18,25 @@ namespace sublimacion
 {
     public partial class ClienteVer : System.Web.UI.Page
     {
-        private Dictionary<long, Cliente> _dicCliente;
+        private List<Cliente> _Clientes;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            cargarGrilla();
-            
-            setearGrillaSiEstaVacia();
+            if (!IsPostBack)
+            {
+                _Clientes = ClienteDAO.obtenerClienteTodos().Values.ToList();
+                cargarGrilla();
+            }
         }
 
         private void cargarGrilla()
         {
-            _dicCliente = ClienteDAO.obtenerClienteTodos();
+           
 
-            GridView1.DataSource = _dicCliente.Values.ToList();
+            GridView1.DataSource = _Clientes;
             GridView1.DataBind();
 
+            setearGrillaSiEstaVacia();
         }
 
 
@@ -63,6 +65,33 @@ namespace sublimacion
             }
 
         }
+
+
+        protected void BtnBuscar_Click(object sender, EventArgs e)
+        {
+            string buscar = txtBuscar.Text.Trim().ToLower();
+            _Clientes = ClienteDAO.obtenerClienteTodos().Values.ToList();
+
+            var newList = (from x in _Clientes
+                           where x.Apellido.ToLower().Contains(buscar) 
+                           || x.Nombre.ToLower().Contains(buscar) 
+                           || x.Dni.ToString().ToLower().Contains(buscar)
+                           || x.Mail.ToString().ToLower().Contains(buscar)
+                           || x.Telefono.ToString().ToLower().Contains(buscar)
+                           || x.Direccion.ToString().ToLower().Contains(buscar)
+                           select x).ToList();
+
+            _Clientes = newList;
+            cargarGrilla();
+        }
+
+        protected void Btnlimpiar_Click(object sender, EventArgs e)
+        {
+            txtBuscar.Text = "";
+            _Clientes = ClienteDAO.obtenerClienteTodos().Values.ToList();
+            cargarGrilla();
+        }
+        
 
         protected void BtnNuevo_Click(object sender, EventArgs e)
         {
