@@ -429,12 +429,8 @@ namespace sublimacion
         {
             if (e.CommandName == "Borrar")
             {
-                // Retrieve the row index stored in the 
-                // CommandArgument property.
-                int index = Convert.ToInt32(e.CommandArgument);
 
-                // Retrieve the row that contains the button 
-                // from the Rows collection.
+                int index = Convert.ToInt32(e.CommandArgument);
                 GridViewRow row = GridViewProductos.Rows[index];
 
                 
@@ -442,6 +438,7 @@ namespace sublimacion
                 Label Cata = row.FindControl("LblCata") as Label;
                 Label Plant = row.FindControl("LblPlant") as Label;
                 Label Cant = row.FindControl("LblCant") as Label;
+                Label NombreArchivo = row.FindControl("LblArchivo") as Label;
              
                 
                 if (Id.Text.Trim() != "")
@@ -450,7 +447,7 @@ namespace sublimacion
                     List<LineaPedido> dtN = new List<LineaPedido>();
                     foreach (LineaPedido p in dt)
                     {
-                        if (p.Producto.Idproducto.ToString() == Id.Text.Trim() && p.CatalogoNombre == Cata.Text && p.PlantillaNombre == Plant.Text && p.Cantidad.ToString() == Cant.Text)
+                        if (p.Producto.Idproducto.ToString() == Id.Text.Trim() && p.CatalogoNombre == Cata.Text && p.PlantillaNombre == Plant.Text && p.Cantidad.ToString() == Cant.Text && p.ArchivoClienteNombreMostrable == NombreArchivo.Text.Trim())
                         {
 
                         }
@@ -465,6 +462,43 @@ namespace sublimacion
                     GridViewProductos.DataBind();
 
                     calcularPrecio();
+                }
+            }
+            
+            
+            if (e.CommandName == "VerAdjunto")
+            {
+                int index = Convert.ToInt32(e.CommandArgument);
+                GridViewRow row = GridViewProductos.Rows[index];
+                Label Id = row.FindControl("LblIdproducto") as Label;
+                Label Cata = row.FindControl("LblCata") as Label;
+                Label Plant = row.FindControl("LblPlant") as Label;
+                Label Cant = row.FindControl("LblCant") as Label;
+                Label NombreArchivo = row.FindControl("LblArchivo") as Label;
+
+
+                if (Id.Text.Trim() != "")
+                {
+                    List<LineaPedido> dt = (List<LineaPedido>)Session["Productos"];
+                  
+                    foreach (LineaPedido p in dt)
+                    {
+                        if (p.Producto.Idproducto.ToString() == Id.Text.Trim() && p.CatalogoNombre == Cata.Text && p.PlantillaNombre == Plant.Text && p.Cantidad.ToString() == Cant.Text && p.ArchivoClienteNombreMostrable == NombreArchivo.Text.Trim())
+                        {
+                            if (p.ArchivoCliente != "")
+                            {
+                                Response.AppendHeader("content-disposition", "attachment; filename=" + p.ArchivoClienteNombreMostrable);
+                                Response.WriteFile("Data\\" + p.ArchivoCliente);
+                                Response.End();
+                            }
+                        }
+                        else
+                        {
+                            
+                        }
+                    }
+
+                 
                 }
             }
 
