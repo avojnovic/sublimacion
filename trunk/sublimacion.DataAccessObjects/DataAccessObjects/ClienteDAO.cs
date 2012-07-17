@@ -102,14 +102,14 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             return c;
         }
 
-        public static void insertarCliente(Cliente i)
+        public static Cliente insertarCliente(Cliente i)
         {
 
             string queryStr;
 
 
             queryStr = @"INSERT INTO cliente( nombre, apellido, dni, direccion, telefono, mail, fecha, borrado)
-                VALUES (:nombre, :apellido, :dni, :direccion, :telefono, :mail, :fecha, :borrado)";
+                VALUES (:nombre, :apellido, :dni, :direccion, :telefono, :mail, :fecha, :borrado); SELECT currval('cliente_idcliente_seq');";
 
             NpgsqlDb.Instancia.PrepareCommand(queryStr);
 
@@ -121,13 +121,15 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
             try
             {
-                NpgsqlDb.Instancia.ExecuteNonQuery();
+              i.IdCliente=  NpgsqlDb.Instancia.ExecuteScalar();
 
             }
             catch (System.OverflowException Ex)
             {
                 throw Ex;
             }
+
+            return i;
         }
 
         public static void actualizarCliente(Cliente i)

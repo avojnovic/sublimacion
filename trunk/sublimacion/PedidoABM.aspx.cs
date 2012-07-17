@@ -34,10 +34,12 @@ namespace sublimacion
 
         Dictionary<Producto, int> _listaProductosAgregados = new Dictionary<Producto, int>();
         Usuario user;
+        string idCliente;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             string id = Request.QueryString["id"];
+            idCliente = Request.QueryString["idCliente"];
 
             if (id != null && id!="")
             {
@@ -200,6 +202,12 @@ namespace sublimacion
             else
             {
                 _modoApertura = ModosEdicionEnum.Nuevo;
+
+                if (idCliente != null && idCliente != "")
+                {
+                    CmbCliente.SelectedValue = idCliente;
+                }
+
             }
         }
 
