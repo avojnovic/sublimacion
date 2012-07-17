@@ -85,10 +85,10 @@ namespace sublimacion
                 itPlaN.NavigateUrl = "PlantillaABM.aspx";
                 itPla.ChildItems.Add(itPlaN);
 
-                
+
                 divMenu.Items.Add(itPla);
 
-               
+
 
             }
 
@@ -107,12 +107,12 @@ namespace sublimacion
                 itInsN.NavigateUrl = "InsumoABM.aspx";
                 itIns.ChildItems.Add(itInsN);
 
-                
+
                 divMenu.Items.Add(itIns);
 
                 //PRODUCTO
                 MenuItem itPro = new MenuItem("Productos");
-                
+
                 MenuItem itProE = new MenuItem("Ver");
                 itProE.Value = "ProductoVer";
                 itProE.NavigateUrl = "ProductoVer.aspx";
@@ -139,24 +139,38 @@ namespace sublimacion
                 itDeN.Value = "DescuentoNuevo";
                 itDeN.NavigateUrl = "DescuentoABM.aspx";
                 itDe.ChildItems.Add(itDeN);
-                
+
                 divMenu.Items.Add(itDe);
             }
 
             if ((user.Perfil == Usuario.PerfilesEnum.Vendedor) || (user.Perfil == Usuario.PerfilesEnum.Administrador) || (user.Perfil == Usuario.PerfilesEnum.Diseniador))
             {
-                //ACEPTAR DISENIO
+                //DISENIO
                 MenuItem itDiseno = new MenuItem("Diseño");
 
-                MenuItem itAcep = new MenuItem("Aceptar Diseño");
-                itAcep.Value = "AceptarDisenio";
-                itAcep.NavigateUrl = "AceptarDisenio.aspx";
-                itDiseno.ChildItems.Add(itAcep);
+                MenuItem itDisPe = new MenuItem("Diseños Pendientes");
+                itDisPe.Value = "DiseniosPendientes";
+                itDisPe.NavigateUrl = "DiseniosPendientes.aspx";
+                itDiseno.ChildItems.Add(itDisPe);
 
                 MenuItem itReg = new MenuItem("Registrar Diseño");
                 itReg.Value = "RegistrarDisenio";
                 itReg.NavigateUrl = "RegistrarDisenio.aspx";
                 itDiseno.ChildItems.Add(itReg);
+
+
+                if ((user.Perfil == Usuario.PerfilesEnum.Vendedor)|| (user.Perfil == Usuario.PerfilesEnum.Administrador))
+                {
+                    //ACEPTAR DISEÑO
+
+                    MenuItem itAcepDi = new MenuItem("Aceptar Diseño");
+                    itAcepDi.Value = "AceptarDisenio";
+                    itAcepDi.NavigateUrl = "AceptarDisenio.aspx";
+                    itDiseno.ChildItems.Add(itAcepDi);
+
+
+                }
+
 
                 divMenu.Items.Add(itDiseno);
 
@@ -190,10 +204,10 @@ namespace sublimacion
 
                 if ((user.Perfil != Usuario.PerfilesEnum.JefeProduccion))
                 {
-                MenuItem itPeN = new MenuItem("Nuevo");
-                itPeN.Value = "PedidoNuevo";
-                itPeN.NavigateUrl = "PedidoABM.aspx";
-                itPe.ChildItems.Add(itPeN);
+                    MenuItem itPeN = new MenuItem("Nuevo");
+                    itPeN.Value = "PedidoNuevo";
+                    itPeN.NavigateUrl = "PedidoABM.aspx";
+                    itPe.ChildItems.Add(itPeN);
                 }
 
                 divMenu.Items.Add(itPe);
@@ -233,7 +247,7 @@ namespace sublimacion
                 itInsN.NavigateUrl = "UsuarioABM.aspx";
                 itIns.ChildItems.Add(itInsN);
 
-                
+
                 divMenu.Items.Add(itIns);
             }
 

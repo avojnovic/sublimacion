@@ -70,6 +70,7 @@
     <Content Include="Default.aspx" />
     <Content Include="DescuentoABM.aspx" />
     <Content Include="DescuentoVer.aspx" />
+    <Content Include="DiseniosPendientes.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Images\File-Open-icon.png" />
     <Content Include="Images\New.png" />
@@ -151,6 +152,13 @@
     </Compile>
     <Compile Include="DescuentoVer.aspx.designer.cs">
       <DependentUpon>DescuentoVer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DiseniosPendientes.aspx.cs">
+      <DependentUpon>DiseniosPendientes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DiseniosPendientes.aspx.designer.cs">
+      <DependentUpon>DiseniosPendientes.aspx</DependentUpon>
     </Compile>
     <Compile Include="InsumoABM.aspx.cs">
       <DependentUpon>InsumoABM.aspx</DependentUpon>
