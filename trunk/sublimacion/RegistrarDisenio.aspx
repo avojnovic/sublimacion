@@ -112,7 +112,7 @@
                                     <asp:Label ID="LblCant" Font-Names="calibri" runat="server" Text='<%#Eval("Cantidad") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Archivo">
+                            <asp:TemplateField HeaderText="Archivo Cliente">
                                 <ItemTemplate>
                                     <asp:Label ID="LblArchivo" Font-Names="calibri" runat="server" Text='<%#Eval("ArchivoClienteNombreMostrable") %>'></asp:Label>
                                 </ItemTemplate>
@@ -123,10 +123,21 @@
                                         Text="Ver Foto" />
                                 </ItemTemplate>
                             </asp:TemplateField>
+                             <asp:TemplateField HeaderText="Archivo Diseño">
+                                <ItemTemplate>
+                                    <asp:Label ID="LblArchivoDisenio" Font-Names="calibri" runat="server" Text='<%#Eval("ArchivoDisenioNombreMostrable") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:Button ID="BtnSubirDisenio" runat="server" CommandName="SubirDisenio" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"
-                                        Text="Subir Diseño" />
+                                    <asp:Button ID="BtnVerAdjuntoDisenio" runat="server" CommandName="VerAdjuntoDisenio" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"
+                                        Text="Ver Diseño" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:Button ID="BtnSeleccionar" runat="server" CommandName="Seleccionar" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"
+                                        Text="Seleccionar" />
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
@@ -137,6 +148,25 @@
             </tr>
             </table>
         </center>
+        
+        <br/>
+           <asp:Panel runat="server" ID="panel3" Visible="true" Width="800px" Style="background-color: #DDDDDD">
+            <table>
+                <tr>
+                    <td align="center">
+                    <asp:Label ID="lblLineaSeleccionada" runat="server"></asp:Label>
+                      <input type="file" id="FileDisenio" name="FileDisenio" runat="server" />
+                       <asp:ImageButton ID="BtnAdjuntar" Width="32px" Height="32px" ImageUrl="~/Images/Save.png"
+                            runat="server" ValidationGroup="add" OnClick="BtnAdjuntar_Click" ToolTip="Adjuntar" />
+                   </td>
+                </tr>
+            </table>
+        </asp:Panel>
+        <act:RoundedCornersExtender ID="RoundedCornersExtender3" runat="server" TargetControlID="panel2"
+            Radius="8" Color="#DDDDDD" Corners="All" Enabled="true" />
+
+        <br/>
+
         <asp:Panel runat="server" ID="panel2" Visible="true" Width="800px" Style="background-color: #DDDDDD">
             <table>
                 <tr>
