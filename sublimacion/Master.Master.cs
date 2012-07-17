@@ -53,6 +53,7 @@ namespace sublimacion
 
         private void generarMenu()
         {
+          
 
             if ((user.Perfil == Usuario.PerfilesEnum.Diseniador) || (user.Perfil == Usuario.PerfilesEnum.Administrador))
             {
@@ -153,23 +154,23 @@ namespace sublimacion
                 itDisPe.NavigateUrl = "DiseniosPendientes.aspx";
                 itDiseno.ChildItems.Add(itDisPe);
 
-                MenuItem itReg = new MenuItem("Registrar Diseño");
-                itReg.Value = "RegistrarDisenio";
-                itReg.NavigateUrl = "RegistrarDisenio.aspx";
-                itDiseno.ChildItems.Add(itReg);
+                //MenuItem itReg = new MenuItem("Registrar Diseño");
+                //itReg.Value = "RegistrarDisenio";
+                //itReg.NavigateUrl = "RegistrarDisenio.aspx";
+                //itDiseno.ChildItems.Add(itReg);
 
 
-                if ((user.Perfil == Usuario.PerfilesEnum.Vendedor)|| (user.Perfil == Usuario.PerfilesEnum.Administrador))
-                {
-                    //ACEPTAR DISEÑO
+                //if ((user.Perfil == Usuario.PerfilesEnum.Vendedor)|| (user.Perfil == Usuario.PerfilesEnum.Administrador))
+                //{
+                //    //ACEPTAR DISEÑO
 
-                    MenuItem itAcepDi = new MenuItem("Aceptar Diseño");
-                    itAcepDi.Value = "AceptarDisenio";
-                    itAcepDi.NavigateUrl = "AceptarDisenio.aspx";
-                    itDiseno.ChildItems.Add(itAcepDi);
+                //    MenuItem itAcepDi = new MenuItem("Aceptar Diseño");
+                //    itAcepDi.Value = "AceptarDisenio";
+                //    itAcepDi.NavigateUrl = "AceptarDisenio.aspx";
+                //    itDiseno.ChildItems.Add(itAcepDi);
 
 
-                }
+                //}
 
 
                 divMenu.Items.Add(itDiseno);
@@ -260,6 +261,12 @@ namespace sublimacion
 
             divMenu.Items.Add(itSalir);
 
+           
+            MenuItem ituser = new MenuItem(" " + user.NombreCompleto + " - " + user.Perfil.ToString());
+            ituser.Value = "user";
+            ituser.ImageUrl = "~/Images/user_info.png";
+            ituser.Selectable = false;
+            divMenu.Items.Add(ituser);
         }
     }
 }

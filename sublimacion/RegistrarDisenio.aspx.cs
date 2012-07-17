@@ -157,66 +157,6 @@ namespace sublimacion
             }
         }
 
-       /* private void setearObjeto()
-        {
-
-            if (_pedido == null)
-                _pedido = new Pedido();
-
-            _pedido.Cliente = TxtCliente.Text.Trim();
-
-            _pedido.Borrado = false;
-            _pedido.Comentario = TxtComentario.Text.Trim();
-
-            if (TxtPrioridad.Text.Trim() == "")
-                _pedido.Prioridad = 0;
-            else
-                _pedido.Prioridad = int.Parse(TxtPrioridad.Text.Trim());
-
-            _pedido.Ubicacion = TxtUbicacion.Text.Trim();
-
-                     
-
-
-
-            if (!_pedido.EstadosPedido.ContainsKey(long.Parse(this.CmbEstado.SelectedValue)))
-            {
-                EstadosPedido est = new EstadosPedido();
-                est.Fecha_inicio = DateTime.Now;
-                est.Fecha_fin = null;
-                est.Estado = _listaEstados[long.Parse(this.CmbEstado.SelectedValue)];
-                _pedido.EstadosPedido.Add(est.Estado.Id, est);
-
-
-                foreach (EstadosPedido e in _pedido.EstadosPedido.Values.ToList())
-                {
-
-                    if (e.Estado.Id != est.Estado.Id && e.Fecha_fin == null)
-                    {
-                        e.Fecha_fin = DateTime.Now;
-                    }
-                }
-
-            }
-
-            _pedido.LineaPedido = new List<LineaPedido>();
-
-
-
-            List<LineaPedido> dt = (List<LineaPedido>)Session["Productos"];
-
-            _pedido.LineaPedido = dt;
-
-
-
-
-
-
-
-        }*/
-
-
-
         private void setearGrillaSiEstaVacia()
         {
 
@@ -356,7 +296,7 @@ namespace sublimacion
                 Label NombreArchivo = row.FindControl("LblArchivo") as Label;
 
 
-                if (Id.Text.Trim() != "")
+                if (Id.Text.Trim() != "" && NombreArchivo.Text.Trim() != "")
                 {
                     List<LineaPedido> dt = (List<LineaPedido>)Session["Productos"];
 
@@ -392,7 +332,7 @@ namespace sublimacion
                 Label NombreArchivo = row.FindControl("LblArchivo") as Label;
                 Label NombreArchivoDisenio = row.FindControl("LblArchivoDisenio") as Label;
 
-                if (Id.Text.Trim() != "")
+                if (Id.Text.Trim() != "" && NombreArchivoDisenio.Text.Trim() != "")
                 {
                     List<LineaPedido> dt = (List<LineaPedido>)Session["Productos"];
 

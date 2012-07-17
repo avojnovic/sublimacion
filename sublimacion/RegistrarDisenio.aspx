@@ -112,15 +112,21 @@
                                     <asp:Label ID="LblCant" Font-Names="calibri" runat="server" Text='<%#Eval("Cantidad") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
+                             <asp:TemplateField>
+                                <ItemTemplate>
+                                    <asp:ImageButton ID="BtnVerAdjunto" Width="16px" Height="16px" ImageUrl="~/Images/arrow_down.png"
+                                            runat="server" ToolTip="Descargar archivo cliente" CommandName="VerAdjunto" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
                             <asp:TemplateField HeaderText="Archivo Cliente">
                                 <ItemTemplate>
                                     <asp:Label ID="LblArchivo" Font-Names="calibri" runat="server" Text='<%#Eval("ArchivoClienteNombreMostrable") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField>
+                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:Button ID="BtnVerAdjunto" runat="server" CommandName="VerAdjunto" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"
-                                        Text="Ver Foto" />
+                                   <asp:ImageButton ID="BtnVerAdjuntoDisenio" Width="16px" Height="16px" ImageUrl="~/Images/arrow_down.png"
+                                            runat="server" ToolTip="Descargar diseño" CommandName="VerAdjuntoDisenio" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
                                 </ItemTemplate>
                             </asp:TemplateField>
                              <asp:TemplateField HeaderText="Archivo Diseño">
@@ -128,16 +134,11 @@
                                     <asp:Label ID="LblArchivoDisenio" Font-Names="calibri" runat="server" Text='<%#Eval("ArchivoDisenioNombreMostrable") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
+                          
                             <asp:TemplateField>
                                 <ItemTemplate>
-                                    <asp:Button ID="BtnVerAdjuntoDisenio" runat="server" CommandName="VerAdjuntoDisenio" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"
-                                        Text="Ver Diseño" />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField>
-                                <ItemTemplate>
-                                    <asp:Button ID="BtnSeleccionar" runat="server" CommandName="Seleccionar" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"
-                                        Text="Seleccionar" />
+                                <asp:ImageButton ID="BtnSeleccionar" Width="16px" Height="16px" ImageUrl="~/Images/edit.png"
+                                            runat="server" ToolTip="Seleccionar / Editar" CommandName="Seleccionar" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
@@ -156,7 +157,7 @@
                     <td align="center">
                     <asp:Label ID="lblLineaSeleccionada" runat="server"></asp:Label>
                       <input type="file" id="FileDisenio" name="FileDisenio" runat="server" />
-                       <asp:ImageButton ID="BtnAdjuntar" Width="32px" Height="32px" ImageUrl="~/Images/Save.png"
+                       <asp:ImageButton ID="BtnAdjuntar" Width="32px" Height="32px" ImageUrl="~/Images/attach.png"
                             runat="server" ValidationGroup="add" OnClick="BtnAdjuntar_Click" ToolTip="Adjuntar" />
                    </td>
                 </tr>

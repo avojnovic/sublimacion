@@ -353,7 +353,7 @@ namespace sublimacion
                 dt.Columns.Add("PlantillaNombre");
                 dt.Columns.Add("Cantidad");
                 dt.Columns.Add("ArchivoClienteNombreMostrable");
-
+                dt.Columns.Add("ArchivoDisenioNombreMostrable");
 
                 dt.Rows.Add(new object[] { "", "", "", "", "","" });
 
@@ -478,7 +478,7 @@ namespace sublimacion
                 Label NombreArchivo = row.FindControl("LblArchivo") as Label;
 
 
-                if (Id.Text.Trim() != "")
+                if (Id.Text.Trim() != "" && NombreArchivo.Text.Trim()!="")
                 {
                     List<LineaPedido> dt = (List<LineaPedido>)Session["Productos"];
                   
@@ -503,7 +503,46 @@ namespace sublimacion
                 }
             }
 
+            if (e.CommandName == "VerAdjuntoDisenio")
+            {
+                int index = Convert.ToInt32(e.CommandArgument);
+                GridViewRow row = GridViewProductos.Rows[index];
+                Label Id = row.FindControl("LblIdproducto") as Label;
+                Label Cata = row.FindControl("LblCata") as Label;
+                Label Plant = row.FindControl("LblPlant") as Label;
+                Label Cant = row.FindControl("LblCant") as Label;
+                Label NombreArchivo = row.FindControl("LblArchivo") as Label;
+                Label NombreArchivoDisenio = row.FindControl("LblArchivoDisenio") as Label;
+
+                if (Id.Text.Trim() != "" && NombreArchivoDisenio.Text.Trim() != "")
+                {
+                    List<LineaPedido> dt = (List<LineaPedido>)Session["Productos"];
+
+                    foreach (LineaPedido p in dt)
+                    {
+                        if (p.Producto.Idproducto.ToString() == Id.Text.Trim() && p.CatalogoNombre == Cata.Text && p.PlantillaNombre == Plant.Text && p.Cantidad.ToString() == Cant.Text && p.ArchivoClienteNombreMostrable == NombreArchivo.Text.Trim() && p.ArchivoDisenioNombreMostrable == NombreArchivoDisenio.Text.Trim())
+                        {
+                            if (p.ArchivoDisenio != "")
+                            {
+                                Response.AppendHeader("content-disposition", "attachment; filename=" + p.ArchivoDisenioNombreMostrable);
+                                Response.WriteFile("Data\\" + p.ArchivoDisenio);
+                                Response.End();
+                            }
+                        }
+                        else
+                        {
+
+                        }
+                    }
+
+
+                }
+            }
+
         }
+
+
+
         protected void GridViewProductos_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             GridViewProductos.PageIndex = e.NewPageIndex;
