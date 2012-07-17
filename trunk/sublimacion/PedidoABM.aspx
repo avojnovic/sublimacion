@@ -189,20 +189,32 @@
                                         <asp:Label ID="LblCant" Font-Names="calibri" runat="server" Text='<%#Eval("Cantidad") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Archivo">
+                                <asp:TemplateField>
+                                    <ItemTemplate>
+                                        <asp:ImageButton ID="BtnVerAdjunto" Width="16px" Height="16px" ImageUrl="~/Images/arrow_down.png"
+                                            runat="server" ToolTip="Descargar archivo cliente" CommandName="VerAdjunto" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Archivo Cliente">
                                     <ItemTemplate>
                                         <asp:Label ID="LblArchivo" Font-Names="calibri" runat="server" Text='<%#Eval("ArchivoClienteNombreMostrable") %>'></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                 <asp:TemplateField>
-                                    <ItemTemplate>
-                                        <asp:Button ID="BtnVerAdjunto" runat="server" CommandName="VerAdjunto"  CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"  Text="Abrir" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <asp:Button ID="BtnBorrar" runat="server" CommandName="Borrar" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" Text="Borrar" />
+                                        <asp:ImageButton ID="BtnVerAdjuntoDisenio" Width="16px" Height="16px" ImageUrl="~/Images/arrow_down.png"
+                                            runat="server" ToolTip="Descargar diseño" CommandName="VerAdjuntoDisenio" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Archivo Diseño">
+                                    <ItemTemplate>
+                                        <asp:Label ID="LblArchivoDisenio" Font-Names="calibri" runat="server" Text='<%#Eval("ArchivoDisenioNombreMostrable") %>'></asp:Label>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField>
+                                    <ItemTemplate>
+                                        <asp:ImageButton ID="BtnBorrarGrid" Width="16px" Height="16px" ImageUrl="~/Images/Trash.png"
+                                            runat="server" ToolTip="Borrar" CommandName="Borrar" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
