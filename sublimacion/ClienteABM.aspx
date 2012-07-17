@@ -95,8 +95,8 @@
         <asp:ImageButton ID="ImageButton1" Width="32px" Height="32px" ImageUrl="~/Images/Save.png" runat="server" ValidationGroup="add" onclick="BtnGuardar_Click" ToolTip="Guardar" />
         <asp:ImageButton ID="BtnBorrar" Width="32px" Height="32px" ImageUrl="~/Images/Trash.png" runat="server" onclick="BtnBorrar_Click" ToolTip="Borrar" />
         <asp:ImageButton ID="BtnSalir" Width="32px" Height="32px" ImageUrl="~/Images/return.png" runat="server" onclick="BtnSalir_Click" ToolTip="Salir" />
-         <asp:ImageButton ID="BtnVerPedidos" Width="32px" Height="32px" ImageUrl="~/Images/jobs.png" runat="server" onclick="BtnVerPedidos_Click" ToolTip="Ver Pedidos" />
-       
+         <asp:ImageButton ID="BtnVerPedidos" Width="32px" Height="32px" ImageUrl="~/Images/jobs.png" runat="server"  onclick="BtnVerPedidos_Click" ToolTip="Ver Pedidos" />
+       <asp:ImageButton ID="BtnPedidoNew" Width="32px" Height="32px" ImageUrl="~/Images/SaveAndNew.png" runat="server" ValidationGroup="add" onclick="BtnPedidoNew_Click" ToolTip="Guardar y Nuevo Pedido" />
          
     </td>
 </tr>

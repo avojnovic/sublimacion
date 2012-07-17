@@ -57,7 +57,8 @@ namespace sublimacion
             {
                 _modoApertura = ModosEdicionEnum.Nuevo;
                 TxtFecha.Text = DateTime.Now.ToShortDateString();
-              
+                
+                
                 BtnBorrar.Visible = false;
             }
 
@@ -87,10 +88,19 @@ namespace sublimacion
         {
 
 
+            guardar();
+
+
+            Response.Redirect("ClienteVer.aspx");
+
+        }
+
+        private void guardar()
+        {
             if (_modoApertura == ModosEdicionEnum.Nuevo)
             {
                 setearObjeto();
-                ClienteDAO.insertarCliente(_cliente);
+                _cliente=ClienteDAO.insertarCliente(_cliente);
 
             }
             else
@@ -101,10 +111,6 @@ namespace sublimacion
                     ClienteDAO.actualizarCliente(_cliente);
                 }
             }
-
-
-            Response.Redirect("ClienteVer.aspx");
-
         }
 
         private void setearObjeto()
@@ -122,7 +128,13 @@ namespace sublimacion
           
          
         }
+        protected void BtnPedidoNew_Click(object sender, EventArgs e)
+        {
+            guardar();
+            Response.Redirect("PedidoABM.aspx?idCliente="+_cliente.IdClienteStr);
 
+        }
+        
         protected void BtnSalir_Click(object sender, EventArgs e)
         {
             Response.Redirect("ClienteVer.aspx");
