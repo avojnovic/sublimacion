@@ -184,19 +184,7 @@ namespace sublimacion
                 TxtUbicacion.Text = _pedido.Ubicacion;
                 TxtUsuario.Text = _pedido.UserNombre;
 
-                DateTime? t = DateTime.MinValue;
-                Estado est = new Estado();
-
-                foreach (EstadosPedido e in _pedido.EstadosPedido.Values.ToList())
-                {
-                    if (e.Fecha_inicio > t)
-                    {
-                        t = e.Fecha_inicio;
-                        est = e.Estado;
-                    }
-                }
-
-                CmbEstado.SelectedValue = est.Id.ToString();
+                CmbEstado.SelectedValue = _pedido.EstadoId.ToString();
 
                 CmbCliente.SelectedValue = _pedido.Cliente.IdCliente.ToString();
 
@@ -320,6 +308,19 @@ namespace sublimacion
                     }
                 }
 
+            }
+            else
+            {
+                _pedido.EstadosPedido[long.Parse(this.CmbEstado.SelectedValue)].Fecha_fin = null;
+               
+                foreach (EstadosPedido e in _pedido.EstadosPedido.Values.ToList())
+                {
+
+                    if (e.Estado.Id != _pedido.EstadosPedido[long.Parse(this.CmbEstado.SelectedValue)].Estado.Id && e.Fecha_fin == null)
+                    {
+                        e.Fecha_fin = DateTime.Now;
+                    }
+                }
             }
 
             _pedido.LineaPedido = new List<LineaPedido>();
