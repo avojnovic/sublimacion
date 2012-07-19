@@ -18,7 +18,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
           string sql = "";
           sql = @"SELECT idcatalogo, nombre, fecha, id_producto, borrado
                 FROM catalogo
-                where borrado=false";
+                where borrado=false order by nombre";
 
 
           NpgsqlDb.Instancia.PrepareCommand(sql);

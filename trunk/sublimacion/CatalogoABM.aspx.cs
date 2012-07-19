@@ -42,7 +42,7 @@ namespace sublimacion
 
             if (!IsPostBack)
             {
-                Session["Plantilla"] = _listaPlantilla;
+                Session["Plantilla"] = null;
 
                 cargarGrilla();
                 setearGrillaSiEstaVacia();
@@ -92,7 +92,8 @@ namespace sublimacion
 
                 if (_catalogo.Plantilla != null)
                 {
-                    GridViewCheckBoxSetear(_catalogo.Plantilla);
+                    Session["Plantilla"] = _catalogo.Plantilla;
+                    GridViewCheckBoxSetear();
                 }
 
 
@@ -110,44 +111,69 @@ namespace sublimacion
 
             Dictionary<long, Plantilla> dp = (Dictionary<long, Plantilla>)Session["Plantilla"];
 
-
+            if (dp == null)
+            {
+                dp = new Dictionary<long, Plantilla>();
+            }
 
             for (int i = 0; i < GridViewPlantillas.Rows.Count; i++)
             {
                 GridViewRow row = GridViewPlantillas.Rows[i];
                 bool isChecked = ((CheckBox)row.FindControl("checkBoxPlantilla")).Checked;
+                Label id = ((Label)row.FindControl("LblIdPlantilla"));
 
                 if (isChecked)
                 {
-                    Label id = ((Label)row.FindControl("LblIdPlantilla"));
+                   
+                    if (dp.ContainsKey(long.Parse(id.Text)))
+                    {
+                        dp[long.Parse(id.Text)].Pertenece = true;
+                    }
+                    else
+                    {
+                        _listaPlantilla[long.Parse(id.Text)].Pertenece = true;
+                        dp.Add(long.Parse(id.Text), _listaPlantilla[long.Parse(id.Text)]);
+                    }
 
-                    dp[long.Parse(id.Text)].Pertenece = true;
-                    _catalogo.Plantilla.Add(dp[long.Parse(id.Text)].IdPlantilla, dp[long.Parse(id.Text)]);
 
                 }
+                else
+                {
+                    if (dp.ContainsKey(long.Parse(id.Text)))
+                    {
+                        dp.Remove(long.Parse(id.Text));
+                    }
+                    
+                }
             }
+
+            Session["Plantilla"] = dp;
         }
 
-        public void GridViewCheckBoxSetear(Dictionary<long,Plantilla> _dic)
+        public void GridViewCheckBoxSetear()
         {
 
+            Dictionary<long, Plantilla> _dic = (Dictionary<long, Plantilla>)Session["Plantilla"];
 
-            foreach (Plantilla p in _dic.Values.ToList())
+            if (_dic != null)
             {
-                for (int i = 0; i < GridViewPlantillas.Rows.Count; i++)
+                foreach (Plantilla p in _dic.Values.ToList())
                 {
-                    GridViewRow row = GridViewPlantillas.Rows[i];
-
-                    Label id = ((Label)row.FindControl("LblIdPlantilla"));
-
-
-                    if (id.Text.Trim()==p.IdPlantilla.ToString())
+                    for (int i = 0; i < GridViewPlantillas.Rows.Count; i++)
                     {
-                        if (p.Pertenece)
+                        GridViewRow row = GridViewPlantillas.Rows[i];
+
+                        Label id = ((Label)row.FindControl("LblIdPlantilla"));
+
+
+                        if (id.Text.Trim() == p.IdPlantilla.ToString())
                         {
-                            ((CheckBox)row.FindControl("checkBoxPlantilla")).Checked=p.Pertenece;
+                            if (p.Pertenece)
+                            {
+                                ((CheckBox)row.FindControl("checkBoxPlantilla")).Checked = p.Pertenece;
+                            }
+                            break;
                         }
-                        break;
                     }
                 }
             }
@@ -171,13 +197,15 @@ namespace sublimacion
 
 
             GridViewCheckBoxGuardar();
+
+            _catalogo.Plantilla = (Dictionary<long, Plantilla>)Session["Plantilla"];
         }
 
 
         private void cargarGrilla()
         {
-            Dictionary<long, Plantilla> dp = (Dictionary<long, Plantilla>)Session["Plantilla"];
-            GridViewPlantillas.DataSource = dp.Values.ToList();
+
+            GridViewPlantillas.DataSource = _listaPlantilla.Values.ToList();
             GridViewPlantillas.DataBind();
         }
 
@@ -203,8 +231,14 @@ namespace sublimacion
 
         protected void GridViewPlantillas_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
+
+            GridViewCheckBoxGuardar();
             GridViewPlantillas.PageIndex = e.NewPageIndex;
-            GridViewPlantillas.DataBind();
+            cargarGrilla();
+            GridViewCheckBoxSetear();
+
+
+
         }
 
         protected void BtnSalir_Click(object sender, EventArgs e)

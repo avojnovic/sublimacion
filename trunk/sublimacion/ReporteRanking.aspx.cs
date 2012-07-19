@@ -201,7 +201,7 @@ namespace sublimacion
         protected void GridViewReporte_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             GridViewReporte.PageIndex = e.NewPageIndex;
-            GridViewReporte.DataBind();
+            cargarGrilla();
         }
 
         protected void CmbEstados_SelectedIndexChanged(object sender, EventArgs e)

@@ -23,8 +23,8 @@ namespace sublimacion
 
             user = (Usuario)Session["usuario"];
 
-            if (!IsPostBack)
-            {
+            //if (!IsPostBack)
+            //{
                 if (!Page.Request.Url.ToString().ToLower().Contains("login.aspx") && !Page.Request.Url.ToString().ToLower().Contains("error.aspx"))
                 {
 
@@ -42,7 +42,7 @@ namespace sublimacion
                 {
                     this.divMenu.Visible = false;
                 }
-            }
+            //}
         }
 
         protected void ScriptManager1_AsyncPostBackError(object sender, AsyncPostBackErrorEventArgs e)
@@ -214,24 +214,28 @@ namespace sublimacion
                 divMenu.Items.Add(itPe);
             }
 
-            if ((user.Perfil == Usuario.PerfilesEnum.JefeProduccion) || (user.Perfil == Usuario.PerfilesEnum.Administrador))
-            {
+           
                 //LOGISTICA PRODUCCION
-                MenuItem itIns = new MenuItem("Logistica Producción");
+                MenuItem itLog = new MenuItem("Logistica Producción");
 
-                MenuItem itPeE = new MenuItem("Ver");
-                itPeE.Value = "VerLogistica";
-                itPeE.NavigateUrl = "VerLogistica.aspx";
-                itIns.ChildItems.Add(itPeE);
 
-                MenuItem itInsN = new MenuItem("Crear");
-                itInsN.Value = "Crear";
-                itInsN.NavigateUrl = "LogisticaProduccion.aspx";
-                itIns.ChildItems.Add(itInsN);
+                if ((user.Perfil == Usuario.PerfilesEnum.JefeProduccion) || (user.Perfil == Usuario.PerfilesEnum.Administrador))
+                {
+                    MenuItem itInsN = new MenuItem("Crear Plan de Producción");
+                    itInsN.Value = "Crear";
+                    itInsN.NavigateUrl = "LogisticaProduccion.aspx";
+                    itLog.ChildItems.Add(itInsN);
+                }
+                if ((user.Perfil == Usuario.PerfilesEnum.JefeProduccion) || (user.Perfil == Usuario.PerfilesEnum.Operario) || (user.Perfil == Usuario.PerfilesEnum.Administrador))
+                {
+                    MenuItem itPlp = new MenuItem("Registrar producción");
+                    itPlp.Value = "VerLogistica";
+                    itPlp.NavigateUrl = "VerLogistica.aspx";
+                    itLog.ChildItems.Add(itPlp);
+                }
 
-                divMenu.Items.Add(itIns);
-            }
-
+                divMenu.Items.Add(itLog);
+           
 
             if ((user.Perfil == Usuario.PerfilesEnum.Administrador))
             {

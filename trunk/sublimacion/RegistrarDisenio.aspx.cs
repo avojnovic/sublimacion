@@ -151,6 +151,7 @@ namespace sublimacion
         protected void GridViewLineaPedido_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             GridViewLineaPedido.PageIndex = e.NewPageIndex;
+           GridViewLineaPedido.DataSource= (List<LineaPedido>)Session["Productos"];
             GridViewLineaPedido.DataBind();
         }
 

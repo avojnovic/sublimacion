@@ -1,8 +1,11 @@
-cuando el pedido esta en xxx estado no editar en abm
+-----cuando el pedido esta en xxx estado no editar en abm
 
-validar q el pedido tenga alguna linea de pedido
+LISTO-----validar q el pedido tenga alguna linea de pedido
 
-probar varias datos en grilla para controlar info...
+LISTO-----probar varias datos en grilla para controlar info...
+
+
+LISTO-----RESTAR EL STOCK en pedido
 
 la orden de trabajo posta delñ trabajo q se hizo
 

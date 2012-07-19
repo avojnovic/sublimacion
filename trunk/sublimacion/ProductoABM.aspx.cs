@@ -90,7 +90,7 @@ namespace sublimacion
 
             _producto.Nombre = TxtNombre.Text;
             _producto.Precio = Utils.convertToDecimal(TxtPrecio.Text);
-            _producto.Tiempo = Utils.convertToDecimal(TxtTiempo.Text);
+            _producto.Tiempo =int.Parse(TxtTiempo.Text);
           
         
 
@@ -136,7 +136,7 @@ namespace sublimacion
         protected void GridViewInsumos_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             GridViewInsumos.PageIndex = e.NewPageIndex;
-            GridViewInsumos.DataBind();
+            cargarGrilla();
         }
         
         protected void GridViewInsumos_RowEditing(object sender, GridViewEditEventArgs e)

@@ -15,9 +15,10 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
         {
 
             string sql = "";
-            sql = @" SELECT cantidad, descuento, fecha, p.idproducto, p.nombre, p.precio, p.borrado, p.costo,p.tiempo
-                     FROM descuento d inner join producto p on d.id_producto=p.idproducto
-                        WHERE p.borrado=FALSE";
+            sql = @" SELECT cantidad, descuento, fecha, p.idproducto, p.nombre, p.precio, p.borrado, p.tiempo
+                     FROM descuento d 
+                     inner join producto p on d.id_producto=p.idproducto
+                     WHERE p.borrado=FALSE";
 
            
 
@@ -43,9 +44,10 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
         {
 
             string sql = "";
-            sql = @"SELECT cantidad, descuento, fecha, p.idproducto, p.nombre, p.precio, p.borrado, p.costo,p.tiempo
-                     FROM descuento d inner join producto p on d.id_producto=p.idproducto
-                        WHERE p.borrado=FALSE and d.id_producto='{0}' and cantidad={1}";
+            sql = @"SELECT cantidad, descuento, fecha, p.idproducto, p.nombre, p.precio, p.borrado, p.tiempo
+                     FROM descuento d 
+                    inner join producto p on d.id_producto=p.idproducto
+                    WHERE p.borrado=FALSE and d.id_producto='{0}' and cantidad={1}";
 
             sql = string.Format(sql, idProducto, cantidad);
             NpgsqlDb.Instancia.PrepareCommand(sql);

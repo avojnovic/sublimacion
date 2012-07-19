@@ -14,6 +14,7 @@ using sublimacion.BussinesObjects;
 using System.Collections.Generic;
 using sublimacion.BussinesObjects.BussinesObjects;
 using sublimacion.DataAccessObjects.DataAccessObjects;
+using System.Globalization;
 
 namespace sublimacion
 {
@@ -28,163 +29,83 @@ namespace sublimacion
         protected void Page_Load(object sender, EventArgs e)
         {
             LblComentario.Text = "";
+            user = (Usuario)Session["usuario"];
+
             if (!IsPostBack)
             {
+                LblFecha.Text = "Fecha: " + DateTime.Now.ToString("dd/MM/yyyy");
                 _dicPlanificar = new Dictionary<long, Pedido>();
-                TxtFechaInicio.Text = DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToLongTimeString();
+                TxtFechaInicio.Text = DateTime.Now.ToString("dd/MM/yyyy");
+                TxtHoraInicio.Text = DateTime.Now.ToString("HH:mm");
 
+                Session["Pedidos"] = null;
+                cargarGrillas();
+               
             }
 
-
-            user = (Usuario)Session["usuario"];
-            cargarGrilla();
-
-            LblFecha.Text = "Fecha: " + DateTime.Now.ToShortDateString();
-           
-
-
-            setearGrillaSiEstaVacia();
         }
 
-        private void setearGrillaSiEstaVacia()
+         private void setearGrillaSiEstaVacia()
         {
             if (GridViewPlanif.Rows.Count == 0)
             {
                 DataTable dt = new DataTable();
                 dt.Columns.Add("IdPedido");
-                dt.Columns.Add("CostoTotalTiempo");
-                dt.Columns.Add("CostoTotal");
+                dt.Columns.Add("PlanId");
+                dt.Columns.Add("FechaVer");
+                dt.Columns.Add("Comentario");
                 dt.Columns.Add("Prioridad");
                 dt.Columns.Add("Estado");
+                dt.Columns.Add("ClienteNombre");
+                dt.Columns.Add("Ubicacion");
+                dt.Columns.Add("UserNombre");
+                dt.Columns.Add("CostoTotalTiempo");
+                dt.Columns.Add("PrecioTotal");
+                dt.Columns.Add("CostoTotal");
 
-                dt.Rows.Add(new object[] { "", "","","","" });
+                dt.Rows.Add(new object[] { "", "", "", "", "", "", "", "", "", "", "" });
 
                 GridViewPlanif.DataSource = dt;
                 GridViewPlanif.DataBind();
             }
 
-            if (GridView1.Rows.Count == 0)
+
+            if (GridViewPedidos.Rows.Count == 0)
             {
                 DataTable dt = new DataTable();
                 dt.Columns.Add("IdPedido");
-                dt.Columns.Add("CostoTotalTiempo");
-                dt.Columns.Add("CostoTotal");
+                dt.Columns.Add("FechaVer");
+                dt.Columns.Add("Comentario");
                 dt.Columns.Add("Prioridad");
                 dt.Columns.Add("Estado");
+                dt.Columns.Add("ClienteNombre");
+                dt.Columns.Add("Ubicacion");
+                dt.Columns.Add("UserNombre");
+                dt.Columns.Add("CostoTotalTiempo");
+                dt.Columns.Add("PrecioTotal");
+                dt.Columns.Add("CostoTotal");
 
-                dt.Rows.Add(new object[] { "", "", "", "", "" });
+                dt.Rows.Add(new object[] { "", "", "", "", "", "", "", "", "", "", "" });
 
-                GridView1.DataSource = dt;
-                GridView1.DataBind();
+                GridViewPedidos.DataSource = dt;
+                GridViewPedidos.DataBind();
             }
 
         }
 
-       
-
-        private void cargarGrilla()
+        private void cargarGrillas()
         {
-
-            Dictionary<long,Pedido> _dicTemp = new Dictionary<long, Pedido>();
-            _dicTemp = PedidoDAO.obtenerTodos();
-            _dicPedidos = new Dictionary<long, Pedido>();
-
-            if ((user.Perfil == Usuario.PerfilesEnum.JefeProduccion) || (user.Perfil == Usuario.PerfilesEnum.Administrador))
-            {
-
-                foreach (Pedido p in _dicTemp.Values.ToList())
-                {
-                    if (p.EstadosPedido.ContainsKey(3))
-                    {
-                        if (p.EstadosPedido[3].Fecha_fin == null)
-                        {
-                            if (!_dicPedidos.ContainsKey(p.IdPedido))
-                                _dicPedidos.Add(p.IdPedido, p);
-                        }
-                    }
-                }
-
-
-            }
-            
-
-
+            //CARGO LOS SIN PLANIFICADOS
+            _dicPedidos = PedidoDAO.obtenerTodos();
             List<Pedido> listP = _dicPedidos.Values.ToList();
 
+            var newList = (from x in listP
+                           where x.EstadoId == (long)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.DisenioAceptado
+                           && (x.PlanDeProduccion == null || x.PlanDeProduccion.IdPlan == 0)
+                           select x).ToList();
 
-            listP.Sort(delegate(Pedido p1, Pedido p2)
-            {
-                return p2.Prioridad.CompareTo(p1.Prioridad);
-            });
+            listP = (List<Pedido>)newList;
 
-
-            GridView1.DataSource = listP;
-
-            GridView1.DataBind();
-        }
-
-
-   
-
-       
-
-        protected void AgregarAPlan_Click(object sender, EventArgs e)
-        {
-            LblComentario.Text = "";
-            DateTime fechaInicio = DateTime.Now;
-
-
-
-            if (Session["listaPedidos"] == null)
-            {
-                _dicPlanificar = new Dictionary<long, Pedido>();
-                Session["listaPedidos"] = _dicPlanificar;
-            }
-            else
-            {
-                _dicPlanificar = (Dictionary<long, Pedido>)Session["listaPedidos"];
-            }
-
-
-            if (DateTime.TryParse(TxtFechaInicio.Text.Trim(), out fechaInicio))
-            {
-
-                GridViewRow row = GridView1.SelectedRow;
-                if (row != null)
-                {
-                    string id = (row.Cells[1].Text);
-
-                    Pedido i = PedidoDAO.obtenerPorId(id.Trim());
-
-                    if (i != null && i.IdPedido != 0)
-                    {
-                        float tiempo= agregarPedidoAPlanificado(i);
-                        float t = tiempo - (int)tiempo;
-                        
-                        float minutos = 0;
-                        minutos = t * 60;
-
-                        TimeSpan ts = new TimeSpan((int)tiempo, (int)minutos, 0);
-
-                        fechaInicio=fechaInicio.Add(ts);
-                       TxtFechaFin.Text=fechaInicio.ToShortDateString()+" " +fechaInicio.ToLongTimeString();
-
-                       setearGrillaPlanificados();
-
-                        Session["listaPedidos"] = _dicPlanificar;
-                    }
-                }
-            }
-            else
-            {
-                LblComentario.Text = "Fecha de Inicio Incorrecta";
-            }
-        }
-
-        private void setearGrillaPlanificados()
-        {
-
-            List<Pedido> listP = _dicPlanificar.Values.ToList();
 
 
             listP.Sort(delegate(Pedido p1, Pedido p2)
@@ -193,91 +114,270 @@ namespace sublimacion
             });
 
 
-            GridViewPlanif.DataSource = listP;
+            GridViewPedidos.DataSource = listP;
+            GridViewPedidos.DataBind();
 
+
+            //CARGO LOS PLANIFICADOS
+             List<Pedido> listPlan = PedidoDAO.obtenerTodosConIdPlanProd().Values.ToList();
+
+            var newList2 = (from x in listPlan
+                           where x.EstadoId == (long)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.Producción
+                           && (x.PlanDeProduccion!= null || x.PlanDeProduccion.IdPlan != 0)
+                           select x).ToList();
+
+            listPlan = (List<Pedido>)newList2;
+
+            GridViewPlanif.DataSource = listPlan;
             GridViewPlanif.DataBind();
 
+            setearGrillaSiEstaVacia();
+        }
+
+        public void GridViewCheckBoxGuardar()
+        {
+
+            Dictionary<long, Pedido> dp = (Dictionary<long, Pedido>)Session["Pedidos"];
+            _dicPedidos = PedidoDAO.obtenerTodos();
+
+            if (dp == null)
+            {
+                dp = new Dictionary<long, Pedido>();
+            }
+
+            for (int i = 0; i < GridViewPedidos.Rows.Count; i++)
+            {
+                GridViewRow row = GridViewPedidos.Rows[i];
+                bool isChecked = ((CheckBox)row.FindControl("checkBox")).Checked;
+                Label id = ((Label)row.FindControl("LblIdPedido"));
+
+                if (id.Text != "")
+                {
+                    if (isChecked)
+                    {
+
+                        if (!dp.ContainsKey(long.Parse(id.Text)))
+                        {
+                            dp.Add(long.Parse(id.Text), _dicPedidos[long.Parse(id.Text)]);
+                        }
+
+                    }
+                    else
+                    {
+                        if (dp.ContainsKey(long.Parse(id.Text)))
+                        {
+                            dp.Remove(long.Parse(id.Text));
+                        }
+
+                    }
+                }
+            }
+
+            Session["Pedidos"] = dp;
+        }
+
+        public void GridViewCheckBoxSetear()
+        {
+
+            Dictionary<long, Pedido> dp = (Dictionary<long, Pedido>)Session["Pedidos"];
+
+            if (dp != null)
+            {
+                for (int i = 0; i < GridViewPedidos.Rows.Count; i++)
+                {
+                    GridViewRow row = GridViewPedidos.Rows[i];
+
+                    Label id = ((Label)row.FindControl("LblIdPedido"));
+
+                    if (dp.ContainsKey(long.Parse(id.Text.Trim())))
+                        ((CheckBox)row.FindControl("checkBox")).Checked = true;
+                    else
+                        ((CheckBox)row.FindControl("checkBox")).Checked = false;
+
+                }
+            }
+        }
+
+        protected void GridViewPlanif_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+    
 
         }
 
-        private float agregarPedidoAPlanificado(Pedido i)
+        protected void GridViewPedidos_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            float tiempoTotal = 0;
-            if (!_dicPlanificar.ContainsKey(i.IdPedido))
+            GridViewCheckBoxGuardar();
+            GridViewPedidos.PageIndex = e.NewPageIndex;
+            cargarGrillas();
+            GridViewCheckBoxSetear();
+
+
+           
+        }
+
+        protected void BtnCalcularTiempo_Click(object sender, EventArgs e)
+        {
+            LblComentario.Text = "";
+            GridViewCheckBoxGuardar();
+            Dictionary<long, Pedido> dp = (Dictionary<long, Pedido>)Session["Pedidos"];
+            CultureInfo provider = CultureInfo.InvariantCulture;
+            DateTime fechaInicio = DateTime.MinValue;
+
+            if (dp.Values.Count > 0)
             {
-                _dicPlanificar.Add(i.IdPedido, i);
 
-               
-                foreach (Pedido ped in _dicPlanificar.Values.ToList())
+                try
                 {
-                    try 
-	                    {
-                            tiempoTotal += float.Parse(ped.CostoTotalTiempo);
-	                    }
-	                    catch (Exception)
-	                    {
-
-                            tiempoTotal += 0;
-	                    }
-                   
+                    fechaInicio = DateTime.ParseExact(TxtFechaInicio.Text + " " + TxtHoraInicio.Text, "dd/MM/yyyy HH:mm", provider);
+                }
+                catch (Exception)
+                {
+                    LblComentario.Text = "Formato de Fecha inicio invalido";
                 }
 
-            
-            }
-            return tiempoTotal;
+                System.Nullable<Decimal> tiempoTotal = (from ord in dp.Values.ToList()
+                                                        select ord.TiempoTotal).Sum();
 
-        }
+                fechaInicio=fechaInicio.AddMinutes((double)tiempoTotal);
 
-        protected void BtnGuardarLogistica_Click(object sender, EventArgs e)
-        {
-
-            if (Session["listaPedidos"] == null)
-            {
-                _dicPlanificar = new Dictionary<long, Pedido>();
-                Session["listaPedidos"] = _dicPlanificar;
+                TxtFechaFin.Text = fechaInicio.ToString("dd/MM/yyyy");
+                TxtHoraFin.Text = fechaInicio.ToString("HH:mm");
             }
             else
             {
-                _dicPlanificar = (Dictionary<long, Pedido>)Session["listaPedidos"];
+                TxtFechaFin.Text = "";
+                TxtHoraFin.Text = "";
+
+                LblComentario.Text = "Seleccione al menos un pedido";
             }
+
+            
+        }
+
+
+
+        protected void BtnAgregarAPlan_Click(object sender, EventArgs e)
+        {
+            LblComentario.Text = "";
+           
+            Dictionary<long, Pedido> dp = (Dictionary<long, Pedido>)Session["Pedidos"];
+            CultureInfo provider = CultureInfo.InvariantCulture;
             DateTime fechaInicio = DateTime.MinValue;
             DateTime fechaFin = DateTime.MinValue;
-            if (DateTime.TryParse(TxtFechaInicio.Text.Trim(), out fechaInicio))
+
+            if (dp!=null && dp.Values.Count > 0)
             {
-                if (DateTime.TryParse(TxtFechaFin.Text.Trim(), out fechaFin))
+
+                try
                 {
-                    PlanDeProduccion plan=new PlanDeProduccion();
-                    plan.Borrado=false;
-                    plan.Fecha_inicio=fechaInicio;
-                    plan.Fecha_fin=fechaFin;
+                    fechaInicio = DateTime.ParseExact(TxtFechaInicio.Text + " " + TxtHoraInicio.Text, "dd/MM/yyyy HH:mm", provider);
+                }
+                catch (Exception)
+                {
+                    LblComentario.Text = "Formato de Fecha inicio invalido";
+                }
+                try
+                {
+                    fechaFin = DateTime.ParseExact(TxtFechaFin.Text + " " + TxtHoraFin.Text, "dd/MM/yyyy HH:mm", provider);
+                }
+                catch (Exception)
+                {
+                    LblComentario.Text = "Formato de Fecha fin invalido";
+                }
 
-                    PlanProdDAO.insertarPlan(plan);
-                    if (plan.IdPlan != 0)
-                    {
-                        foreach (Pedido pedido in _dicPlanificar.Values.ToList())
-                        {
-                            setearEstadoEnProduccion(pedido);
-                            pedido.PlanDeProduccion = plan;
-                            PedidoDAO.actualizarPedido(pedido);
 
-                        }
-                        Response.Redirect("LogisticaProduccion.aspx");
-                    }
+                if (LblComentario.Text=="")
+                {
+
+                   GenerarPlanificacion(fechaInicio,fechaFin,dp);
                 }
                 else
                 {
-                    LblComentario.Text = "Fecha de Fin Incorrecta";
+                    LblComentario.Text = "Fecha de Inicio Incorrecta";
                 }
             }
             else
             {
-                LblComentario.Text = "Fecha de Inicio Incorrecta";
+                LblComentario.Text = "Por favor calcule el Tiempo";
             }
         }
 
+
+
+        private void GenerarPlanificacion(DateTime inicio, DateTime fin,Dictionary<long, Pedido> _pedidos)
+        {
+            PlanDeProduccion plan = new PlanDeProduccion();
+            plan.Fecha_inicio = inicio;
+            plan.Fecha_fin = fin;
+            plan = PlanProdDAO.insertarPlan(plan);
+
+            OrdenDeTrabajo orden = new OrdenDeTrabajo();
+            orden.Tiempo_estimado = 0;
+            orden.Fecha_comienzo = null;
+            orden.Fecha_finalizacion = null;
+            orden = OrdenTrabajoDAO.insertarOrdenTrabajo(orden);
+
+            Dictionary<long, Pedido> dp = (Dictionary<long, Pedido>)Session["Pedidos"];
+
+            foreach (Pedido p in dp.Values.ToList())
+            {
+                p.OrdenDeTrabajo = orden;
+                p.PlanDeProduccion = plan;
+                setearEstadoPedido(p);
+                PedidoDAO.actualizarPedido(p);
+            }
+            
+            Session["Pedidos"]=null;
+         
+
+            LblComentarioPlan.Text = "Plan nro:" + plan.Id + " creado";
+            
+            
+
+             cargarGrillas();
+        }
+
+        private void setearEstadoPedido(Pedido _pedido)
+        {
+            if (!_pedido.EstadosPedido.ContainsKey((long)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.Producción))
+            {
+                EstadosPedido est = new EstadosPedido();
+                est.Fecha_inicio = DateTime.Now;
+                est.Fecha_fin = null;
+                est.Estado = TipoEstadoDAO.obtenerEstadosPorId(((long)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.Producción).ToString());
+                _pedido.EstadosPedido.Add(est.Estado.Id, est);
+
+
+                foreach (EstadosPedido e in _pedido.EstadosPedido.Values.ToList())
+                {
+
+                    if (e.Estado.Id != est.Estado.Id && e.Fecha_fin == null)
+                    {
+                        e.Fecha_fin = DateTime.Now;
+                    }
+                }
+
+            }
+            else
+            {
+                _pedido.EstadosPedido[((long)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.Producción)].Fecha_fin = null;
+
+                foreach (EstadosPedido e in _pedido.EstadosPedido.Values.ToList())
+                {
+
+                    if (e.Estado.Id != _pedido.EstadosPedido[((long)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.Producción)].Estado.Id && e.Fecha_fin == null)
+                    {
+                        e.Fecha_fin = DateTime.Now;
+                    }
+                }
+            }
+
+        }
+
+       
         private void setearEstadoEnProduccion(Pedido pedido)
         {
-          Estado c= TipoEstadoDAO.obtenerEstadosPorId("6");
+            Estado c = TipoEstadoDAO.obtenerEstadosPorId(((long)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.Producción).ToString());
 
             if (!pedido.EstadosPedido.ContainsKey(c.Id))
             {
@@ -300,38 +400,9 @@ namespace sublimacion
             }
         }
 
-        protected void BtnVerPedido_Click(object sender, EventArgs e)
-        {
-            GridViewRow row = GridView1.SelectedRow;
-            if (row != null)
-            {
-                string id = (row.Cells[1].Text);
 
-                Pedido i = PedidoDAO.obtenerPorId(id.Trim());
 
-                if (i != null && i.IdPedido != 0)
-                {
-                    Session["pedido"] = i;
-                    Response.Redirect("Pedido.aspx");
-                }
-            }
-        }
 
-        protected void BtnLimpiar_Click(object sender, EventArgs e)
-        {
-            Session["listaPedidos"] = null;
-            Response.Redirect("LogisticaProduccion.aspx");
-        }
 
-        protected void GridViewPlanif_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            GridViewPlanif.PageIndex = e.NewPageIndex;
-            GridViewPlanif.DataBind();
-        }
-        protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            GridView1.PageIndex = e.NewPageIndex;
-            GridView1.DataBind();
-        }
     }
 }

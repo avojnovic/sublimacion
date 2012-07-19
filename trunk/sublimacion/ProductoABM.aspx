@@ -39,13 +39,13 @@
                     </tr>
                     <tr>
                         <td align="left" style="width: 100px;">
-                            <asp:Label ID="Label3" runat="server" Text="Tiempo:" Font-Names="Calibri"></asp:Label>
+                            <asp:Label ID="Label3" runat="server" Text="Tiempo (en minutos):" Font-Names="Calibri"></asp:Label>
                             <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="TxtTiempo"
                                 Display="Dynamic" ErrorMessage="*" SetFocusOnError="true" ValidationGroup="add" />
                         </td>
                         <td style="width: 200px;">
                             <asp:TextBox ID="TxtTiempo" Width="100%" runat="server"></asp:TextBox>
-                            <act:MaskedEditExtender ID="MaskedEditExtender2" runat="server" Mask="99.99" MaskType="Number"
+                            <act:MaskedEditExtender ID="MaskedEditExtender2" runat="server" Mask="999" MaskType="Number"
                                 TargetControlID="TxtTiempo">
                             </act:MaskedEditExtender>
                         </td>

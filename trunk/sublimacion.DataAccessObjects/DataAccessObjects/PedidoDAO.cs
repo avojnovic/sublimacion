@@ -54,6 +54,48 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
         }
 
+        public static Dictionary<long, Pedido> obtenerTodosPlanTrabajo(long id)
+        {
+
+            string sql = "";
+            sql = @"
+                   SELECT p.idpedido, p.fecha, p.borrado, p.comentario, p.prioridad, p.ubicacion, p.id_usuario, p.id_cliente,
+                   p.id_orden_trab, o.fecha_comienzo as fco,o.fecha_finalizacion as ffo, o.tiempo_estimado,
+                   p.id_plan_prod, pl.fecha_inicio as fip ,pl.fecha_fin as ffp,
+                   c.idcliente as cli_idcliente, c.nombre as cli_nombre, c.apellido as cli_apellido, c.dni as cli_dni,
+                   c.direccion as cli_direccion, c.telefono as cli_telefono, c.mail as cli_mail, c.fecha as cli_fecha,
+                   c.borrado as cli_borrado,
+                   u.id as usu_id, u.usuario as usu_usuario, u.contrasenia as usu_contrasenia, u.nombre as usu_nombre,
+                   u.apellido as usu_apellido, u.telefono as usu_telefono, u.mail as usu_mail, u.borrado as usu_borrado, 
+                   u.id_perfil as usu_id_perfil
+                  FROM pedido p
+                  left join cliente C on p.id_cliente=c.idcliente
+                  left join usuario u on u.id=p.id_usuario
+                  left join orden_de_trabajo o on o.idorden=p.id_orden_trab
+                  left join plan_produccion pl on pl.idplan=p.id_plan_prod 
+                  where p.borrado=false and c.borrado=false and u.borrado=false and p.id_plan_prod={0}
+                  order by p.idpedido
+                ";
+            sql = string.Format(sql, id);
+
+            NpgsqlDb.Instancia.PrepareCommand(sql);
+            NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
+            Dictionary<long, Pedido> dicPedidos = new Dictionary<long, Pedido>();
+
+            while (dr.Read())
+            {
+                Pedido p = getPedidosDelDataReader(dr);
+
+
+
+                if (!dicPedidos.ContainsKey(p.IdPedido))
+                    dicPedidos.Add(p.IdPedido, p);
+            }
+
+            return dicPedidos;
+
+        }
+
         public static Dictionary<long, Pedido> obtenerTodosPorCliente(string id)
         {
 
@@ -118,7 +160,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
                   left join orden_de_trabajo o on o.idorden=p.id_orden_trab
                   left join plan_produccion pl on pl.idplan=p.id_plan_prod 
                   where p.borrado=false and c.borrado=false and u.borrado=false and  p.id_plan_prod is not NULL
-                order by p.idpedido
+                 order by p.id_plan_prod desc,p.prioridad  desc
                 ";
 
             NpgsqlDb.Instancia.PrepareCommand(sql);
@@ -309,8 +351,28 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
         private static void actualizarLineasPedido(Pedido p)
         {
-            //Borro e inserto nuevamente
-            string sql = @"DELETE FROM linea_pedido WHERE id_pedido=" + p.IdPedido;
+            //SUMO EL STOCK - BORRO
+            string sql = @"UPDATE
+                                insumo
+                            SET
+                                stock = R.nuevoStock
+                            FROM
+                               (
+	                            select i.idinsumo as insumoUpd ,stock + (lp.cantidad*pi.cantidad) as nuevoStock
+	                            from 
+	                            (	select sum(cantidad)as cantidad,id_producto,id_pedido 
+		                            from linea_pedido
+		                            group by id_producto,id_pedido) lp  
+	                            inner join producto_insumo pi on lp.id_producto=pi.id_producto
+	                            inner join insumo i on i.idinsumo=pi.id_insumo
+	                            where id_pedido={0}
+                               ) R
+                            where idinsumo = R.insumoUpd;
+                
+                    DELETE FROM linea_pedido WHERE id_pedido={0};";
+
+            sql = string.Format(sql, p.IdPedido);
+
             NpgsqlDb.Instancia.PrepareCommand(sql);
             try
             {
@@ -322,6 +384,8 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
                 throw Ex;
             }
 
+
+            //INSERTO
             if (p.LineaPedido != null)
             {
                 foreach (LineaPedido linea in p.LineaPedido)
@@ -340,6 +404,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
                     
                     try
                     {
+                       
                         NpgsqlDb.Instancia.ExecuteNonQuery();
 
                     }
@@ -347,6 +412,38 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
                     {
                         throw Ex;
                     }
+                }
+
+
+                //RESTO EL STOCK
+                sql = @"UPDATE
+                                insumo
+                            SET
+                                stock = R.nuevoStock
+                            FROM
+                               (
+	                            select i.idinsumo as insumoUpd ,stock - (lp.cantidad*pi.cantidad) as nuevoStock
+	                            from 
+	                            (	select sum(cantidad)as cantidad,id_producto,id_pedido 
+		                            from linea_pedido
+		                            group by id_producto,id_pedido) lp  
+	                            inner join producto_insumo pi on lp.id_producto=pi.id_producto
+	                            inner join insumo i on i.idinsumo=pi.id_insumo
+	                            where id_pedido={0}
+                               ) R
+                            where idinsumo = R.insumoUpd;";
+
+                sql = string.Format(sql, p.IdPedido);
+
+                try
+                {
+                    NpgsqlDb.Instancia.PrepareCommand(sql);
+                    NpgsqlDb.Instancia.ExecuteNonQuery();
+
+                }
+                catch (System.OverflowException Ex)
+                {
+                    throw Ex;
                 }
             }
 
@@ -477,7 +574,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             string sql = "";
 
             sql = @"SELECT lp.id_producto,lp.cantidad, lp.subtotal, lp.archivo_cliente,lp.archivo_disenio,
-                p.idproducto, p.nombre, p.precio, p.borrado, p.costo, p.tiempo,
+                p.idproducto, p.nombre, p.precio, p.borrado, p.tiempo,
                 pl.idplantilla as pl_idplantilla, pl.nombre as pl_nombre,
                 pl.medida_ancho as pl_medida_ancho, pl.medida_largo as pl_medida_largo, pl.borrado as pl_borrado,
                 ct.idcatalogo as ct_idcatalogo, ct.nombre as ct_nombre, ct.fecha as ct_fecha, ct.id_producto as ct_id_producto, ct.borrado as ct_borrado

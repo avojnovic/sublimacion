@@ -12,7 +12,41 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 {
     public static class PlanProdDAO
     {
+        
 
+         public static Dictionary<long, PlanDeProduccion> obtenerPendientes()
+        {
+
+            string sql = "";
+            sql += @"SELECT idplan, fecha_inicio, fecha_fin 
+                    FROM plan_produccion 
+                    where borrado=False
+                    and idplan in
+                    (
+                    select id_plan_prod 
+                    from pedido p 
+                    inner join orden_de_trabajo o on p.id_orden_trab=o.idorden
+                    where o.fecha_comienzo is null
+
+                    )";
+
+            NpgsqlDb.Instancia.PrepareCommand(sql);
+            NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
+            Dictionary<long, PlanDeProduccion> dicPlan = new Dictionary<long, PlanDeProduccion>();
+
+            while (dr.Read())
+            {
+                PlanDeProduccion i = getPlanDelDataReader(dr);
+
+
+
+                if (!dicPlan.ContainsKey(i.IdPlan))
+                    dicPlan.Add(i.IdPlan, i);
+            }
+
+            return dicPlan;
+
+        }
 
         public static Dictionary<long, PlanDeProduccion> obtenerTodos()
         {
@@ -79,7 +113,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
         }
 
 
-        public static void insertarPlan(PlanDeProduccion p)
+        public static PlanDeProduccion insertarPlan(PlanDeProduccion p)
         {
 
             string queryStr;
@@ -87,14 +121,14 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
             queryStr = @"INSERT INTO plan_produccion(
              fecha_inicio, fecha_fin, borrado)
-            VALUES ( :fecha_inicio, :fecha_fin, :borrado);";
+            VALUES ( :fecha_inicio, :fecha_fin, :borrado); SELECT currval('plan_produccion_idplan_seq');";
 
             NpgsqlDb.Instancia.PrepareCommand(queryStr);
             parametrosQuery(p);
 
             try
             {
-                NpgsqlDb.Instancia.ExecuteNonQuery();
+               p.IdPlan= NpgsqlDb.Instancia.ExecuteScalar();
 
             }
             catch (System.OverflowException Ex)
@@ -102,17 +136,9 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
                 throw Ex;
             }
 
-            queryStr = "SELECT currval('plan_produccion_idplan_seq')";
-            NpgsqlDb.Instancia.PrepareCommand(queryStr);
-            NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
-            while (dr.Read())
-            {
-                if (!dr.IsDBNull(0))
-                    p.IdPlan = long.Parse(dr[0].ToString());
+            return p;
 
-            }
 
-           
         }
 
         private static void parametrosQuery(PlanDeProduccion p)

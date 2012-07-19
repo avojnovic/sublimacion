@@ -19,7 +19,7 @@ namespace sublimacion
 
             cargarGrilla();
 
-            setearGrillaSiEstaVacia();
+           
         }
 
         private void cargarGrilla()
@@ -28,6 +28,8 @@ namespace sublimacion
 
             GridView1.DataSource = _dicUsuario.Values.ToList();
             GridView1.DataBind();
+
+            setearGrillaSiEstaVacia();
 
         }
 
@@ -67,7 +69,7 @@ namespace sublimacion
         protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             GridView1.PageIndex = e.NewPageIndex;
-            GridView1.DataBind();
+            cargarGrilla();
         }
     }
 }
