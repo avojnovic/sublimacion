@@ -593,5 +593,52 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
         }
 
 
+
+        public static Dictionary<long,Pedido> obtenerTodosFecha(DateTime fechaDesde, DateTime fechaHasta)
+        {
+            string sql = "";
+            sql = @"
+                   SELECT p.idpedido, p.fecha, p.borrado, p.comentario, p.prioridad, p.ubicacion, p.id_usuario, p.id_cliente,
+                   p.id_orden_trab, o.fecha_comienzo as fco,o.fecha_finalizacion as ffo, o.tiempo_estimado,
+                   p.id_plan_prod, pl.fecha_inicio as fip ,pl.fecha_fin as ffp,
+                   c.idcliente as cli_idcliente, c.nombre as cli_nombre, c.apellido as cli_apellido, c.dni as cli_dni,
+                   c.direccion as cli_direccion, c.telefono as cli_telefono, c.mail as cli_mail, c.fecha as cli_fecha,
+                   c.borrado as cli_borrado,
+                   u.id as usu_id, u.usuario as usu_usuario, u.contrasenia as usu_contrasenia, u.nombre as usu_nombre,
+                   u.apellido as usu_apellido, u.telefono as usu_telefono, u.mail as usu_mail, u.borrado as usu_borrado, 
+                   u.id_perfil as usu_id_perfil
+                  FROM pedido p
+                  left join cliente C on p.id_cliente=c.idcliente
+                  left join usuario u on u.id=p.id_usuario
+                  left join orden_de_trabajo o on o.idorden=p.id_orden_trab
+                  left join plan_produccion pl on pl.idplan=p.id_plan_prod 
+                  where p.borrado=false and c.borrado=false and u.borrado=false and (p.fecha between :fechaDesde and :fechaHasta)
+                  order by p.idpedido
+                ";
+          
+            
+            NpgsqlDb.Instancia.PrepareCommand(sql);
+
+
+            NpgsqlDb.Instancia.AddCommandParameter(":fechaDesde", NpgsqlDbType.Timestamp, ParameterDirection.Input, true, fechaDesde);
+
+            NpgsqlDb.Instancia.AddCommandParameter(":fechaHasta", NpgsqlDbType.Timestamp, ParameterDirection.Input, true, fechaHasta);
+
+            NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
+            Dictionary<long, Pedido> dicPedidos = new Dictionary<long, Pedido>();
+
+            while (dr.Read())
+            {
+                Pedido p = getPedidosDelDataReader(dr);
+
+
+
+                if (!dicPedidos.ContainsKey(p.IdPedido))
+                    dicPedidos.Add(p.IdPedido, p);
+            }
+
+            return dicPedidos;
+
+        }
     }
 }

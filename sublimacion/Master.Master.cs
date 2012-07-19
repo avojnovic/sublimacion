@@ -252,7 +252,24 @@ namespace sublimacion
                 divMenu.Items.Add(itIns);
             }
 
+            if ((user.Perfil == Usuario.PerfilesEnum.JefeSuperior) || (user.Perfil == Usuario.PerfilesEnum.Administrador))
+            {
+                //REPORTES
+                MenuItem itRepo = new MenuItem("Reportes");
 
+                MenuItem itReRan = new MenuItem("Ranking de Ventas");
+                itReRan.Value = "RankingVentas";
+                itReRan.NavigateUrl = "ReporteRanking.aspx";
+                itRepo.ChildItems.Add(itReRan);
+
+                MenuItem itReEs = new MenuItem("Estimaciones");
+                itReEs.Value = "Estimaciones";
+                itReEs.NavigateUrl = "ReporteEstimaciones.aspx";
+                itRepo.ChildItems.Add(itReEs);
+
+
+                divMenu.Items.Add(itRepo);
+            }
 
             MenuItem itSalir = new MenuItem("Logout");
 
