@@ -7,8 +7,9 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <br />
     <br />
-    <asp:Label ID="LblComentario" runat="server"></asp:Label>
-    <center>
+     <center>
+        <asp:Label ID="LblComentario" runat="server" Font-Bold="true" Font-Names="calibri" ForeColor="Red" ></asp:Label>
+   
         <asp:Panel runat="server" ID="panel1" Visible="true" Width="800px" Style="background-color: #DDDDDD">
             <table>
                 <tr>
@@ -236,6 +237,8 @@
                             runat="server" OnClick="BtnBorrar_Click" ToolTip="Borrar" />
                         <asp:ImageButton ID="ImageButton2" Width="32px" Height="32px" ImageUrl="~/Images/return.png"
                             runat="server" OnClick="BtnSalir_Click" ToolTip="Salir" />
+                        <br />
+                        <asp:Label ID="lblInformacionFechas" runat="server" Font-Size="X-Small"></asp:Label>
                     </td>
                 </tr>
             </table>

@@ -31,6 +31,7 @@ namespace sublimacion
         Dictionary<long, Catalogo> _listaCatalogo = new Dictionary<long, Catalogo>();
         Dictionary<long, Plantilla> _listaPlantilla = new Dictionary<long, Plantilla>();
 
+        static string prevPage = String.Empty;
 
         Dictionary<Producto, int> _listaProductosAgregados = new Dictionary<Producto, int>();
         Usuario user;
@@ -58,11 +59,18 @@ namespace sublimacion
 
             if (!IsPostBack)
             {
+                Session["Productos"] = null;
 
                 cargarCombos();
                 cargarPedido();
 
                 setearGrillaSiEstaVacia();
+
+                if (Request.UrlReferrer != null)
+                    prevPage = Request.UrlReferrer.ToString();
+                else
+                    prevPage = "PedidoVer.aspx";
+
             }
 
 
@@ -198,9 +206,15 @@ namespace sublimacion
 
                 calcularPrecio();
 
+                ;
+                lblInformacionFechas.Text = "Fecha Inicio estimada: " + _pedido.PlanDeProduccion.Fecha_inicio_str;
+                lblInformacionFechas.Text += " Fecha Fin estimada: " + _pedido.PlanDeProduccion.Fecha_fin_str;
+                lblInformacionFechas.Text += " - Fecha Inicio real: " + _pedido.OrdenDeTrabajo.Fecha_inicio_str;
+                lblInformacionFechas.Text += " Fecha Fin real: " + _pedido.OrdenDeTrabajo.Fecha_fin_str;
             }
             else
             {
+                lblInformacionFechas.Text = "";
                 _modoApertura = ModosEdicionEnum.Nuevo;
 
                 if (idCliente != null && idCliente != "")
@@ -217,45 +231,58 @@ namespace sublimacion
             _pedido.Borrado = true;
             PedidoDAO.actualizarPedido(_pedido);
 
-            if ((user.Perfil == Usuario.PerfilesEnum.JefeProduccion))
-            {
-                Response.Redirect("LogisticaProduccion.aspx");
-            }
-            else
-            {
-                Response.Redirect("PedidoVer.aspx");
-            }
+
+            Response.Redirect(prevPage);
+
+            //if ((user.Perfil == Usuario.PerfilesEnum.JefeProduccion))
+            //{
+            //    Response.Redirect("LogisticaProduccion.aspx");
+            //}
+            //else
+            //{
+            //    Response.Redirect("PedidoVer.aspx");
+            //}
 
         }
 
         protected void BtnGuardar_Click(object sender, EventArgs e)
         {
+            LblComentario.Text = "";
 
             if (_modoApertura == ModosEdicionEnum.Nuevo)
             {
                 setearObjeto();
-                PedidoDAO.insertarPedido(_pedido);
+                if (_pedido.LineaPedido!=null && _pedido.LineaPedido.Count > 0)
+                {
+                    PedidoDAO.insertarPedido(_pedido);
+
+
+                    Response.Redirect(prevPage);
+
+                }
+                else
+                    LblComentario.Text = "Debe por lo menos ingresar una linea de pedido";
             }
             else
             {
                 if (_modoApertura == ModosEdicionEnum.Modificar)
                 {
                     setearObjeto();
-                    PedidoDAO.actualizarPedido(_pedido);
+                    if (_pedido.LineaPedido != null && _pedido.LineaPedido.Count > 0)
+                    {
+                        PedidoDAO.actualizarPedido(_pedido);
+
+                        Response.Redirect(prevPage);
+                    }
+                    else
+                        LblComentario.Text = "Debe por lo menos ingresar una linea de pedido";
 
                 }
             }
 
 
 
-            if ((user.Perfil == Usuario.PerfilesEnum.JefeProduccion))
-            {
-                Response.Redirect("LogisticaProduccion.aspx");
-            }
-            else
-            {
-                Response.Redirect("PedidoVer.aspx");
-            }
+           
 
 
         }
@@ -374,14 +401,7 @@ namespace sublimacion
         protected void BtnSalir_Click(object sender, EventArgs e)
         {
 
-            if ((user.Perfil == Usuario.PerfilesEnum.JefeProduccion))
-            {
-                Response.Redirect("LogisticaProduccion.aspx");
-            }
-            else
-            {
-                Response.Redirect("PedidoVer.aspx");
-            }
+           Response.Redirect(prevPage);
         }
 
 

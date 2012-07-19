@@ -36,9 +36,9 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             set { _borrado = value; }
         }
 
-        private decimal _tiempo;
+        private int _tiempo;
 
-        public decimal Tiempo
+        public int Tiempo
         {
             get { return _tiempo; }
             set { _tiempo = value; }
@@ -52,14 +52,16 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             get
             {
                 decimal costo = 0;
-                foreach (Insumo i in _insumos.Values)
-                {
-                    costo = costo + (i.Costo * i.Cantidad);
+                costo = (from lp in _insumos.Values select lp.Costo * lp.Cantidad).Sum();
+                //foreach (Insumo i in _insumos.Values)
+                //{
+                //    costo = costo + (i.Costo * i.Cantidad);
 
-                }
+                //}
                 return costo;
             }
         }
+
 
         //Agregar propiedad que genere automaticamente Stock
         public string StockAutomatico

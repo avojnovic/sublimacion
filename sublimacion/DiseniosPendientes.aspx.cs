@@ -16,17 +16,17 @@ namespace sublimacion
         private Dictionary<long, Pedido> _dicPedidos;
         Dictionary<long, Estado> _listaEstados = new Dictionary<long, Estado>();
 
-                protected void Page_Load(object sender, EventArgs e)
+        protected void Page_Load(object sender, EventArgs e)
         {
             user = (Usuario)Session["usuario"];
 
 
             cargarGrilla();
 
-           
+
         }
 
-   
+
 
         private void setearGrillaSiEstaVacia()
         {
@@ -35,7 +35,7 @@ namespace sublimacion
             {
                 DataTable dt = new DataTable();
                 dt.Columns.Add("IdPedido");
-                dt.Columns.Add("Fecha");
+                dt.Columns.Add("FechaVer");
                 dt.Columns.Add("Comentario");
                 dt.Columns.Add("Prioridad");
                 dt.Columns.Add("Estado");
@@ -62,14 +62,14 @@ namespace sublimacion
 
             List<Pedido> listP = _dicPedidos.Values.ToList();
 
-          
-           
-                var newList = (from x in listP
-                               where x.EstadoId == 2
-                               select x).ToList();
 
-                listP = (List<Pedido>)newList;
-           
+
+            var newList = (from x in listP
+                           where x.EstadoId == (long)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.DisenioPendiente
+                           select x).ToList();
+
+            listP = (List<Pedido>)newList;
+
 
 
             listP.Sort(delegate(Pedido p1, Pedido p2)
@@ -88,12 +88,14 @@ namespace sublimacion
 
         protected void GridViewPedidos_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
+
+
             GridViewPedidos.PageIndex = e.NewPageIndex;
-            GridViewPedidos.DataBind();
+            cargarGrilla();
         }
 
-                    
-            
+
+
 
     }
 }

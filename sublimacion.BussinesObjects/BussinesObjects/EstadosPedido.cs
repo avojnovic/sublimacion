@@ -7,7 +7,19 @@ namespace sublimacion.BussinesObjects.BussinesObjects
 {
     public class EstadosPedido
     {
+        public enum EstadosPedidoEnum
+        {
 
+            DisenioPendiente =2,
+            AceptacionDisenioPendiente=3,
+            DisenioAceptado=4,
+            FaltanteStock=5,
+            Producción=6,
+            Terminado=7,
+            Entregado=8
+
+        }
+    
 
         private DateTime? _fecha_inicio;
 
@@ -30,5 +42,8 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             get { return _estado; }
             set { _estado = value; }
         }
+
+
+
     }
 }

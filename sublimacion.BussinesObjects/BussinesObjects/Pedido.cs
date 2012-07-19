@@ -131,6 +131,14 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             }
         }
 
+        public long PlanId
+        {
+            get
+            {
+                return PlanDeProduccion.IdPlan;
+            }
+        }
+
         public long EstadoId
         {
             get
@@ -149,21 +157,50 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             }
         }
 
+        public decimal TiempoTotal
+        {
+            get
+            {
+                decimal tiempoTotal = (from lp in LineaPedido select lp.Producto.Tiempo).Sum();
 
+                return tiempoTotal;
+            }
+        }
         public string CostoTotalTiempo
         {
             get
             {
-                decimal tiempo = 0;
-                if (LineaPedido != null && LineaPedido.Count > 0)
-                {
-                    foreach (LineaPedido p in LineaPedido)
-                    {
-                        tiempo += p.Producto.Tiempo * p.Cantidad;
-                    }
-                }
+                //decimal tiempo = 0;
+                //if (LineaPedido != null && LineaPedido.Count > 0)
+                //{
+                //    foreach (LineaPedido p in LineaPedido)
+                //    {
+                //        tiempo += p.Producto.Tiempo * p.Cantidad;
+                //    }
+                //}
 
-                return tiempo.ToString();
+                //return tiempo.ToString();
+                decimal tiempoTotal = (from lp in LineaPedido select lp.Producto.Tiempo).Sum();
+
+                return tiempoTotal.ToString();
+            }
+        }
+
+        public string PrecioTotal
+        {
+            get
+            {
+                decimal precio = 0;
+                //if (LineaPedido != null && LineaPedido.Count > 0)
+                //{
+                //    foreach (LineaPedido p in LineaPedido)
+                //    {
+                //        precio += p.Producto.Precio * p.Cantidad;
+                //    }
+                //}
+
+                precio = (from lp in LineaPedido select lp.Producto.Precio + lp.Cantidad).Sum();
+                return precio.ToString();
             }
         }
 
@@ -172,14 +209,14 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             get
             {
                 decimal costo = 0;
-                if (LineaPedido != null && LineaPedido.Count > 0)
-                {
-                    foreach (LineaPedido p in LineaPedido)
-                    {
-                        costo += p.Producto.Precio * p.Cantidad;
-                    }
-                }
-
+                //if (LineaPedido != null && LineaPedido.Count > 0)
+                //{
+                //    foreach (LineaPedido p in LineaPedido)
+                //    {
+                //        costo += p.Producto.CostoAutomatico * p.Cantidad;
+                //    }
+                //}
+                costo = (from lp in LineaPedido select lp.Producto.CostoAutomatico + lp.Cantidad).Sum();
                 return costo.ToString();
             }
         }

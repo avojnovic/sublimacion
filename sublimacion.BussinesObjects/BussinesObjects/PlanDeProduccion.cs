@@ -40,17 +40,30 @@ namespace sublimacion.BussinesObjects.BussinesObjects
 
         public string Id
         {
-            get { return _idPlan.ToString(); }        
+            get { return _idPlan.ToString(); }
         }
 
         public string Fecha_inicio_str
         {
-            get { return _fecha_inicio.ToShortDateString() + " " + _fecha_inicio.ToLongTimeString(); }
+            get
+            {
+                if (_fecha_inicio != DateTime.MinValue)
+                    return _fecha_inicio.ToString("dd/MM/yyyy") + " " + _fecha_inicio.ToString("HH:mm");
+                else
+                    return "";
+
+            }
         }
 
         public string Fecha_fin_str
         {
-            get { return _fecha_fin.ToShortDateString() + " " + _fecha_fin.ToLongTimeString(); }
+            get
+            {
+                if (_fecha_fin != DateTime.MinValue)
+                    return _fecha_fin.ToString("dd/MM/yyyy") + " " + _fecha_fin.ToString("HH:mm");
+                else
+                    return "";
+            }
         }
     }
 }

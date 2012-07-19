@@ -85,14 +85,14 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
         
         }
         
-        public static void insertarOrdenTrabajo(OrdenDeTrabajo i)
+        public static OrdenDeTrabajo insertarOrdenTrabajo(OrdenDeTrabajo i)
         {
 
             string queryStr;
 
 
             queryStr = @"INSERT INTO orden_de_trabajo(fecha_comienzo, fecha_finalizacion, tiempo_estimado)
-                    VALUES ( :fecha_comienzo, :fecha_finalizacion, :tiempo_estimado);";
+                    VALUES ( :fecha_comienzo, :fecha_finalizacion, :tiempo_estimado); SELECT currval('orden_de_trabajo_idorden_seq');";
 
             NpgsqlDb.Instancia.PrepareCommand(queryStr);
 
@@ -100,13 +100,15 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
             try
             {
-                NpgsqlDb.Instancia.ExecuteNonQuery();
+               i.Idorden= NpgsqlDb.Instancia.ExecuteScalar();
 
             }
             catch (System.OverflowException Ex)
             {
                 throw Ex;
             }
+
+            return i;
         }
                        
         public static void actualizarOrdenTrabajo(OrdenDeTrabajo i)

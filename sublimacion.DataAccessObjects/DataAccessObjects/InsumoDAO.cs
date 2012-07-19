@@ -122,6 +122,32 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
         }
 
+        public static Dictionary<long, Insumo> obtenerTodosInsumos(long p)
+        {
+
+            string sql = "";
+            sql += @"SELECT idinsumo, nombre, nombre_fab, costo, borrado, stock, fecha_act_stock, cantidad 
+                    FROM producto_insumo pi
+                left join insumo i on i.idinsumo= pi.id_insumo    
+                where pi.id_producto=" + p.ToString() + " order by nombre";
+
+            NpgsqlDb.Instancia.PrepareCommand(sql);
+            NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
+
+            Dictionary<long, Insumo> insumos = new Dictionary<long, Insumo>();
+
+            while (dr.Read())
+            {
+                Insumo i = InsumoDAO.getInsumosDelDataReader(dr);
+                i.Cantidad = dr.GetInt32(dr.GetOrdinal("cantidad"));
+                insumos.Add(i.Idinsumo, i);
+
+            }
+
+            return insumos;
+
+        }
+
         public static Insumo getInsumosDelDataReader(NpgsqlDataReader dr)
         {
             Insumo i = new Insumo();

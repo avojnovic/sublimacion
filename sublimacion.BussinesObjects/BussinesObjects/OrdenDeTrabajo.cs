@@ -15,16 +15,16 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             get { return _idorden; }
             set { _idorden = value; }
         }
-        private DateTime _fecha_comienzo;
+        private DateTime? _fecha_comienzo;
 
-        public DateTime Fecha_comienzo
+        public DateTime? Fecha_comienzo
         {
             get { return _fecha_comienzo; }
             set { _fecha_comienzo = value; }
         }
-        private DateTime _fecha_finalizacion;
+        private DateTime? _fecha_finalizacion;
 
-        public DateTime Fecha_finalizacion
+        public DateTime? Fecha_finalizacion
         {
             get { return _fecha_finalizacion; }
             set { _fecha_finalizacion = value; }
@@ -35,6 +35,44 @@ namespace sublimacion.BussinesObjects.BussinesObjects
         {
             get { return _tiempo_estimado; }
             set { _tiempo_estimado = value; }
+        }
+
+
+        public string Fecha_inicio_str
+        {
+            get {
+
+                    if (_fecha_comienzo != null)
+                    {
+                        DateTime t = (DateTime)_fecha_comienzo;
+                        return t.ToString("dd/MM/yyyy") + " " + t.ToString("HH:mm"); 
+                    }
+                    else
+                    {
+                        return "";
+                    }
+               
+            
+                }
+        }
+
+        public string Fecha_fin_str
+        {
+            get
+            {
+
+                if (_fecha_finalizacion != null)
+                {
+                    DateTime t = (DateTime)_fecha_finalizacion;
+                    return t.ToString("dd/MM/yyyy") + " " + t.ToString("HH:mm");
+                }
+                else
+                {
+                    return "";
+                }
+
+
+            }
         }
     }
 }
