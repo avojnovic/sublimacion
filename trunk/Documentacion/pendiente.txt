@@ -1,0 +1,9 @@
+cuando el pedido esta en xxx estado no editar en abm
+
+validar q el pedido tenga alguna linea de pedido
+
+probar varias datos en grilla para controlar info...
+
+la orden de trabajo posta delñ trabajo q se hizo
+
+el plan es lo q se estimaria para resolver...

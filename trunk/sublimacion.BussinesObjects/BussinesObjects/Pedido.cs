@@ -22,6 +22,12 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             get { return _fecha; }
             set { _fecha = value; }
         }
+
+        public string FechaVer
+        {
+            get { return Fecha.ToShortDateString(); }
+        }
+
         private bool _borrado;
 
         public bool Borrado

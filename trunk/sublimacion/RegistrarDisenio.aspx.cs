@@ -13,24 +13,14 @@ namespace sublimacion
     public partial class RegistrarDisenio : System.Web.UI.Page
     {
 
-        ModosEdicionEnum _modoApertura = new ModosEdicionEnum();
         Pedido _pedido;
 
         Dictionary<long, Estado> _listaEstados = new Dictionary<long, Estado>();
-       /* Dictionary<long, Cliente> _listaClientes = new Dictionary<long, Cliente>();
-
-        Dictionary<long, Producto> _listaProductos = new Dictionary<long, Producto>();
-        Dictionary<long, Catalogo> _listaCatalogo = new Dictionary<long, Catalogo>();
-        Dictionary<long, Plantilla> _listaPlantilla = new Dictionary<long, Plantilla>();*/
-
-
-       /* Dictionary<Producto, int> _listaProductosAgregados = new Dictionary<Producto, int>();*/
-
         Usuario user;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-           string id = Request.QueryString["id"];
+            string id = Request.QueryString["id"];
 
             if (id != null && id != "")
             {
@@ -38,17 +28,11 @@ namespace sublimacion
             }
 
 
-            /* 
-             _listaClientes = ClienteDAO.obtenerClienteTodos();
-             _listaProductos = ProductoDAO.obtenerProductoTodos();
-
-             */
-
             _listaEstados = TipoEstadoDAO.obtenerEstados();
 
             LblComentario.Text = "";
             user = (Usuario)Session["usuario"];
-         
+
 
             if (!IsPostBack)
             {
@@ -58,9 +42,6 @@ namespace sublimacion
 
                 setearGrillaSiEstaVacia();
             }
-
-
-     
 
         }
 
@@ -82,44 +63,33 @@ namespace sublimacion
                 TxtPrioridad.Text = _pedido.Prioridad.ToString();
                 TxtUbicacion.Text = _pedido.Ubicacion;
                 TxtUsuario.Text = _pedido.UserNombre;
-
-                CmbEstado.SelectedValue = _pedido.EstadoId.ToString();
-
                 TxtCliente.Text = _pedido.Cliente.NombreCompleto.ToString();
 
-
-
-
+                CmbEstado.SelectedValue = _pedido.EstadoId.ToString();
+                              
                 Session["Productos"] = _pedido.LineaPedido;
 
                 GridViewLineaPedido.DataSource = _pedido.LineaPedido;
-                GridViewLineaPedido.DataBind();
-
-               
-
+                GridViewLineaPedido.DataBind();              
             }
-            
+
         }
 
-   
+
 
         protected void BtnGuardar_Click(object sender, EventArgs e)
         {
 
             setearObjeto();
 
-
             PedidoDAO.actualizarPedido(_pedido);
 
             Response.Redirect("DiseniosPendientes.aspx");
-          
-
+            
         }
 
         private void setearObjeto()
         {
-
-
             _pedido.LineaPedido = (List<LineaPedido>)Session["Productos"];
             _pedido.Comentario = TxtComentario.Text;
 
@@ -130,8 +100,7 @@ namespace sublimacion
                 est.Fecha_fin = null;
                 est.Estado = _listaEstados[long.Parse(this.CmbEstado.SelectedValue)];
                 _pedido.EstadosPedido.Add(est.Estado.Id, est);
-
-
+                
                 foreach (EstadosPedido e in _pedido.EstadosPedido.Values.ToList())
                 {
 
@@ -188,70 +157,70 @@ namespace sublimacion
         protected void BtnSalir_Click(object sender, EventArgs e)
         {
 
-          
-                Response.Redirect("DiseniosPendientes.aspx");
-            
+            Response.Redirect("DiseniosPendientes.aspx");
+
         }
 
 
         protected void BtnSeleccionarArchivo_Click(object sender, EventArgs e)
         {
 
-
         }
+
         protected void BtnAdjuntar_Click(object sender, EventArgs e)
         {
             if (lblLineaSeleccionada.Text != "")
-            { 
+            {
                 //Solo si seleccione una linea me permite adjuntar.
                 // la linea seleccionada la guarde en  Session["linea"]
-                 List<LineaPedido> dt = (List<LineaPedido>)Session["Productos"];
-                 LineaPedido _lineaSeleccionada = (LineaPedido)Session["linea"];
-                 
-                 foreach (LineaPedido p in dt)
-                 {
-                     if (p.Idproducto == _lineaSeleccionada.Idproducto && p.Cantidad == _lineaSeleccionada.Cantidad && p.Plantilla.IdPlantilla == _lineaSeleccionada.Plantilla.IdPlantilla && p.Catalogo.IdCatalogo == _lineaSeleccionada.Catalogo.IdCatalogo && p.ArchivoCliente == _lineaSeleccionada.ArchivoCliente)
-                     { 
+
+                List<LineaPedido> dt = (List<LineaPedido>)Session["Productos"];
+                LineaPedido _lineaSeleccionada = (LineaPedido)Session["linea"];
+
+                foreach (LineaPedido p in dt)
+                {
+                    if (p.Idproducto == _lineaSeleccionada.Idproducto && p.Cantidad == _lineaSeleccionada.Cantidad && p.Plantilla.IdPlantilla == _lineaSeleccionada.Plantilla.IdPlantilla && p.Catalogo.IdCatalogo == _lineaSeleccionada.Catalogo.IdCatalogo && p.ArchivoCliente == _lineaSeleccionada.ArchivoCliente)
+                    {
                         //ACA LO ENCONTRE
 
-                         if ((FileDisenio.PostedFile != null) && (FileDisenio.PostedFile.ContentLength > 0))
-                         {
-                             string fn = DateTime.Now.ToString("yyyyMMddhhmmssffff") + System.IO.Path.GetFileName(FileDisenio.PostedFile.FileName);
-                             
-                             //le pongo el nombre del archivo
-                             p.ArchivoDisenio = fn;
-                             string SaveLocation = Server.MapPath("Data") + "\\" + fn;
-                             try
-                             {
-                                 FileDisenio.PostedFile.SaveAs(SaveLocation);
+                        if ((FileDisenio.PostedFile != null) && (FileDisenio.PostedFile.ContentLength > 0))
+                        {
+                            string fn = DateTime.Now.ToString("yyyyMMddhhmmssffff") + System.IO.Path.GetFileName(FileDisenio.PostedFile.FileName);
 
-                             }
-                             catch (Exception ex)
-                             {
-                                 throw ex;
-                             }
-                         }
+                            //le pongo el nombre del archivo
+                            p.ArchivoDisenio = fn;
+                            string SaveLocation = Server.MapPath("Data") + "\\" + fn;
+                            try
+                            {
+                                FileDisenio.PostedFile.SaveAs(SaveLocation);
 
-                         break;
-                     }
-                 }
+                            }
+                            catch (Exception ex)
+                            {
+                                throw ex;
+                            }
+                        }
+
+                        break;
+                    }
+                }
 
                 //actualizo la lista con el nombre del archivo adjuntado
-                 Session["Productos"] = dt;
-                 GridViewLineaPedido.DataSource = dt;
-                 GridViewLineaPedido.DataBind();
+                Session["Productos"] = dt;
+                GridViewLineaPedido.DataSource = dt;
+                GridViewLineaPedido.DataBind();
             }
 
             //limpio la seleccion
             lblLineaSeleccionada.Text = "";
             Session["linea"] = null;
         }
-        
+
 
         protected void GridViewLineaPedido_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "Seleccionar")
-            { 
+            {
 
                 int index = Convert.ToInt32(e.CommandArgument);
                 GridViewRow row = GridViewLineaPedido.Rows[index];
@@ -272,15 +241,12 @@ namespace sublimacion
                     {
                         if (p.Producto.Idproducto.ToString() == Id.Text.Trim() && p.CatalogoNombre == Cata.Text && p.PlantillaNombre == Plant.Text && p.Cantidad.ToString() == Cant.Text && p.ArchivoClienteNombreMostrable == NombreArchivo.Text.Trim())
                         {
-                            Session["linea"]=p;
-                            lblLineaSeleccionada.Text = "Producto: "+p.Producto.Nombre+ " - Catalogo: "+p.CatalogoNombre+ " - Plantilla: "+p.PlantillaNombre+" - Cantidad: "+p.Cantidad.ToString() + " - Archivo Cliente: "+p.ArchivoClienteNombreMostrable;
+                            Session["linea"] = p;
+                            lblLineaSeleccionada.Text = "Producto: " + p.Producto.Nombre + " - Catalogo: " + p.CatalogoNombre + " - Plantilla: " + p.PlantillaNombre + " - Cantidad: " + p.Cantidad.ToString() + " - Archivo Cliente: " + p.ArchivoClienteNombreMostrable;
                         }
-                       
+
                     }
 
-                  
-
-                    
                 }
             }
 
@@ -358,13 +324,13 @@ namespace sublimacion
             }
 
         }
-        
 
-        
 
-           
 
-     
-    
+
+
+
+
+
     }
 }

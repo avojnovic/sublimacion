@@ -80,7 +80,7 @@ namespace sublimacion
             {
                 DataTable dt = new DataTable();
                 dt.Columns.Add("IdPedido");
-                dt.Columns.Add("Fecha");
+                dt.Columns.Add("FechaVer");
                 dt.Columns.Add("Comentario");
                 dt.Columns.Add("Prioridad");
                 dt.Columns.Add("Estado");

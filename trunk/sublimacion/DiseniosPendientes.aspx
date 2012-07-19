@@ -12,7 +12,7 @@
             <RowStyle HorizontalAlign="Center" VerticalAlign="Middle" />
             <Columns>
                 <asp:BoundField DataField="IdPedido" HeaderText="Id" ReadOnly="True" SortExpression="id" />
-                <asp:BoundField DataField="Fecha" HeaderText="Fecha" ReadOnly="True" SortExpression="Fecha" />
+                <asp:BoundField DataField="FechaVer" HeaderText="Fecha" ReadOnly="True" SortExpression="Fecha" />
                 <asp:BoundField DataField="Comentario" HeaderText="Comentario" SortExpression="Comentario" />
                 <asp:BoundField DataField="Prioridad" HeaderText="Prioridad" SortExpression="Prioridad" />
                 <asp:BoundField DataField="Estado" HeaderText="Estado" SortExpression="Estado" />
