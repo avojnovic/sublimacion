@@ -27,9 +27,11 @@
                 <asp:BoundField DataField="Comentario" HeaderText="Comentario" SortExpression="Comentario" />
                 <asp:BoundField DataField="Prioridad" HeaderText="Prioridad" SortExpression="Prioridad" />
                 <asp:BoundField DataField="Estado" HeaderText="Estado" SortExpression="Estado" />
+                <asp:BoundField DataField="ClienteNombre" HeaderText="Cliente" SortExpression="Cliente" />
                 <asp:BoundField DataField="Ubicacion" HeaderText="Ubicacion" SortExpression="Ubicacion" />
                 <asp:BoundField DataField="UserNombre" HeaderText="Usuario" SortExpression="Usuario" />
-                <asp:BoundField DataField="ClienteNombre" HeaderText="Cliente" SortExpression="Cliente" />
+                <asp:BoundField DataField="CostoTotalTiempo" HeaderText="Tiempo Estimado" SortExpression="CostoTotalTiempo" />
+                <asp:BoundField DataField="PrecioTotal" HeaderText="Precio Total" SortExpression="PrecioTotal" />
                 <asp:TemplateField ItemStyle-Width="25px">
                     <ItemTemplate>
                         <a href="PedidoABM.aspx?id=<%# Eval("IdPedido") %>">

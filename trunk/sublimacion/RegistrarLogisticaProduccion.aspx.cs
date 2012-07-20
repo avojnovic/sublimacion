@@ -18,7 +18,7 @@ using System.Globalization;
 
 namespace sublimacion
 {
-    public partial class LogisticaProduccion : System.Web.UI.Page
+    public partial class RegistrarLogisticaProduccion : System.Web.UI.Page
     {
 
         Usuario user;
@@ -375,30 +375,7 @@ namespace sublimacion
         }
 
        
-        private void setearEstadoEnProduccion(Pedido pedido)
-        {
-            Estado c = TipoEstadoDAO.obtenerEstadosPorId(((long)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.Producción).ToString());
-
-            if (!pedido.EstadosPedido.ContainsKey(c.Id))
-            {
-                EstadosPedido est = new EstadosPedido();
-                est.Fecha_inicio = DateTime.Now;
-                est.Fecha_fin = null;
-                est.Estado = c;
-                pedido.EstadosPedido.Add(c.Id, est);
-
-
-                foreach (EstadosPedido e in pedido.EstadosPedido.Values.ToList())
-                {
-
-                    if (e.Estado.Id != c.Id && e.Fecha_fin == null)
-                    {
-                        e.Fecha_fin = DateTime.Now;
-                    }
-                }
-
-            }
-        }
+      
 
 
 

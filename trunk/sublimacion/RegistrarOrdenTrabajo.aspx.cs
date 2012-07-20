@@ -18,7 +18,7 @@ using System.Globalization;
 
 namespace sublimacion
 {
-    public partial class VerLogistica : System.Web.UI.Page
+    public partial class RegistrarOrdenTrabajo : System.Web.UI.Page
     {
         Usuario user;
         private Dictionary<long, Pedido> _dicPedidos;

@@ -42,6 +42,8 @@ namespace sublimacion
             string id = Request.QueryString["id"];
             idCliente = Request.QueryString["idCliente"];
 
+           
+
             if (id != null && id!="")
             {
                 _pedido = PedidoDAO.obtenerPorId(id);
@@ -73,37 +75,69 @@ namespace sublimacion
 
             }
 
+            CmbEstado.Enabled = false;
 
             if (_pedido != null)
             {
                 _modoApertura = ModosEdicionEnum.Modificar;
-                BtnBorrar.Visible = true;
+                prepararvisibilidad(false);
             }
             else
             {
                 _modoApertura = ModosEdicionEnum.Nuevo;
+
+                prepararvisibilidad(true);
+            }
+
+
+          
+
+        }
+
+        private void prepararvisibilidad(bool nuevo)
+        {
+            if (nuevo)
+            {
                 BtnBorrar.Visible = false;
                 Usuario u = (Usuario)Session["usuario"];
                 TxtUsuario.Text = u.NombreCompleto;
                 TxtFecha.Text = DateTime.Now.ToShortDateString();
+                TxtUbicacion.Text = "Sin ubicación";
+                TxtUbicacion.Enabled = false;
+                TxtPrioridad.Text = "0";
+                TxtPrioridad.Enabled = false;
+                CmbEstado.SelectedValue = ((int)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.DisenioPendiente).ToString();
+
             }
-
-
-            if (user.Perfil == Usuario.PerfilesEnum.JefeProduccion)
+            else
             {
 
-                TxtComentario.ReadOnly = true;
-                TxtFecha.ReadOnly = true;
-                TxtUbicacion.ReadOnly = true;
-                TxtUsuario.ReadOnly = true;
+                BtnBorrar.Visible = true;
                 CmbCliente.Enabled = false;
-                CmbEstado.Enabled = false;
 
-                GridViewProductos.Enabled = false;
+                if (_pedido.EstadoId == (long)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.AceptacionDisenioPendiente)
+                {
+                    BtnAceptarDisenio.Visible = true;
+                    BtnRechazarDisenio.Visible = true;
+                }
+                else
+                {
+                    BtnAceptarDisenio.Visible = false;
+                    BtnRechazarDisenio.Visible = false;
+                }
+
+                if (_pedido.EstadoId == (long)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.DisenioPendiente || _pedido.EstadoId == (long)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.AceptacionDisenioPendiente || _pedido.EstadoId == (long)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.FaltanteStock )
+                    BtnBorrar.Visible = true;
+                else
+                    BtnBorrar.Visible = false;
+
+                tblLineaPedido.Visible = false;
+                GridViewProductos.Columns[9].Visible = false;
 
             }
-
         }
+
+
 
         private void cargarCombos()
         {
@@ -245,6 +279,43 @@ namespace sublimacion
 
         }
 
+        protected void BtnAceptarDisenio_Click(object sender, EventArgs e)
+        {
+            if (_modoApertura == ModosEdicionEnum.Modificar)
+            {
+                CmbEstado.SelectedValue = ((int)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.DisenioAceptado).ToString();
+                setearObjeto();
+
+                if (_pedido.LineaPedido != null && _pedido.LineaPedido.Count > 0)
+                {
+                    PedidoDAO.actualizarPedido(_pedido);
+
+                    Response.Redirect(prevPage);
+                }
+                else
+                    LblComentario.Text = "Debe por lo menos ingresar un producto";
+
+            }
+        }
+
+        protected void BtnRechazarDisenio_Click(object sender, EventArgs e)
+        {
+            if (_modoApertura == ModosEdicionEnum.Modificar)
+            {
+                CmbEstado.SelectedValue = ((int)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.DisenioPendiente).ToString();
+                setearObjeto();
+                if (_pedido.LineaPedido != null && _pedido.LineaPedido.Count > 0)
+                {
+                    PedidoDAO.actualizarPedido(_pedido);
+
+                    Response.Redirect(prevPage);
+                }
+                else
+                    LblComentario.Text = "Debe por lo menos ingresar un producto";
+
+            }
+        }
+
         protected void BtnGuardar_Click(object sender, EventArgs e)
         {
             LblComentario.Text = "";
@@ -261,7 +332,7 @@ namespace sublimacion
 
                 }
                 else
-                    LblComentario.Text = "Debe por lo menos ingresar una linea de pedido";
+                    LblComentario.Text = "Debe por lo menos ingresar un producto";
             }
             else
             {
@@ -275,7 +346,7 @@ namespace sublimacion
                         Response.Redirect(prevPage);
                     }
                     else
-                        LblComentario.Text = "Debe por lo menos ingresar una linea de pedido";
+                        LblComentario.Text = "Debe por lo menos ingresar un producto";
 
                 }
             }
@@ -389,7 +460,8 @@ namespace sublimacion
                 dt.Columns.Add("Cantidad");
                 dt.Columns.Add("ArchivoClienteNombreMostrable");
                 dt.Columns.Add("ArchivoDisenioNombreMostrable");
-
+                dt.Columns.Add("ArchivoCliente");
+                dt.Columns.Add("ArchivoDisenio");
                 dt.Rows.Add(new object[] { "", "", "", "", "","" });
 
                 GridViewProductos.DataSource = dt;

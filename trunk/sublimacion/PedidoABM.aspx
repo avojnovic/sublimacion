@@ -17,7 +17,7 @@
                         <asp:Label ID="Label1" runat="server" Text="Fecha" Font-Names="calibri"></asp:Label>
                     </td>
                     <td>
-                        <asp:TextBox ID="TxtFecha" runat="server" Width="100%" ReadOnly="True"></asp:TextBox>
+                        <asp:TextBox ID="TxtFecha" runat="server" Width="100%" Enabled="false" ></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
@@ -69,7 +69,7 @@
                         <asp:Label ID="Label9" runat="server" Text="Usuario" Font-Names="calibri"></asp:Label>
                     </td>
                     <td>
-                        <asp:TextBox ID="TxtUsuario" runat="server" Width="100%" ReadOnly="True"></asp:TextBox>
+                        <asp:TextBox ID="TxtUsuario" runat="server" Width="100%" Enabled="false"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
@@ -97,7 +97,7 @@
             Radius="8" Color="#DDDDDD" Corners="All" Enabled="true" />
         <br />
         <center>
-            <table>
+            <table id="tblLineaPedido" runat="server">
                 <tr>
                     <td>
                         <asp:Label ID="Label7" runat="server" Text="Producto" Font-Names="calibri"></asp:Label>
@@ -139,13 +139,7 @@
                             Display="Dynamic" ErrorMessage="*" SetFocusOnError="true" ValidationGroup="lineaPedidoAdd" />
                     </td>
                     <td>
-                        <%-- <asp:TextBox ID="TxtArchivoUsuario" ValidationGroup="lineaPedidoAdd" runat="server"
-                        ReadOnly="true" />
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator10" runat="server" ControlToValidate="TxtArchivoUsuario"
-                        Display="Dynamic" ErrorMessage="*" SetFocusOnError="true" ValidationGroup="lineaPedidoAdd" />
-                    <asp:ImageButton ID="BtnSeleccionarArchivo" Width="32px" Height="32px" ImageUrl="~/Images/Image_Explore.png.png"
-                        runat="server" OnClick="BtnSeleccionarArchivo_Click" ToolTip="Seleccionar Archivo" />
-                        --%>
+                       
                         <input type="file" id="FileUsuario" name="FileUsuario" runat="server" />
                     </td>
                     <td>
@@ -196,9 +190,11 @@
                                             runat="server" ToolTip="Descargar archivo cliente" CommandName="VerAdjunto" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Archivo Cliente">
+                                 <asp:TemplateField HeaderText="Archivo Cliente">
                                     <ItemTemplate>
-                                        <asp:Label ID="LblArchivo" Font-Names="calibri" runat="server" Text='<%#Eval("ArchivoClienteNombreMostrable") %>'></asp:Label>
+                                        <a href="VerImagen.aspx?Imagen=<%# Eval("ArchivoCliente") %>" target="_blank">
+                                            <asp:Label ID="LblArchivo" Font-Names="calibri" runat="server" Text='<%#Eval("ArchivoClienteNombreMostrable") %>'></asp:Label>
+                                        </a>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField>
@@ -209,7 +205,9 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Archivo Diseño">
                                     <ItemTemplate>
+                                    <a href="VerImagen.aspx?Imagen=<%# Eval("ArchivoDisenio") %>" target="_blank">
                                         <asp:Label ID="LblArchivoDisenio" Font-Names="calibri" runat="server" Text='<%#Eval("ArchivoDisenioNombreMostrable") %>'></asp:Label>
+                                        </a>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField>
@@ -231,12 +229,17 @@
                 <tr>
                     <td align="center" colspan="2">
                         <br />
-                        <asp:ImageButton ID="ImageButton1" Width="32px" Height="32px" ImageUrl="~/Images/Save.png"
+                        <asp:ImageButton ID="BtnGuardar" Width="32px" Height="32px" ImageUrl="~/Images/Save.png"
                             runat="server" ValidationGroup="add" OnClick="BtnGuardar_Click" ToolTip="Guardar" />
                         <asp:ImageButton ID="BtnBorrar" Width="32px" Height="32px" ImageUrl="~/Images/Trash.png"
                             runat="server" OnClick="BtnBorrar_Click" ToolTip="Borrar" />
-                        <asp:ImageButton ID="ImageButton2" Width="32px" Height="32px" ImageUrl="~/Images/return.png"
+                        <asp:ImageButton ID="BtnSalir" Width="32px" Height="32px" ImageUrl="~/Images/return.png"
                             runat="server" OnClick="BtnSalir_Click" ToolTip="Salir" />
+                        
+                        <asp:ImageButton ID="BtnAceptarDisenio" Width="32px" Visible="false" Height="32px" ImageUrl="~/Images/designok.png"
+                            runat="server" OnClick="BtnAceptarDisenio_Click" ToolTip="Guardar y Aceptar diseño" />
+                        <asp:ImageButton ID="BtnRechazarDisenio" Width="32px" Visible="false" Height="32px" ImageUrl="~/Images/designko.png"
+                            runat="server" OnClick="BtnRechazarDisenio_Click" ToolTip="Guardar y Rechazar diseño" />
                         <br />
                         <asp:Label ID="lblInformacionFechas" runat="server" Font-Size="X-Small"></asp:Label>
                     </td>
