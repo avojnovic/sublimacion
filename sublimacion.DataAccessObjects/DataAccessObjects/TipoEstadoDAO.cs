@@ -17,7 +17,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
         {
 
             string sql = "";
-            sql = @"SELECT idestado, estado FROM tipo_estado order by estado;";
+            sql = @"SELECT idestado, estado FROM tipo_estado order by idestado;";
 
             
             NpgsqlDb.Instancia.PrepareCommand(sql);

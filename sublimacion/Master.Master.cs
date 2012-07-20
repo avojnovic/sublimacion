@@ -25,23 +25,23 @@ namespace sublimacion
 
             //if (!IsPostBack)
             //{
-                if (!Page.Request.Url.ToString().ToLower().Contains("login.aspx") && !Page.Request.Url.ToString().ToLower().Contains("error.aspx"))
-                {
+            if (!Page.Request.Url.ToString().ToLower().Contains("login.aspx") && !Page.Request.Url.ToString().ToLower().Contains("error.aspx"))
+            {
 
-                    if (user == null)
-                    {
-                        Response.Redirect("login.aspx");
-                    }
-                    else
-                    {
-                        this.divMenu.Visible = true;
-                        generarMenu();
-                    }
+                if (user == null)
+                {
+                    Response.Redirect("login.aspx");
                 }
                 else
                 {
-                    this.divMenu.Visible = false;
+                    this.divMenu.Visible = true;
+                    generarMenu();
                 }
+            }
+            else
+            {
+                this.divMenu.Visible = false;
+            }
             //}
         }
 
@@ -53,7 +53,7 @@ namespace sublimacion
 
         private void generarMenu()
         {
-          
+
 
             if ((user.Perfil == Usuario.PerfilesEnum.Diseniador) || (user.Perfil == Usuario.PerfilesEnum.Administrador))
             {
@@ -214,28 +214,28 @@ namespace sublimacion
                 divMenu.Items.Add(itPe);
             }
 
-           
-                //LOGISTICA PRODUCCION
-                MenuItem itLog = new MenuItem("Logistica Producción");
+
+            //LOGISTICA PRODUCCION
+            MenuItem itLog = new MenuItem("Logistica Producción");
 
 
-                if ((user.Perfil == Usuario.PerfilesEnum.JefeProduccion) || (user.Perfil == Usuario.PerfilesEnum.Administrador))
-                {
-                    MenuItem itInsN = new MenuItem("Crear Plan de Producción");
-                    itInsN.Value = "Crear";
-                    itInsN.NavigateUrl = "LogisticaProduccion.aspx";
-                    itLog.ChildItems.Add(itInsN);
-                }
-                if ((user.Perfil == Usuario.PerfilesEnum.JefeProduccion) || (user.Perfil == Usuario.PerfilesEnum.Operario) || (user.Perfil == Usuario.PerfilesEnum.Administrador))
-                {
-                    MenuItem itPlp = new MenuItem("Registrar producción");
-                    itPlp.Value = "VerLogistica";
-                    itPlp.NavigateUrl = "VerLogistica.aspx";
-                    itLog.ChildItems.Add(itPlp);
-                }
+            if ((user.Perfil == Usuario.PerfilesEnum.JefeProduccion) || (user.Perfil == Usuario.PerfilesEnum.Administrador))
+            {
+                MenuItem itInsN = new MenuItem("Planificación de Producción");
+                itInsN.Value = "Crear";
+                itInsN.NavigateUrl = "RegistrarLogisticaProduccion.aspx";
+                itLog.ChildItems.Add(itInsN);
+            }
+            if ((user.Perfil == Usuario.PerfilesEnum.JefeProduccion) || (user.Perfil == Usuario.PerfilesEnum.Operario) || (user.Perfil == Usuario.PerfilesEnum.Administrador))
+            {
+                MenuItem itPlp = new MenuItem("Registrar orden de Trabajo");
+                itPlp.Value = "RegistrarProduccion";
+                itPlp.NavigateUrl = "RegistrarOrdenTrabajo.aspx";
+                itLog.ChildItems.Add(itPlp);
+            }
 
-                divMenu.Items.Add(itLog);
-           
+            divMenu.Items.Add(itLog);
+
 
             if ((user.Perfil == Usuario.PerfilesEnum.Administrador))
             {
@@ -282,7 +282,7 @@ namespace sublimacion
 
             divMenu.Items.Add(itSalir);
 
-           
+
             MenuItem ituser = new MenuItem(" " + user.NombreCompleto + " - " + user.Perfil.ToString());
             ituser.Value = "user";
             ituser.ImageUrl = "~/Images/user_info.png";

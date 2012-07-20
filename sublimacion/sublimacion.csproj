@@ -88,6 +88,7 @@
     <Content Include="style.css" />
     <Content Include="UsuarioABM.aspx" />
     <Content Include="UsuarioVer.aspx" />
+    <Content Include="VerImagen.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -182,12 +183,12 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="LogisticaProduccion.aspx.cs">
-      <DependentUpon>LogisticaProduccion.aspx</DependentUpon>
+    <Compile Include="RegistrarLogisticaProduccion.aspx.cs">
+      <DependentUpon>RegistrarLogisticaProduccion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="LogisticaProduccion.aspx.designer.cs">
-      <DependentUpon>LogisticaProduccion.aspx</DependentUpon>
+    <Compile Include="RegistrarLogisticaProduccion.aspx.designer.cs">
+      <DependentUpon>RegistrarLogisticaProduccion.aspx</DependentUpon>
     </Compile>
     <Compile Include="Master.Master.cs">
       <DependentUpon>Master.Master</DependentUpon>
@@ -272,12 +273,19 @@
     <Compile Include="UsuarioVer.aspx.designer.cs">
       <DependentUpon>UsuarioVer.aspx</DependentUpon>
     </Compile>
-    <Compile Include="VerLogistica.aspx.cs">
-      <DependentUpon>VerLogistica.aspx</DependentUpon>
+    <Compile Include="RegistrarOrdenTrabajo.aspx.cs">
+      <DependentUpon>RegistrarOrdenTrabajo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="VerLogistica.aspx.designer.cs">
-      <DependentUpon>VerLogistica.aspx</DependentUpon>
+    <Compile Include="RegistrarOrdenTrabajo.aspx.designer.cs">
+      <DependentUpon>RegistrarOrdenTrabajo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VerImagen.aspx.cs">
+      <DependentUpon>VerImagen.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VerImagen.aspx.designer.cs">
+      <DependentUpon>VerImagen.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -298,11 +306,11 @@
     <Content Include="Images\logosuperior.PNG" />
     <Content Include="InsumoABM.aspx" />
     <Content Include="InsumoVer.aspx" />
-    <Content Include="LogisticaProduccion.aspx" />
+    <Content Include="RegistrarLogisticaProduccion.aspx" />
     <Content Include="Master.Master" />
     <Content Include="PedidoABM.aspx" />
     <Content Include="PedidoVer.aspx" />
-    <Content Include="VerLogistica.aspx" />
+    <Content Include="RegistrarOrdenTrabajo.aspx" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

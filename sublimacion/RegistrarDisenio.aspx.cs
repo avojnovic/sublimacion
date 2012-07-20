@@ -22,6 +22,8 @@ namespace sublimacion
         {
             string id = Request.QueryString["id"];
 
+            CmbEstado.Enabled = false;
+
             if (id != null && id != "")
             {
                 _pedido = PedidoDAO.obtenerPorId(id);
@@ -92,7 +94,27 @@ namespace sublimacion
         {
             _pedido.LineaPedido = (List<LineaPedido>)Session["Productos"];
             _pedido.Comentario = TxtComentario.Text;
+            bool terminado = true;
+            foreach (LineaPedido lp in _pedido.LineaPedido)
+            {
+                if (lp.ArchivoDisenio==null || lp.ArchivoDisenio.Trim() == "")
+                {
+                    terminado = false;
+                }
+                
+            }
 
+            if (terminado)
+            {
+                CmbEstado.SelectedValue = ((int)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.AceptacionDisenioPendiente).ToString();
+                setearEstado();
+            }
+
+           
+        }
+
+        private void setearEstado()
+        {
             if (!_pedido.EstadosPedido.ContainsKey(long.Parse(this.CmbEstado.SelectedValue)))
             {
                 EstadosPedido est = new EstadosPedido();
@@ -100,7 +122,7 @@ namespace sublimacion
                 est.Fecha_fin = null;
                 est.Estado = _listaEstados[long.Parse(this.CmbEstado.SelectedValue)];
                 _pedido.EstadosPedido.Add(est.Estado.Id, est);
-                
+
                 foreach (EstadosPedido e in _pedido.EstadosPedido.Values.ToList())
                 {
 

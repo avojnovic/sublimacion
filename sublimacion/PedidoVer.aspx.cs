@@ -84,12 +84,14 @@ namespace sublimacion
                 dt.Columns.Add("Comentario");
                 dt.Columns.Add("Prioridad");
                 dt.Columns.Add("Estado");
+                dt.Columns.Add("ClienteNombre");
                 dt.Columns.Add("Ubicacion");
                 dt.Columns.Add("UserNombre");
-                dt.Columns.Add("ClienteNombre");
+                dt.Columns.Add("CostoTotalTiempo");
+                dt.Columns.Add("PrecioTotal");
 
 
-                dt.Rows.Add(new object[] { "", "", "", "", "","","","" });
+                dt.Rows.Add(new object[] { "", "", "", "", "", "", "", "", "", "" });
 
                 GridView1.DataSource = dt;
                 GridView1.DataBind();

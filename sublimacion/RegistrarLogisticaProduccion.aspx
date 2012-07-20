@@ -1,5 +1,5 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="LogisticaProduccion.aspx.cs"
-    Inherits="sublimacion.LogisticaProduccion" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="RegistrarLogisticaProduccion.aspx.cs"
+    Inherits="sublimacion.RegistrarLogisticaProduccion" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="act" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">

@@ -10,13 +10,13 @@ namespace sublimacion.BussinesObjects.BussinesObjects
         public enum EstadosPedidoEnum
         {
 
-            DisenioPendiente =2,
-            AceptacionDisenioPendiente=3,
-            DisenioAceptado=4,
-            FaltanteStock=5,
-            Producción=6,
-            Terminado=7,
-            Entregado=8
+            DisenioPendiente =1,
+            AceptacionDisenioPendiente=2,
+            DisenioAceptado=3,
+            Producción=4,
+            Terminado=5,
+            Entregado=6,
+            FaltanteStock=7
 
         }
     
