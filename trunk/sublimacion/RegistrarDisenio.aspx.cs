@@ -164,6 +164,8 @@ namespace sublimacion
 
                 dt.Rows.Add(new object[] { "", "", "", "", "", "" });
 
+                GridViewLineaPedido.Columns[GridViewLineaPedido.Columns.Count - 1].Visible = false;
+
                 GridViewLineaPedido.DataSource = dt;
                 GridViewLineaPedido.DataBind();
             }

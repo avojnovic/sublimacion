@@ -19,8 +19,6 @@ namespace sublimacion
         protected void Page_Load(object sender, EventArgs e)
         {
             user = (Usuario)Session["usuario"];
-
-
             cargarGrilla();
 
 
@@ -45,6 +43,8 @@ namespace sublimacion
 
 
                 dt.Rows.Add(new object[] { "", "", "", "", "", "", "", "" });
+
+                GridViewPedidos.Columns[GridViewPedidos.Columns.Count - 1].Visible = false;
 
                 GridViewPedidos.DataSource = dt;
                 GridViewPedidos.DataBind();

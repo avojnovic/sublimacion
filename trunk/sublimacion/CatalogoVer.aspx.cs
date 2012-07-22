@@ -42,6 +42,8 @@ namespace sublimacion
 
                 dt.Rows.Add(new object[] { "", "", ""});
 
+                GridView1.Columns[GridView1.Columns.Count].Visible = false;
+
                 GridView1.DataSource = dt;
                 GridView1.DataBind();
             }
