@@ -67,6 +67,9 @@ namespace sublimacion
 
                 dt.Rows.Add(new object[] { "", "", "" });
 
+                GridViewPlanif.Columns[GridViewPlanif.Columns.Count - 1].Visible = false;
+
+
                 GridViewPlanif.DataSource = dt;
                 GridViewPlanif.DataBind();
             }
@@ -87,6 +90,8 @@ namespace sublimacion
                 dt.Columns.Add("CostoTotal");
 
                 dt.Rows.Add(new object[] { "", "", "", "", "", "", "", "", "", "", "" });
+
+                GridViewPedidos.Columns[GridViewPedidos.Columns.Count - 1].Visible = false;
 
                 GridViewPedidos.DataSource = dt;
                 GridViewPedidos.DataBind();

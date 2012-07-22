@@ -171,12 +171,7 @@ namespace sublimacion
                 ititCliE.NavigateUrl = "ClienteVer.aspx";
                 itCli.ChildItems.Add(ititCliE);
 
-                MenuItem ititCliV = new MenuItem("Nuevo");
-                ititCliV.Value = "ClienteNuevo";
-                ititCliV.NavigateUrl = "ClienteABM.aspx";
-                itCli.ChildItems.Add(ititCliV);
-
-                divMenu.Items.Add(itCli);
+                                               
 
                 //PEDIDO
                 MenuItem itPe = new MenuItem("Pedidos");
@@ -186,13 +181,20 @@ namespace sublimacion
                 itPeE.NavigateUrl = "PedidoVer.aspx";
                 itPe.ChildItems.Add(itPeE);
 
-                if ((user.Perfil != Usuario.PerfilesEnum.JefeProduccion))
+                if (user.Perfil != Usuario.PerfilesEnum.JefeProduccion)
                 {
+                    MenuItem ititCliV = new MenuItem("Nuevo");
+                    ititCliV.Value = "ClienteNuevo";
+                    ititCliV.NavigateUrl = "ClienteABM.aspx";
+                    itCli.ChildItems.Add(ititCliV);
+
                     MenuItem itPeN = new MenuItem("Nuevo");
                     itPeN.Value = "PedidoNuevo";
                     itPeN.NavigateUrl = "PedidoABM.aspx";
                     itPe.ChildItems.Add(itPeN);
                 }
+
+                divMenu.Items.Add(itCli);
 
                 divMenu.Items.Add(itPe);
             }
@@ -202,22 +204,28 @@ namespace sublimacion
             MenuItem itLog = new MenuItem("Logistica Producción");
 
 
-            if ((user.Perfil == Usuario.PerfilesEnum.JefeProduccion) || (user.Perfil == Usuario.PerfilesEnum.Administrador))
-            {
-                MenuItem itInsN = new MenuItem("Planificación de Producción");
-                itInsN.Value = "Crear";
-                itInsN.NavigateUrl = "RegistrarLogisticaProduccion.aspx";
-                itLog.ChildItems.Add(itInsN);
-            }
+       
             if ((user.Perfil == Usuario.PerfilesEnum.JefeProduccion) || (user.Perfil == Usuario.PerfilesEnum.Operario) || (user.Perfil == Usuario.PerfilesEnum.Administrador))
             {
                 MenuItem itPlp = new MenuItem("Registrar orden de Trabajo");
                 itPlp.Value = "RegistrarProduccion";
                 itPlp.NavigateUrl = "RegistrarOrdenTrabajo.aspx";
                 itLog.ChildItems.Add(itPlp);
+
+                if ((user.Perfil == Usuario.PerfilesEnum.JefeProduccion) || (user.Perfil == Usuario.PerfilesEnum.Administrador))
+                {
+                    MenuItem itInsN = new MenuItem("Planificación de Producción");
+                    itInsN.Value = "Crear";
+                    itInsN.NavigateUrl = "RegistrarLogisticaProduccion.aspx";
+                    itLog.ChildItems.Add(itInsN);
+
+                }
+
+
+                divMenu.Items.Add(itLog);
             }
 
-            divMenu.Items.Add(itLog);
+            
 
 
             if ((user.Perfil == Usuario.PerfilesEnum.Administrador))
