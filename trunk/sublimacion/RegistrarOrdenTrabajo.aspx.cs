@@ -162,6 +162,8 @@ namespace sublimacion
                 }
 
 
+
+
                 if (LblComentario.Text == "")
                 {
 

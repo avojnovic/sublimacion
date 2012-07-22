@@ -84,10 +84,19 @@
                 </tr>
                 <tr>
                     <td align="left">
-                        <asp:Label ID="Label12" runat="server" Text="Precio Total" Font-Names="calibri"></asp:Label>
+                        <asp:Label ID="Label12" runat="server" Text="Precio Total sin descuento" Font-Names="calibri"></asp:Label>
                     </td>
                     <td>
                         <asp:Label ID="lblPrecioFinal" runat="server" ForeColor="Red" Font-Names="calibri"
+                            Font-Bold="true"></asp:Label>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left">
+                        <asp:Label ID="Label13" runat="server" Text="Precio Total con descuento" Font-Names="calibri"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:Label ID="lblPrecioFinalDescuento" runat="server" ForeColor="Red" Font-Names="calibri"
                             Font-Bold="true"></asp:Label>
                     </td>
                 </tr>

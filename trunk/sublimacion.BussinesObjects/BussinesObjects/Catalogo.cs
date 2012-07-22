@@ -32,7 +32,7 @@ namespace sublimacion.BussinesObjects.BussinesObjects
 
         public string FechaVer
         {
-            get { return Fecha.ToShortDateString(); }
+            get { return _fecha.ToString("dd/MM/yyyy"); }
 
         }
 

@@ -26,7 +26,11 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             get { return _producto.Idproducto; }
 
         }
+        public decimal precio
+        {
+            get { return _producto.Precio; }
 
+        }
         private int _cantidad;
 
         public int Cantidad
@@ -51,6 +55,11 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             set { _fecha = value; }
         }
 
+        public string FechaVer
+        {
+            get { return _fecha.ToString("dd/MM/yyyy"); }
+ 
+        }
 
     }
 }

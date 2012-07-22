@@ -23,7 +23,8 @@
                  <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="CmbProducto" Display="Dynamic" ErrorMessage="*" SetFocusOnError="true" ValidationGroup="add" />
             </td>
             <td>
-                <asp:DropDownList ID="CmbProducto" runat="server" Width="100%"/>
+                <asp:DropDownList ID="CmbProducto" runat="server" Width="100%" AutoPostBack="true" 
+                    onselectedindexchanged="CmbProducto_SelectedIndexChanged"/>
             </td>
         </tr>
 
@@ -37,11 +38,18 @@
         <act:MaskedEditExtender ID="MaskedEditExtender1" runat="server" Mask="99999" MaskType="Number" TargetControlID="TxtCantidad"></act:MaskedEditExtender>
     </td>
 </tr>
-
+ <tr>
+    <td align="left" style="width:100px;" >
+        <asp:Label ID="Label5" runat="server" Text="Precio x Unidad sin Descuento:" Font-Names="Calibri"></asp:Label>
+    </td>
+    <td style="width:200px;" >
+        <asp:TextBox ID="TxtPrecio" Width="100%" Enabled="false" runat="server"></asp:TextBox>
+    </td>
+</tr>
 
  <tr>
     <td align="left" style="width:100px;" >
-        <asp:Label ID="Label3" runat="server" Text="Descuento:" Font-Names="Calibri"></asp:Label>
+        <asp:Label ID="Label3" runat="server" Text="Precio x Unidad con Descuento:" Font-Names="Calibri"></asp:Label>
         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TxtDescuento" Display="Dynamic" ErrorMessage="*" SetFocusOnError="true" ValidationGroup="add" />
     </td>
     <td style="width:200px;" >

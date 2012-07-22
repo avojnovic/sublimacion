@@ -19,6 +19,7 @@ namespace sublimacion
         protected void Page_Load(object sender, EventArgs e)
         {
 
+
             cargarGrilla();
 
             setearGrillaSiEstaVacia();
@@ -45,8 +46,8 @@ namespace sublimacion
                 dt.Columns.Add("productoNombre");
                 dt.Columns.Add("Cantidad");
                 dt.Columns.Add("Descuento1");
-                dt.Columns.Add("Fecha");
-              
+                dt.Columns.Add("FechaVer");
+                dt.Columns.Add("precio");
 
 
 

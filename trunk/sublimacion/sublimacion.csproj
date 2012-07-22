@@ -72,18 +72,34 @@
     <Content Include="DescuentoVer.aspx" />
     <Content Include="DiseniosPendientes.aspx" />
     <Content Include="favicon.ico" />
+    <Content Include="Images\add.png" />
+    <Content Include="Images\arrow_down.png" />
+    <Content Include="Images\attach.png" />
+    <Content Include="Images\calculator.png" />
+    <Content Include="Images\calendar.png" />
+    <Content Include="Images\clear.png" />
+    <Content Include="Images\designko.png" />
+    <Content Include="Images\designok.png" />
+    <Content Include="Images\edit.png" />
     <Content Include="Images\File-Open-icon.png" />
+    <Content Include="Images\Generate.png" />
+    <Content Include="Images\Image_Explore.png" />
+    <Content Include="Images\jobs.png" />
     <Content Include="Images\New.png" />
     <Content Include="Images\ok.png" />
     <Content Include="Images\return.png" />
     <Content Include="Images\save.png" />
+    <Content Include="Images\SaveAndNew.png" />
+    <Content Include="Images\search.png" />
     <Content Include="Images\Trash.png" />
+    <Content Include="Images\user_info.png" />
     <Content Include="Login.aspx" />
     <Content Include="PlantillaABM.aspx" />
     <Content Include="PlantillaVer.aspx" />
     <Content Include="ProductoABM.aspx" />
     <Content Include="ProductoVer.aspx" />
     <Content Include="RegistrarDisenio.aspx" />
+    <Content Include="ReporteEstimaciones.aspx" />
     <Content Include="ReporteRanking.aspx" />
     <Content Include="style.css" />
     <Content Include="UsuarioABM.aspx" />
@@ -251,6 +267,13 @@
     </Compile>
     <Compile Include="RegistrarDisenio.aspx.designer.cs">
       <DependentUpon>RegistrarDisenio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReporteEstimaciones.aspx.cs">
+      <DependentUpon>ReporteEstimaciones.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReporteEstimaciones.aspx.designer.cs">
+      <DependentUpon>ReporteEstimaciones.aspx</DependentUpon>
     </Compile>
     <Compile Include="ReporteRanking.aspx.cs">
       <DependentUpon>ReporteRanking.aspx</DependentUpon>

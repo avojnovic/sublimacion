@@ -19,7 +19,7 @@ namespace sublimacion
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            BtnBorrar.Attributes.Add("OnClick", "javascript:if(confirm('Esta seguro que desea borrar la Plantilla')== false) return false;");
+            BtnBorrar.Attributes.Add("OnClick", "javascript:if(confirm('¿Esta seguro que desea borrar la Plantilla?')== false) return false;");
 
             string id = Request.QueryString["id"];
 

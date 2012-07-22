@@ -64,6 +64,36 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
         }
 
+        public static Descuento obtenerDescuentoPorCantidadMasCercana(string idProducto, string cantidad)
+        {
+
+            string sql = "";
+            sql = @"SELECT cantidad, descuento, fecha, p.idproducto, p.nombre, p.precio, p.borrado, p.tiempo
+                    FROM descuento d 
+                    inner join producto p on d.id_producto=p.idproducto
+                    WHERE p.borrado=FALSE and d.id_producto='{0}' and cantidad<={1}
+                    and cantidad in
+                    (
+	                    select max(cantidad)
+	                    from descuento
+	                    where id_producto='{0}' and cantidad<={1}
+                    )";
+
+            sql = string.Format(sql, idProducto, cantidad);
+            NpgsqlDb.Instancia.PrepareCommand(sql);
+            NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
+
+            Descuento u = null;
+            while (dr.Read())
+            {
+                u = getDescuentoDelDataReader(dr);
+
+            }
+
+            return u;
+
+        }
+
         private static Descuento getDescuentoDelDataReader(NpgsqlDataReader dr)
         {
             Descuento i = new Descuento();

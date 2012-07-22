@@ -168,8 +168,6 @@ namespace Fwk.Utils
             }
         }
         
-
-
         public static string EncodeCharacterUTF8(string value)
         {
             Regex match = new Regex("=..=..");

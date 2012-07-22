@@ -58,7 +58,7 @@ namespace sublimacion.BussinesObjects.BussinesObjects
 
         public string FechaActVer
         {
-            get { return FechaAct.ToShortDateString(); }
+            get { return _fechaAct.ToString("dd/MM/yyyy"); }
         }
 
         private bool _borrado;
@@ -86,7 +86,7 @@ namespace sublimacion.BussinesObjects.BussinesObjects
 
         public string FechaActStr
         {
-            get { return _fechaAct.ToShortDateString();}
+            get { return _fechaAct.ToString("dd/MM/yyyy"); }
         }
 
         public string CostoStr
