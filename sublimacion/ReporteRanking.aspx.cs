@@ -56,6 +56,12 @@ namespace sublimacion
                 LbComentario.Text = "Formato de Fecha Hasta invalido";
             }
 
+            if(fechaDesde>fechaHasta)
+
+                LbComentario.Text = "Periodo de Fecha Incorrecto";
+           
+
+
             if (LbComentario.Text == "")
             {
                 _Pedidos = PedidoDAO.obtenerTodosFecha(fechaDesde, fechaHasta).Values.ToList(); 
@@ -175,6 +181,10 @@ namespace sublimacion
 
         protected void BtnBuscar_Click(object sender, EventArgs e)
         {
+            GridViewReporte.DataSource = null;
+            GridViewReporte.DataBind();
+
+            
             LbComentario.Text = "";
             cargarGrilla();
         }

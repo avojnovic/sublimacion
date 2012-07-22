@@ -15,6 +15,7 @@ using sublimacion.DataAccessObjects.DataAccessObjects;
 using System.Collections.Generic;
 using sublimacion.BussinesObjects.BussinesObjects;
 using sublimacion.BussinesObjects;
+using System.IO;
 
 namespace sublimacion
 {
@@ -41,6 +42,8 @@ namespace sublimacion
         {
             string id = Request.QueryString["id"];
             idCliente = Request.QueryString["idCliente"];
+
+            BtnBorrar.Attributes.Add("OnClick", "javascript:if(confirm('¿Esta seguro que desea borrar el Pedido?')== false) return false;");
 
            
 
@@ -193,13 +196,29 @@ namespace sublimacion
             List<LineaPedido> dt = (List<LineaPedido>)Session["Productos"];
 
             decimal precio = 0;
+            decimal descuento = 0;
+           
             foreach (LineaPedido p in dt)
             {
+                Descuento d=DescuentoDAO.obtenerDescuentoPorCantidadMasCercana(p.Idproducto.ToString(),p.Cantidad.ToString());
+               
                 precio += p.Cantidad * p.Producto.Precio;
+
+                if (d != null)
+                {
+                    descuento += p.Cantidad * d.Descuento1;
+                }
+                else
+                {
+                    descuento = precio;
+                }
             }
 
             lblPrecioFinal.Text = precio.ToString();
+            lblPrecioFinalDescuento.Text = descuento.ToString();
         }
+
+
         protected void DDLCatalogo_SelectedIndexChanged1(object sender, EventArgs e)
         {
             DDLPlantilla.Items.Clear();
@@ -263,6 +282,35 @@ namespace sublimacion
         {
             setearObjeto();
             _pedido.Borrado = true;
+
+
+            foreach (LineaPedido p in _pedido.LineaPedido)
+            {
+                if (p.ArchivoCliente != null && p.ArchivoCliente != "")
+                {
+                    string nombre = Server.MapPath("Data") + "\\" + p.ArchivoCliente;
+                    FileInfo TheFile = new FileInfo(nombre);
+                    if (TheFile.Exists)
+                    {
+                        File.Delete(nombre);
+                    }
+                }
+
+                if (p.ArchivoDisenio != null && p.ArchivoDisenio != "")
+                {
+                    string nombre = Server.MapPath("Data") + "\\" + p.ArchivoDisenio;
+                    FileInfo TheFile = new FileInfo(nombre);
+                    if (TheFile.Exists)
+                    {
+                        File.Delete(nombre);
+                    }
+                }
+                
+            }
+
+
+            _pedido.LineaPedido = null;
+
             PedidoDAO.actualizarPedido(_pedido);
 
 
@@ -550,7 +598,26 @@ namespace sublimacion
                     {
                         if (p.Producto.Idproducto.ToString() == Id.Text.Trim() && p.CatalogoNombre == Cata.Text && p.PlantillaNombre == Plant.Text && p.Cantidad.ToString() == Cant.Text && p.ArchivoClienteNombreMostrable == NombreArchivo.Text.Trim())
                         {
+                            if (p.ArchivoCliente != null && p.ArchivoCliente != "")
+                            {
+                                string nombre = Server.MapPath("Data") + "\\" + p.ArchivoCliente;
+                                FileInfo TheFile = new FileInfo(nombre);
+                                if (TheFile.Exists)
+                                {
+                                    File.Delete(nombre);
+                                }
+                            }
 
+                            if (p.ArchivoDisenio != null && p.ArchivoDisenio != "")
+                            {
+                                string nombre = Server.MapPath("Data") + "\\" + p.ArchivoDisenio;
+                                FileInfo TheFile = new FileInfo(nombre);
+                                if (TheFile.Exists)
+                                {
+                                    File.Delete(nombre);
+                                }
+                            }
+                            
                         }
                         else
                         {

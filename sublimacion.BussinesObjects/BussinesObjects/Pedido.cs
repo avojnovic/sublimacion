@@ -25,7 +25,7 @@ namespace sublimacion.BussinesObjects.BussinesObjects
 
         public string FechaVer
         {
-            get { return Fecha.ToShortDateString(); }
+            get { return _fecha.ToString("dd/MM/yyyy"); }
         }
 
         private bool _borrado;
@@ -170,16 +170,7 @@ namespace sublimacion.BussinesObjects.BussinesObjects
         {
             get
             {
-                //decimal tiempo = 0;
-                //if (LineaPedido != null && LineaPedido.Count > 0)
-                //{
-                //    foreach (LineaPedido p in LineaPedido)
-                //    {
-                //        tiempo += p.Producto.Tiempo * p.Cantidad;
-                //    }
-                //}
-
-                //return tiempo.ToString();
+              
                 decimal tiempoTotal = (from lp in LineaPedido select lp.Producto.Tiempo).Sum();
 
                 return tiempoTotal.ToString();
@@ -191,13 +182,7 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             get
             {
                 decimal precio = 0;
-                //if (LineaPedido != null && LineaPedido.Count > 0)
-                //{
-                //    foreach (LineaPedido p in LineaPedido)
-                //    {
-                //        precio += p.Producto.Precio * p.Cantidad;
-                //    }
-                //}
+              
 
                 precio = (from lp in LineaPedido select lp.Producto.Precio + lp.Cantidad).Sum();
                 return precio.ToString();
@@ -209,13 +194,7 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             get
             {
                 decimal costo = 0;
-                //if (LineaPedido != null && LineaPedido.Count > 0)
-                //{
-                //    foreach (LineaPedido p in LineaPedido)
-                //    {
-                //        costo += p.Producto.CostoAutomatico * p.Cantidad;
-                //    }
-                //}
+                
                 costo = (from lp in LineaPedido select lp.Producto.CostoAutomatico + lp.Cantidad).Sum();
                 return costo.ToString();
             }

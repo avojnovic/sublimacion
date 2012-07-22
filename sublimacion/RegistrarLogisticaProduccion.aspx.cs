@@ -259,7 +259,7 @@ namespace sublimacion
         protected void BtnAgregarAPlan_Click(object sender, EventArgs e)
         {
             LblComentario.Text = "";
-           
+            GridViewCheckBoxGuardar();
             Dictionary<long, Pedido> dp = (Dictionary<long, Pedido>)Session["Pedidos"];
             CultureInfo provider = CultureInfo.InvariantCulture;
             DateTime fechaInicio = DateTime.MinValue;

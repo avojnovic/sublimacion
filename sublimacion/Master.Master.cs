@@ -23,8 +23,7 @@ namespace sublimacion
 
             user = (Usuario)Session["usuario"];
 
-            //if (!IsPostBack)
-            //{
+           
             if (!Page.Request.Url.ToString().ToLower().Contains("login.aspx") && !Page.Request.Url.ToString().ToLower().Contains("error.aspx"))
             {
 
@@ -42,7 +41,7 @@ namespace sublimacion
             {
                 this.divMenu.Visible = false;
             }
-            //}
+          
         }
 
         protected void ScriptManager1_AsyncPostBackError(object sender, AsyncPostBackErrorEventArgs e)
@@ -154,23 +153,7 @@ namespace sublimacion
                 itDisPe.NavigateUrl = "DiseniosPendientes.aspx";
                 itDiseno.ChildItems.Add(itDisPe);
 
-                //MenuItem itReg = new MenuItem("Registrar Diseño");
-                //itReg.Value = "RegistrarDisenio";
-                //itReg.NavigateUrl = "RegistrarDisenio.aspx";
-                //itDiseno.ChildItems.Add(itReg);
-
-
-                //if ((user.Perfil == Usuario.PerfilesEnum.Vendedor)|| (user.Perfil == Usuario.PerfilesEnum.Administrador))
-                //{
-                //    //ACEPTAR DISEÑO
-
-                //    MenuItem itAcepDi = new MenuItem("Aceptar Diseño");
-                //    itAcepDi.Value = "AceptarDisenio";
-                //    itAcepDi.NavigateUrl = "AceptarDisenio.aspx";
-                //    itDiseno.ChildItems.Add(itAcepDi);
-
-
-                //}
+               
 
 
                 divMenu.Items.Add(itDiseno);

@@ -55,6 +55,7 @@
     <Compile Include="BussinesObjects\Descuento.cs" />
     <Compile Include="BussinesObjects\Estado.cs" />
     <Compile Include="BussinesObjects\EstadosPedido.cs" />
+    <Compile Include="BussinesObjects\Estimacion.cs" />
     <Compile Include="BussinesObjects\LineaPedido.cs" />
     <Compile Include="BussinesObjects\OrdenDeTrabajo.cs" />
     <Compile Include="BussinesObjects\Pedido.cs" />

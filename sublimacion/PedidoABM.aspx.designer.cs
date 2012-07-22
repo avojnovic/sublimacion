@@ -229,6 +229,24 @@ namespace sublimacion {
         protected global::System.Web.UI.WebControls.Label lblPrecioFinal;
         
         /// <summary>
+        /// Control Label13.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label13;
+        
+        /// <summary>
+        /// Control lblPrecioFinalDescuento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPrecioFinalDescuento;
+        
+        /// <summary>
         /// Control RoundedCornersExtender2.
         /// </summary>
         /// <remarks>

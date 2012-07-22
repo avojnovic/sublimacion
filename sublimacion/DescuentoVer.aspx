@@ -18,8 +18,9 @@
                 <asp:BoundField DataField="productoId" HeaderText="ID Producto" HeaderStyle-Font-Names="calibri" ReadOnly="True" SortExpression="id" />
                 <asp:BoundField DataField="productoNombre" HeaderText="Nombre Producto" HeaderStyle-Font-Names="calibri" SortExpression="nombre" />
                 <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" HeaderStyle-Font-Names="calibri" SortExpression="cantidad" />
-                <asp:BoundField DataField="Descuento1" HeaderText="Descuento" HeaderStyle-Font-Names="calibri" SortExpression="descuento" />
-                <asp:BoundField DataField="Fecha" HeaderText="Fecha" HeaderStyle-Font-Names="calibri" SortExpression="fecha" />
+                <asp:BoundField DataField="Precio" HeaderText="Precio x unidad" HeaderStyle-Font-Names="calibri" SortExpression="precio" />
+                <asp:BoundField DataField="Descuento1" HeaderText="Precio x unidad con Descuento" HeaderStyle-Font-Names="calibri" SortExpression="descuento" />
+                <asp:BoundField DataField="FechaVer" HeaderText="Fecha" HeaderStyle-Font-Names="calibri" SortExpression="fecha" />
                 
                 <asp:TemplateField  ItemStyle-Width="25px">
                  <ItemTemplate>  

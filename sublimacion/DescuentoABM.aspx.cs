@@ -24,13 +24,14 @@ namespace sublimacion
             string id = Request.QueryString["productoId"];
             string cantidad = Request.QueryString["cantidad"];
 
-            TxtFecha.ReadOnly = true;
+            TxtFecha.Enabled = false;
 
 
             if (id != null && cantidad != null && id!="")
             {
                 _modoApertura = ModosEdicionEnum.Modificar;
-                TxtCantidad.ReadOnly = true;
+                TxtCantidad.Enabled = false;
+                CmbProducto.Enabled = false;
                 _descuento = DescuentoDAO.obtenerDescuentoPorId(id, cantidad);
 
             }
@@ -60,12 +61,15 @@ namespace sublimacion
             if (_descuento != null)
             {
                 TxtCantidad.Text = _descuento.Cantidad.ToString();
+
                 TxtDescuento.Text = _descuento.Descuento1.ToString().Replace(".", ",");
+
                 TxtFecha.Text = _descuento.Fecha.ToShortDateString();
 
-                Producto pro = new Producto();
-                CmbProducto.SelectedValue = pro.Idproducto.ToString();
 
+                CmbProducto.SelectedValue = _descuento.productoId.ToString();
+
+                TxtPrecio.Text = _listaProductos[long.Parse(this.CmbProducto.SelectedValue)].Precio.ToString();
 
             }
             else
@@ -138,6 +142,12 @@ namespace sublimacion
         protected void BtnSalir_Click(object sender, EventArgs e)
         {
             Response.Redirect("DescuentoVer.aspx");
+        }
+
+        protected void CmbProducto_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.CmbProducto.SelectedValue!=null)
+                 TxtPrecio.Text = _listaProductos[long.Parse(this.CmbProducto.SelectedValue)].Precio.ToString();
         }
 
 

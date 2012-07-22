@@ -45,7 +45,7 @@ namespace sublimacion.BussinesObjects.BussinesObjects
         }
 
                
-        //Agregar propiedad que genere automaticamente Costo
+       
         public decimal CostoAutomatico
         {
 
@@ -53,17 +53,13 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             {
                 decimal costo = 0;
                 costo = (from lp in _insumos.Values select lp.Costo * lp.Cantidad).Sum();
-                //foreach (Insumo i in _insumos.Values)
-                //{
-                //    costo = costo + (i.Costo * i.Cantidad);
-
-                //}
+              
                 return costo;
             }
         }
 
 
-        //Agregar propiedad que genere automaticamente Stock
+        
         public string StockAutomatico
         {
             get
