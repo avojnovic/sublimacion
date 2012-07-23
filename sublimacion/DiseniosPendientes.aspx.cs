@@ -49,6 +49,10 @@ namespace sublimacion
                 GridViewPedidos.DataSource = dt;
                 GridViewPedidos.DataBind();
             }
+            else
+            {
+                GridViewPedidos.Columns[GridViewPedidos.Columns.Count - 1].Visible = true;
+            }
 
         }
 

@@ -184,7 +184,7 @@ namespace sublimacion.BussinesObjects.BussinesObjects
                 decimal precio = 0;
               
 
-                precio = (from lp in LineaPedido select lp.Producto.Precio + lp.Cantidad).Sum();
+                precio = (from lp in LineaPedido select lp.Producto.Precio * lp.Cantidad).Sum();
                 return precio.ToString();
             }
         }
@@ -195,7 +195,7 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             {
                 decimal costo = 0;
                 
-                costo = (from lp in LineaPedido select lp.Producto.CostoAutomatico + lp.Cantidad).Sum();
+                costo = (from lp in LineaPedido select lp.Producto.CostoAutomatico * lp.Cantidad).Sum();
                 return costo.ToString();
             }
         }

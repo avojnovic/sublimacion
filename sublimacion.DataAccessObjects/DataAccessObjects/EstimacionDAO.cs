@@ -85,6 +85,9 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             TimeSpan tsOrden = e.FechaFinOrden - e.FechaInicioOrden;
             TimeSpan tsPlan = e.FechaFinPlan - e.FechaInicioPlan;
 
+            e.TiempoOrden = tsOrden.TotalMinutes;
+            e.TiempoPlan = tsPlan.TotalMinutes;
+
             e.Estimado=(tsOrden.TotalMinutes * 100 / tsPlan.TotalMinutes);
             
 

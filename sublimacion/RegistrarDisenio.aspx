@@ -120,7 +120,9 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Archivo Cliente">
                                 <ItemTemplate>
-                                    <asp:Label ID="LblArchivo" Font-Names="calibri" runat="server" Text='<%#Eval("ArchivoClienteNombreMostrable") %>'></asp:Label>
+                                    <a href="VerImagen.aspx?Imagen=<%# Eval("ArchivoCliente") %>" target="_blank">
+                                            <asp:Label ID="LblArchivo" Font-Names="calibri" runat="server" Text='<%#Eval("ArchivoClienteNombreMostrable") %>'></asp:Label>
+                                        </a>
                                 </ItemTemplate>
                             </asp:TemplateField>
                              <asp:TemplateField>
@@ -131,7 +133,9 @@
                             </asp:TemplateField>
                              <asp:TemplateField HeaderText="Archivo Diseño">
                                 <ItemTemplate>
-                                    <asp:Label ID="LblArchivoDisenio" Font-Names="calibri" runat="server" Text='<%#Eval("ArchivoDisenioNombreMostrable") %>'></asp:Label>
+                                  <a href="VerImagen.aspx?Imagen=<%# Eval("ArchivoDisenio") %>" target="_blank">
+                                        <asp:Label ID="LblArchivoDisenio" Font-Names="calibri" runat="server" Text='<%#Eval("ArchivoDisenioNombreMostrable") %>'></asp:Label>
+                                        </a>
                                 </ItemTemplate>
                             </asp:TemplateField>
                           
@@ -156,14 +160,14 @@
                 <tr>
                     <td align="center">
                     <asp:Label ID="lblLineaSeleccionada" runat="server"></asp:Label>
-                      <input type="file" id="FileDisenio" name="FileDisenio" runat="server" />
-                       <asp:ImageButton ID="BtnAdjuntar" Width="32px" Height="32px" ImageUrl="~/Images/attach.png"
+                      <input type="file" runat="server" visible="false" id="FileDisenio" name="FileDisenio" runat="server" />
+                       <asp:ImageButton ID="BtnAdjuntar" visible="false" Width="32px" Height="32px" ImageUrl="~/Images/attach.png"
                             runat="server" ValidationGroup="add" OnClick="BtnAdjuntar_Click" ToolTip="Adjuntar" />
                    </td>
                 </tr>
             </table>
         </asp:Panel>
-        <act:RoundedCornersExtender ID="RoundedCornersExtender3" runat="server" TargetControlID="panel2"
+        <act:RoundedCornersExtender ID="RoundedCornersExtender3" runat="server" TargetControlID="panel3"
             Radius="8" Color="#DDDDDD" Corners="All" Enabled="true" />
 
         <br/>

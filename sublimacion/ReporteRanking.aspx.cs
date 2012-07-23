@@ -174,6 +174,10 @@ namespace sublimacion
                 GridViewReporte.DataSource = dt;
                 GridViewReporte.DataBind();
             }
+            else
+            {
+                GridViewReporte.Columns[GridViewReporte.Columns.Count - 1].Visible = true;
+            }
 
         }
 

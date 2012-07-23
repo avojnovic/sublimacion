@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using sublimacion.BussinesObjects.BussinesObjects;
 using sublimacion.BussinesObjects;
 using System.IO;
+using System.Drawing;
 
 namespace sublimacion
 {
@@ -45,9 +46,9 @@ namespace sublimacion
 
             BtnBorrar.Attributes.Add("OnClick", "javascript:if(confirm('¿Esta seguro que desea borrar el Pedido?')== false) return false;");
 
-           
 
-            if (id != null && id!="")
+
+            if (id != null && id != "")
             {
                 _pedido = PedidoDAO.obtenerPorId(id);
             }
@@ -56,7 +57,7 @@ namespace sublimacion
             _listaEstados = TipoEstadoDAO.obtenerEstados();
             _listaClientes = ClienteDAO.obtenerClienteTodos();
             _listaProductos = ProductoDAO.obtenerProductoTodos();
-            
+
 
 
             LblComentario.Text = "";
@@ -93,7 +94,7 @@ namespace sublimacion
             }
 
 
-          
+
 
         }
 
@@ -117,6 +118,8 @@ namespace sublimacion
 
                 BtnBorrar.Visible = true;
                 CmbCliente.Enabled = false;
+                TxtPrioridad.Enabled = false;
+
 
                 if (_pedido.EstadoId == (long)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.AceptacionDisenioPendiente)
                 {
@@ -129,14 +132,37 @@ namespace sublimacion
                     BtnRechazarDisenio.Visible = false;
                 }
 
-                if (_pedido.EstadoId == (long)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.DisenioPendiente || _pedido.EstadoId == (long)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.AceptacionDisenioPendiente || _pedido.EstadoId == (long)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.FaltanteStock )
+                if (_pedido.EstadoId == (long)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.DisenioPendiente || _pedido.EstadoId == (long)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.AceptacionDisenioPendiente || _pedido.EstadoId == (long)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.FaltanteStock)
+                {
                     BtnBorrar.Visible = true;
+                    BtnGuardar.Visible = true;
+                }
                 else
+                {
+                    BtnGuardar.Visible = false;
                     BtnBorrar.Visible = false;
+                    TxtComentario.Enabled = false;
+                   
+                }
 
+                if (_pedido.EstadoId == (long)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.Terminado)
+                {
+                    BtnEntregado.Visible = true;
+                }
+
+
+                if (_pedido.EstadoId == (long)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.DisenioAceptado)
+                {
+                    TxtPrioridad.Enabled = true;
+                    BtnGuardar.Visible = true;
+                }
+
+                TxtUbicacion.Enabled = false;
                 tblLineaPedido.Visible = false;
                 GridViewProductos.Columns[9].Visible = false;
 
+
+    
             }
         }
 
@@ -197,11 +223,11 @@ namespace sublimacion
 
             decimal precio = 0;
             decimal descuento = 0;
-           
+            bool sinStock = false;
             foreach (LineaPedido p in dt)
             {
-                Descuento d=DescuentoDAO.obtenerDescuentoPorCantidadMasCercana(p.Idproducto.ToString(),p.Cantidad.ToString());
-               
+                Descuento d = DescuentoDAO.obtenerDescuentoPorCantidadMasCercana(p.Idproducto.ToString(), p.Cantidad.ToString());
+
                 precio += p.Cantidad * p.Producto.Precio;
 
                 if (d != null)
@@ -212,6 +238,47 @@ namespace sublimacion
                 {
                     descuento = precio;
                 }
+
+
+                if (!p.ConStock)
+                {//Sin Stock
+                    sinStock = true;
+                }
+
+
+
+            }
+
+            if (_modoApertura == ModosEdicionEnum.Nuevo)
+            {
+                if (sinStock)
+                {
+                    CmbEstado.SelectedValue = ((int)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.FaltanteStock).ToString();
+
+                }
+                else
+                {
+                    CmbEstado.SelectedValue = ((int)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.DisenioPendiente).ToString();
+                }
+            }
+            else
+            {
+                if (CmbEstado.SelectedValue == ((int)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.FaltanteStock).ToString())
+                {
+                    if (!sinStock)
+                        CmbEstado.SelectedValue = ((int)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.DisenioPendiente).ToString();
+                }
+
+            }
+
+            if(CmbEstado.SelectedValue == ((int)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.FaltanteStock).ToString())
+            {
+                CmbEstado.ForeColor=Color.Red; 
+            }
+
+            if (CmbEstado.SelectedValue == ((int)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.DisenioPendiente).ToString())
+            {
+                CmbEstado.ForeColor = Color.Black;
             }
 
             lblPrecioFinal.Text = precio.ToString();
@@ -227,7 +294,7 @@ namespace sublimacion
 
         private void CargarPlantilla()
         {
-            if (DDLCatalogo.SelectedValue != null && DDLCatalogo.SelectedValue!="")
+            if (DDLCatalogo.SelectedValue != null && DDLCatalogo.SelectedValue != "")
             {
                 _listaPlantilla = PlantillaDAO.obtenerPlantillaPorCatalogo(DDLCatalogo.SelectedValue.Trim());
                 DDLPlantilla.DataSource = _listaPlantilla.Values.ToList();
@@ -253,7 +320,7 @@ namespace sublimacion
 
 
                 Session["Productos"] = _pedido.LineaPedido;
-               
+
                 GridViewProductos.DataSource = _pedido.LineaPedido;
                 GridViewProductos.DataBind();
 
@@ -305,7 +372,7 @@ namespace sublimacion
                         File.Delete(nombre);
                     }
                 }
-                
+
             }
 
 
@@ -346,6 +413,26 @@ namespace sublimacion
             }
         }
 
+
+
+
+        protected void BtnEntregado_Click(object sender, EventArgs e)
+        {
+            if (_modoApertura == ModosEdicionEnum.Modificar)
+            {
+                CmbEstado.SelectedValue = ((int)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.Entregado).ToString();
+                setearObjeto();
+                if (_pedido.LineaPedido != null && _pedido.LineaPedido.Count > 0)
+                {
+                    PedidoDAO.actualizarPedido(_pedido);
+
+                    Response.Redirect(prevPage);
+                }
+                else
+                    LblComentario.Text = "Debe por lo menos ingresar un producto";
+
+            }
+        }
         protected void BtnRechazarDisenio_Click(object sender, EventArgs e)
         {
             if (_modoApertura == ModosEdicionEnum.Modificar)
@@ -371,7 +458,7 @@ namespace sublimacion
             if (_modoApertura == ModosEdicionEnum.Nuevo)
             {
                 setearObjeto();
-                if (_pedido.LineaPedido!=null && _pedido.LineaPedido.Count > 0)
+                if (_pedido.LineaPedido != null && _pedido.LineaPedido.Count > 0)
                 {
                     PedidoDAO.insertarPedido(_pedido);
 
@@ -401,7 +488,7 @@ namespace sublimacion
 
 
 
-           
+
 
 
         }
@@ -411,6 +498,8 @@ namespace sublimacion
 
             if (_pedido == null)
                 _pedido = new Pedido();
+            
+            calcularPrecio();
 
             _pedido.Cliente = _listaClientes[long.Parse(this.CmbCliente.SelectedValue)];
 
@@ -466,7 +555,7 @@ namespace sublimacion
             else
             {
                 _pedido.EstadosPedido[long.Parse(this.CmbEstado.SelectedValue)].Fecha_fin = null;
-               
+
                 foreach (EstadosPedido e in _pedido.EstadosPedido.Values.ToList())
                 {
 
@@ -484,7 +573,7 @@ namespace sublimacion
             List<LineaPedido> dt = (List<LineaPedido>)Session["Productos"];
 
             _pedido.LineaPedido = dt;
-            
+
 
 
 
@@ -494,7 +583,7 @@ namespace sublimacion
         }
 
 
-      
+
         private void setearGrillaSiEstaVacia()
         {
 
@@ -510,7 +599,7 @@ namespace sublimacion
                 dt.Columns.Add("ArchivoDisenioNombreMostrable");
                 dt.Columns.Add("ArchivoCliente");
                 dt.Columns.Add("ArchivoDisenio");
-                dt.Rows.Add(new object[] { "", "", "", "", "","" });
+                dt.Rows.Add(new object[] { "", "", "", "", "", "" });
 
                 GridViewProductos.DataSource = dt;
                 GridViewProductos.DataBind();
@@ -521,7 +610,7 @@ namespace sublimacion
         protected void BtnSalir_Click(object sender, EventArgs e)
         {
 
-           Response.Redirect(prevPage);
+            Response.Redirect(prevPage);
         }
 
 
@@ -543,7 +632,7 @@ namespace sublimacion
             }
             LineaPedido p = new LineaPedido();
             p.Producto = ProductoDAO.obtenerProductoPorId(DDLProducto.SelectedValue.Trim());
-            p.Catalogo=CatalogoDAO.obtenerCatalogoPorId(DDLCatalogo.SelectedValue.Trim());
+            p.Catalogo = CatalogoDAO.obtenerCatalogoPorId(DDLCatalogo.SelectedValue.Trim());
             p.Plantilla = PlantillaDAO.obtenerPlantillaPorId(DDLPlantilla.SelectedValue.Trim());
             p.Cantidad = int.Parse(TxtCantidad.Text);
 
@@ -551,11 +640,11 @@ namespace sublimacion
             {
                 string fn = DateTime.Now.ToString("yyyyMMddhhmmssffff") + System.IO.Path.GetFileName(FileUsuario.PostedFile.FileName);
                 p.ArchivoCliente = fn;
-                string SaveLocation = Server.MapPath("Data") + "\\" +fn;
+                string SaveLocation = Server.MapPath("Data") + "\\" + fn;
                 try
                 {
                     FileUsuario.PostedFile.SaveAs(SaveLocation);
-                   
+
                 }
                 catch (Exception ex)
                 {
@@ -582,14 +671,14 @@ namespace sublimacion
                 int index = Convert.ToInt32(e.CommandArgument);
                 GridViewRow row = GridViewProductos.Rows[index];
 
-                
+
                 Label Id = row.FindControl("LblIdproducto") as Label;
                 Label Cata = row.FindControl("LblCata") as Label;
                 Label Plant = row.FindControl("LblPlant") as Label;
                 Label Cant = row.FindControl("LblCant") as Label;
                 Label NombreArchivo = row.FindControl("LblArchivo") as Label;
-             
-                
+
+
                 if (Id.Text.Trim() != "")
                 {
                     List<LineaPedido> dt = (List<LineaPedido>)Session["Productos"];
@@ -617,7 +706,7 @@ namespace sublimacion
                                     File.Delete(nombre);
                                 }
                             }
-                            
+
                         }
                         else
                         {
@@ -632,8 +721,8 @@ namespace sublimacion
                     calcularPrecio();
                 }
             }
-            
-            
+
+
             if (e.CommandName == "VerAdjunto")
             {
                 int index = Convert.ToInt32(e.CommandArgument);
@@ -645,10 +734,10 @@ namespace sublimacion
                 Label NombreArchivo = row.FindControl("LblArchivo") as Label;
 
 
-                if (Id.Text.Trim() != "" && NombreArchivo.Text.Trim()!="")
+                if (Id.Text.Trim() != "" && NombreArchivo.Text.Trim() != "")
                 {
                     List<LineaPedido> dt = (List<LineaPedido>)Session["Productos"];
-                  
+
                     foreach (LineaPedido p in dt)
                     {
                         if (p.Producto.Idproducto.ToString() == Id.Text.Trim() && p.CatalogoNombre == Cata.Text && p.PlantillaNombre == Plant.Text && p.Cantidad.ToString() == Cant.Text && p.ArchivoClienteNombreMostrable == NombreArchivo.Text.Trim())
@@ -662,11 +751,11 @@ namespace sublimacion
                         }
                         else
                         {
-                            
+
                         }
                     }
 
-                 
+
                 }
             }
 
@@ -717,11 +806,11 @@ namespace sublimacion
         }
 
 
-       
+
 
         protected void DDLCatalogo_SelectedIndexChanged(object sender, EventArgs e)
         {
-           
+
             DropDownList ddl = sender as DropDownList;
 
             CargarPlantillas(ddl);
@@ -757,12 +846,12 @@ namespace sublimacion
             }
         }
 
-     
 
 
-       
 
-      
+
+
+
 
 
     }

@@ -66,6 +66,11 @@ namespace sublimacion
                 GridView1.DataSource = dt;
                 GridView1.DataBind();
             }
+            else
+            {
+                GridView1.Columns[GridView1.Columns.Count - 1].Visible = true;
+            }
+
 
         }
 

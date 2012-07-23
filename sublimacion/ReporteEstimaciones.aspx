@@ -57,9 +57,11 @@
                 <asp:BoundField DataField="IdPlan" HeaderText="Id Plan" />
                 <asp:BoundField DataField="FechaInicioPlan" HeaderText="Fecha Inicio Plan"/>
                 <asp:BoundField DataField="FechaFinPlan" HeaderText="Fecha Fin Plan"/>
+                 <asp:BoundField DataField="TiempoPlan" HeaderText="Tiempo Plan (Minutos)"/>
                 <asp:BoundField DataField="IdOrden" HeaderText="Id Orden" />
                 <asp:BoundField DataField="FechaInicioOrden" HeaderText="Fecha Inicio Orden" />
                 <asp:BoundField DataField="FechaFinOrden" HeaderText="Fecha Fin Orden"/>
+                 <asp:BoundField DataField="TiempoOrden" HeaderText="Tiempo orden (Minutos)"/>
                 <asp:BoundField DataField="CantPedidos" HeaderText="Cantidad Pedidos"  />
                 <asp:BoundField DataField="EstimadoMostrar" HeaderText="Estimacion (%)"  />
               

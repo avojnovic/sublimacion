@@ -71,5 +71,20 @@ namespace sublimacion.BussinesObjects.BussinesObjects
         {
             get { return _estimado.ToString() + "%"; }
         }
+
+        private double _tiempoPlan;
+
+        public double TiempoPlan
+        {
+            get { return _tiempoPlan; }
+            set { _tiempoPlan = value; }
+        }
+        private double _tiempoOrden;
+
+        public double TiempoOrden
+        {
+            get { return _tiempoOrden; }
+            set { _tiempoOrden = value; }
+        }
     }
 }
