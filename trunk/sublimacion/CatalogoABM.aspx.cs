@@ -48,16 +48,14 @@ namespace sublimacion
                 setearGrillaSiEstaVacia();
 
 
-                cargarCatalogo();
-
-               
 
                 ComboProducto.DataValueField = "Idproducto";
                 ComboProducto.DataTextField = "Nombre";
 
                 ComboProducto.DataSource = _dicProductos.Values.ToList();
                 ComboProducto.DataBind();
-
+                
+                cargarCatalogo();
               
 
             }
@@ -88,7 +86,14 @@ namespace sublimacion
                 TxtNombre.Text = _catalogo.Nombre;
                 TxtFecha.Text = _catalogo.Fecha.ToShortDateString();
 
-                ComboProducto.SelectedValue = _catalogo.Producto.Idproducto.ToString();
+                if (_dicProductos.ContainsKey(_catalogo.Producto.Idproducto))
+                {
+                    ComboProducto.SelectedValue = _catalogo.Producto.Idproducto.ToString();
+                }
+                else 
+                {
+                    
+                }
 
                 if (_catalogo.Plantilla != null)
                 {

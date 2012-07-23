@@ -190,10 +190,7 @@ namespace sublimacion
 
                     RegistrarOrden(fechaInicio, fechaFin, dp);
                 }
-                else
-                {
-                    LblComentario.Text = "Fecha de Inicio Incorrecta";
-                }
+
             }
             else
             {

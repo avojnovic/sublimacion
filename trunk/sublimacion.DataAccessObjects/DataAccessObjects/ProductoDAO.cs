@@ -45,7 +45,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
             string sql = "";
             sql += @"SELECT idproducto, nombre, precio, borrado, tiempo
-                FROM producto where borrado=False and  idproducto="+id;
+                FROM producto where idproducto="+id;
 
             NpgsqlDb.Instancia.PrepareCommand(sql);
             NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
