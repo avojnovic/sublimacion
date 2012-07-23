@@ -16,9 +16,10 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
       {
 
           string sql = "";
-          sql = @"SELECT idcatalogo, nombre, fecha, id_producto, borrado
-                FROM catalogo
-                where borrado=false order by nombre";
+          sql = @"SELECT c.idcatalogo, c.nombre, c.fecha, c.id_producto, c.borrado
+                FROM catalogo c
+                inner join producto p on c.id_producto=p.idproducto
+                where c.borrado=false and p.borrado=false order by nombre";
 
 
           NpgsqlDb.Instancia.PrepareCommand(sql);

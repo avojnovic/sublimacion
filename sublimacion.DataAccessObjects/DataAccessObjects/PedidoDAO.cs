@@ -583,7 +583,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
                 inner join plantilla pl on pl.idplantilla=lp.id_plantilla
                 inner join catalogo ct on ct.idcatalogo=lp.id_catalogo
     
-                where p.borrado=false and pl.borrado=false and ct.borrado=false and id_pedido=" + id + ";";
+                where  id_pedido=" + id + ";";
 
             NpgsqlDb.Instancia.PrepareCommand(sql);
             NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();

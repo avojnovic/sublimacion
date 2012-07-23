@@ -129,7 +129,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             sql += @"SELECT idinsumo, nombre, nombre_fab, costo, borrado, stock, fecha_act_stock, cantidad 
                     FROM producto_insumo pi
                 left join insumo i on i.idinsumo= pi.id_insumo    
-                where pi.id_producto=" + p.ToString() + " order by nombre";
+                where i.borrado=false and pi.id_producto=" + p.ToString() + " order by nombre";
 
             NpgsqlDb.Instancia.PrepareCommand(sql);
             NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
