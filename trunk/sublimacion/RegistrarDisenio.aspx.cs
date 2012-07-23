@@ -161,14 +161,15 @@ namespace sublimacion
                 dt.Columns.Add("Cantidad");
                 dt.Columns.Add("ArchivoClienteNombreMostrable");
                 dt.Columns.Add("ArchivoDisenioNombreMostrable");
-
+                dt.Columns.Add("ArchivoCliente");
+                dt.Columns.Add("ArchivoDisenio");
                 dt.Rows.Add(new object[] { "", "", "", "", "", "" });
 
-                GridViewLineaPedido.Columns[GridViewLineaPedido.Columns.Count - 1].Visible = false;
-
+               
                 GridViewLineaPedido.DataSource = dt;
                 GridViewLineaPedido.DataBind();
             }
+          
 
         }
 
@@ -202,31 +203,34 @@ namespace sublimacion
                 List<LineaPedido> dt = (List<LineaPedido>)Session["Productos"];
                 LineaPedido _lineaSeleccionada = (LineaPedido)Session["linea"];
 
-                foreach (LineaPedido p in dt)
+                if (_lineaSeleccionada != null)
                 {
-                    if (p.Idproducto == _lineaSeleccionada.Idproducto && p.Cantidad == _lineaSeleccionada.Cantidad && p.Plantilla.IdPlantilla == _lineaSeleccionada.Plantilla.IdPlantilla && p.Catalogo.IdCatalogo == _lineaSeleccionada.Catalogo.IdCatalogo && p.ArchivoCliente == _lineaSeleccionada.ArchivoCliente)
+                    foreach (LineaPedido p in dt)
                     {
-                        //ACA LO ENCONTRE
-
-                        if ((FileDisenio.PostedFile != null) && (FileDisenio.PostedFile.ContentLength > 0))
+                        if (p.Idproducto == _lineaSeleccionada.Idproducto && p.Cantidad == _lineaSeleccionada.Cantidad && p.Plantilla.IdPlantilla == _lineaSeleccionada.Plantilla.IdPlantilla && p.Catalogo.IdCatalogo == _lineaSeleccionada.Catalogo.IdCatalogo && p.ArchivoCliente == _lineaSeleccionada.ArchivoCliente)
                         {
-                            string fn = DateTime.Now.ToString("yyyyMMddhhmmssffff") + System.IO.Path.GetFileName(FileDisenio.PostedFile.FileName);
+                            //ACA LO ENCONTRE
 
-                            //le pongo el nombre del archivo
-                            p.ArchivoDisenio = fn;
-                            string SaveLocation = Server.MapPath("Data") + "\\" + fn;
-                            try
+                            if ((FileDisenio.PostedFile != null) && (FileDisenio.PostedFile.ContentLength > 0))
                             {
-                                FileDisenio.PostedFile.SaveAs(SaveLocation);
+                                string fn = DateTime.Now.ToString("yyyyMMddhhmmssffff") + System.IO.Path.GetFileName(FileDisenio.PostedFile.FileName);
 
+                                //le pongo el nombre del archivo
+                                p.ArchivoDisenio = fn;
+                                string SaveLocation = Server.MapPath("Data") + "\\" + fn;
+                                try
+                                {
+                                    FileDisenio.PostedFile.SaveAs(SaveLocation);
+
+                                }
+                                catch (Exception ex)
+                                {
+                                    throw ex;
+                                }
                             }
-                            catch (Exception ex)
-                            {
-                                throw ex;
-                            }
+
+                            break;
                         }
-
-                        break;
                     }
                 }
 
@@ -239,6 +243,10 @@ namespace sublimacion
             //limpio la seleccion
             lblLineaSeleccionada.Text = "";
             Session["linea"] = null;
+
+
+            FileDisenio.Visible = false;
+            BtnAdjuntar.Visible = false;
         }
 
 
@@ -268,6 +276,8 @@ namespace sublimacion
                         {
                             Session["linea"] = p;
                             lblLineaSeleccionada.Text = "Producto: " + p.Producto.Nombre + " - Catalogo: " + p.CatalogoNombre + " - Plantilla: " + p.PlantillaNombre + " - Cantidad: " + p.Cantidad.ToString() + " - Archivo Cliente: " + p.ArchivoClienteNombreMostrable;
+                            FileDisenio.Visible = true;
+                            BtnAdjuntar.Visible = true;
                         }
 
                     }

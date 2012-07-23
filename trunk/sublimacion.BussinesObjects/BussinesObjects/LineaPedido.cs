@@ -16,6 +16,22 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             set { _producto = value; }
         }
 
+        public bool ConStock
+        {
+            get 
+            {
+                if (int.Parse(_producto.StockAutomatico) < _cantidad)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+
+            }
+        }
+
         public long Idproducto
         {
             get { return Producto.Idproducto; }

@@ -91,18 +91,26 @@
     
     <asp:TextBox ID="TxtFechaInicio" runat="server" Width="70px"></asp:TextBox>
     <act:CalendarExtender ID="CalendarExtender1" TargetControlID="TxtFechaInicio" runat="server" Format="dd/MM/yyyy" />
-    
+    <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="TxtFechaInicio" Display="Dynamic" ErrorMessage="*" SetFocusOnError="true" ValidationGroup="add" />
+
     <asp:TextBox ID="TxtHoraInicio" runat="server" Width="40px"></asp:TextBox>
     <act:MaskedEditExtender ID="MaskedEditExtender1" runat="server" Mask="99:99" MaskType="Time" TargetControlID="TxtHoraInicio" />
-    
+    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TxtHoraInicio" Display="Dynamic" ErrorMessage="*" SetFocusOnError="true" ValidationGroup="add" />
     
     <asp:Label ID="Label4" runat="server" Text=" Fecha real de Fin: "></asp:Label>
     <asp:TextBox ID="TxtFechaFin" runat="server"  Width="70px"></asp:TextBox>
     <act:CalendarExtender ID="CalendarExtender2" TargetControlID="TxtFechaFin" runat="server" Format="dd/MM/yyyy" />
+    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="TxtFechaFin" Display="Dynamic" ErrorMessage="*" SetFocusOnError="true" ValidationGroup="add" />
 
     <asp:TextBox ID="TxtHoraFin" runat="server" Width="40px"></asp:TextBox>
       <act:MaskedEditExtender ID="MaskedEditExtender2" runat="server" Mask="99:99" MaskType="Time" TargetControlID="TxtHoraFin" />
-    <asp:ImageButton ID="BtnRegistrarTiempoReal" runat="server" Width="16px" Height="16px"
+    <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="TxtHoraFin" Display="Dynamic" ErrorMessage="*" SetFocusOnError="true" ValidationGroup="add" />
+
+     <asp:Label ID="Label1" runat="server" Text=" Ubicación: "></asp:Label>
+    <asp:TextBox ID="TxtUbicacion" runat="server" Width="100px"></asp:TextBox>
+    <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="TxtUbicacion" Display="Dynamic" ErrorMessage="*" SetFocusOnError="true" ValidationGroup="add" />
+
+    <asp:ImageButton ID="BtnRegistrarTiempoReal" runat="server" Width="16px" Height="16px" ValidationGroup="add"
         ImageUrl="~/Images/calculator.png" ToolTip="Registrar Tiempo Real" OnClick="RegistrarTiempoReal_Click" />
     <br />
 

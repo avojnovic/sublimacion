@@ -33,7 +33,7 @@ namespace sublimacion
                 _dicPedidos = new Dictionary<long, Pedido>();
 
                 cargarGrilla();
-                setearGrillaSiEstaVacia();
+               
             }
         }
 
@@ -54,7 +54,11 @@ namespace sublimacion
 
             GridViewPlanif.DataSource = listP;
             GridViewPlanif.DataBind();
+
+            setearGrillaSiEstaVacia();
         }
+
+
         private void setearGrillaSiEstaVacia()
         {
             if (GridViewPlanif.Rows.Count == 0)
@@ -72,6 +76,10 @@ namespace sublimacion
 
                 GridViewPlanif.DataSource = dt;
                 GridViewPlanif.DataBind();
+            }
+            else
+            {
+                GridViewPlanif.Columns[GridViewPlanif.Columns.Count - 1].Visible = true;
             }
 
             if (GridViewPedidos.Rows.Count == 0)
@@ -98,6 +106,11 @@ namespace sublimacion
 
                 Session["Pedidos"] = null;
             }
+            else
+            {
+                GridViewPedidos.Columns[GridViewPedidos.Columns.Count - 1].Visible = true;
+            }
+
 
 
 
@@ -127,6 +140,9 @@ namespace sublimacion
 
                     GridViewPedidos.DataSource = _pedidos.Values.ToList();
                     GridViewPedidos.DataBind();
+
+                    GridViewPedidos.Columns[GridViewPedidos.Columns.Count - 1].Visible = true;
+
                     Session["Pedidos"] = _pedidos;
                 }
             }
@@ -200,6 +216,7 @@ namespace sublimacion
                 OrdenTrabajoDAO.actualizarOrdenTrabajo(o);
 
 
+                p.Ubicacion = TxtUbicacion.Text;
                 setearEstadoTerminado(p);
                 PedidoDAO.actualizarPedido(p);
 

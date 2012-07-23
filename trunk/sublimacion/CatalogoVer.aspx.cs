@@ -37,15 +37,19 @@ namespace sublimacion
                 dt.Columns.Add("IdCatalogo");
                 dt.Columns.Add("Nombre");
                 dt.Columns.Add("Fecha");
-              
-                
 
-                dt.Rows.Add(new object[] { "", "", ""});
+
+
+                dt.Rows.Add(new object[] { "", "", "" });
 
                 GridView1.Columns[GridView1.Columns.Count].Visible = false;
 
                 GridView1.DataSource = dt;
                 GridView1.DataBind();
+            }
+            else
+            {
+                GridView1.Columns[GridView1.Columns.Count - 1].Visible = true;
             }
 
         }

@@ -84,16 +84,19 @@ namespace sublimacion
                 dt.Columns.Add("IdPlan");
                 dt.Columns.Add("FechaInicioPlan");
                 dt.Columns.Add("FechaFinPlan");
+                dt.Columns.Add("TiempoPlan");
                 dt.Columns.Add("IdOrden");
                 dt.Columns.Add("FechaInicioOrden");
                 dt.Columns.Add("FechaFinOrden");
+                dt.Columns.Add("TiempoOrden");
                 dt.Columns.Add("CantPedidos");
                 dt.Columns.Add("EstimadoMostrar");
 
 
+
                 dt.Rows.Add(new object[] { "", "", "", "", "", "", "", "" });
 
-                GridViewReporte.Columns[GridViewReporte.Columns.Count-1].Visible = false;
+               
 
                 GridViewReporte.DataSource = dt;
                 GridViewReporte.DataBind();

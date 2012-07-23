@@ -249,6 +249,8 @@
                             runat="server" OnClick="BtnAceptarDisenio_Click" ToolTip="Guardar y Aceptar diseño" />
                         <asp:ImageButton ID="BtnRechazarDisenio" Width="32px" Visible="false" Height="32px" ImageUrl="~/Images/designko.png"
                             runat="server" OnClick="BtnRechazarDisenio_Click" ToolTip="Guardar y Rechazar diseño" />
+                        <asp:ImageButton ID="BtnEntregado" Width="32px" Visible="false" Height="32px" ImageUrl="~/Images/delivery.png"
+                            runat="server" OnClick="BtnEntregado_Click" ToolTip="Entregado" />
                         <br />
                         <asp:Label ID="lblInformacionFechas" runat="server" Font-Size="X-Small"></asp:Label>
                     </td>
