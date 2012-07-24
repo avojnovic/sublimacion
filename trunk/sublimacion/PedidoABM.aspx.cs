@@ -147,6 +147,7 @@ namespace sublimacion
 
                 if (_pedido.EstadoId == (long)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.Terminado)
                 {
+                    TxtComentario.Enabled = false;
                     BtnEntregado.Visible = true;
                 }
 
@@ -224,65 +225,70 @@ namespace sublimacion
             decimal precio = 0;
             decimal descuento = 0;
             bool sinStock = false;
-            foreach (LineaPedido p in dt)
+            if (dt != null)
             {
-                Descuento d = DescuentoDAO.obtenerDescuentoPorCantidadMasCercana(p.Idproducto.ToString(), p.Cantidad.ToString());
 
-                precio += p.Cantidad * p.Producto.Precio;
-
-                if (d != null)
+                foreach (LineaPedido p in dt)
                 {
-                    descuento += p.Cantidad * d.Descuento1;
+                    Descuento d = DescuentoDAO.obtenerDescuentoPorCantidadMasCercana(p.Idproducto.ToString(), p.Cantidad.ToString());
+
+                    precio += p.Cantidad * p.Producto.Precio;
+
+                    if (d != null)
+                    {
+                        descuento += p.Cantidad * d.Descuento1;
+                    }
+                    else
+                    {
+                        descuento = precio;
+                    }
+
+
+                    if (!p.ConStock)
+                    {//Sin Stock
+                        sinStock = true;
+                    }
+
+                }
+
+
+
+                if (_modoApertura == ModosEdicionEnum.Nuevo)
+                {
+                    if (sinStock)
+                    {
+                        CmbEstado.SelectedValue = ((int)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.FaltanteStock).ToString();
+
+                    }
+                    else
+                    {
+                        CmbEstado.SelectedValue = ((int)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.DisenioPendiente).ToString();
+                    }
                 }
                 else
                 {
-                    descuento = precio;
-                }
-
-
-                if (!p.ConStock)
-                {//Sin Stock
-                    sinStock = true;
-                }
-
-
-
-            }
-
-            if (_modoApertura == ModosEdicionEnum.Nuevo)
-            {
-                if (sinStock)
-                {
-                    CmbEstado.SelectedValue = ((int)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.FaltanteStock).ToString();
+                    if (CmbEstado.SelectedValue == ((int)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.FaltanteStock).ToString())
+                    {
+                        if (!sinStock)
+                            CmbEstado.SelectedValue = ((int)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.DisenioPendiente).ToString();
+                    }
 
                 }
-                else
-                {
-                    CmbEstado.SelectedValue = ((int)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.DisenioPendiente).ToString();
-                }
-            }
-            else
-            {
+
                 if (CmbEstado.SelectedValue == ((int)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.FaltanteStock).ToString())
                 {
-                    if (!sinStock)
-                        CmbEstado.SelectedValue = ((int)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.DisenioPendiente).ToString();
+                    CmbEstado.ForeColor = Color.Red;
                 }
 
-            }
+                if (CmbEstado.SelectedValue == ((int)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.DisenioPendiente).ToString())
+                {
+                    CmbEstado.ForeColor = Color.Black;
+                }
 
-            if(CmbEstado.SelectedValue == ((int)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.FaltanteStock).ToString())
-            {
-                CmbEstado.ForeColor=Color.Red; 
-            }
+                lblPrecioFinal.Text = precio.ToString();
+                lblPrecioFinalDescuento.Text = descuento.ToString();
 
-            if (CmbEstado.SelectedValue == ((int)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.DisenioPendiente).ToString())
-            {
-                CmbEstado.ForeColor = Color.Black;
             }
-
-            lblPrecioFinal.Text = precio.ToString();
-            lblPrecioFinalDescuento.Text = descuento.ToString();
         }
 
 
@@ -340,6 +346,7 @@ namespace sublimacion
                 if (idCliente != null && idCliente != "")
                 {
                     CmbCliente.SelectedValue = idCliente;
+                    CmbCliente.Enabled = false;
                 }
 
             }
@@ -383,15 +390,7 @@ namespace sublimacion
 
             Response.Redirect(prevPage);
 
-            //if ((user.Perfil == Usuario.PerfilesEnum.JefeProduccion))
-            //{
-            //    Response.Redirect("LogisticaProduccion.aspx");
-            //}
-            //else
-            //{
-            //    Response.Redirect("PedidoVer.aspx");
-            //}
-
+           
         }
 
         protected void BtnAceptarDisenio_Click(object sender, EventArgs e)
@@ -401,14 +400,13 @@ namespace sublimacion
                 CmbEstado.SelectedValue = ((int)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.DisenioAceptado).ToString();
                 setearObjeto();
 
-                if (_pedido.LineaPedido != null && _pedido.LineaPedido.Count > 0)
+                if (checkGuardar())
                 {
                     PedidoDAO.actualizarPedido(_pedido);
 
                     Response.Redirect(prevPage);
                 }
-                else
-                    LblComentario.Text = "Debe por lo menos ingresar un producto";
+               
 
             }
         }
@@ -422,14 +420,13 @@ namespace sublimacion
             {
                 CmbEstado.SelectedValue = ((int)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.Entregado).ToString();
                 setearObjeto();
-                if (_pedido.LineaPedido != null && _pedido.LineaPedido.Count > 0)
+                if (checkGuardar())
                 {
                     PedidoDAO.actualizarPedido(_pedido);
 
                     Response.Redirect(prevPage);
                 }
-                else
-                    LblComentario.Text = "Debe por lo menos ingresar un producto";
+                
 
             }
         }
@@ -439,16 +436,36 @@ namespace sublimacion
             {
                 CmbEstado.SelectedValue = ((int)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.DisenioPendiente).ToString();
                 setearObjeto();
-                if (_pedido.LineaPedido != null && _pedido.LineaPedido.Count > 0)
+                if (checkGuardar())
                 {
                     PedidoDAO.actualizarPedido(_pedido);
 
                     Response.Redirect(prevPage);
                 }
-                else
-                    LblComentario.Text = "Debe por lo menos ingresar un producto";
+                
 
             }
+        }
+
+        private bool checkGuardar()
+        {
+
+            bool check=true;
+
+            if (TxtComentario.Text.Length > 250)
+            {
+               LblComentario.Text = "Comentario demasiado largo";
+               check = false;
+            }
+           
+            if (_pedido.LineaPedido == null || _pedido.LineaPedido.Count == 0)
+            {
+                LblComentario.Text = "Debe por lo menos ingresar un producto";
+                check = false;
+            }
+
+            return check;
+        
         }
 
         protected void BtnGuardar_Click(object sender, EventArgs e)
@@ -458,39 +475,31 @@ namespace sublimacion
             if (_modoApertura == ModosEdicionEnum.Nuevo)
             {
                 setearObjeto();
-                if (_pedido.LineaPedido != null && _pedido.LineaPedido.Count > 0)
+                if (checkGuardar())
                 {
                     PedidoDAO.insertarPedido(_pedido);
-
-
                     Response.Redirect(prevPage);
-
                 }
-                else
-                    LblComentario.Text = "Debe por lo menos ingresar un producto";
+
             }
             else
             {
                 if (_modoApertura == ModosEdicionEnum.Modificar)
                 {
                     setearObjeto();
-                    if (_pedido.LineaPedido != null && _pedido.LineaPedido.Count > 0)
+                    if (checkGuardar())
                     {
+
                         PedidoDAO.actualizarPedido(_pedido);
 
                         Response.Redirect(prevPage);
+
+
                     }
-                    else
-                        LblComentario.Text = "Debe por lo menos ingresar un producto";
-
                 }
+
+                                
             }
-
-
-
-
-
-
         }
 
         private void setearObjeto()

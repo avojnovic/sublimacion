@@ -53,7 +53,7 @@
                     <tr>
                         <td colspan="2">
                             <asp:GridView ID="GridViewInsumos" runat="server" GridLines="None" AllowPaging="true" Font-Names="Calibri"
-                                Width="400px" HorizontalAlign="Center" PageSize="20" CssClass="mGrid" PagerStyle-CssClass="pgr"
+                                Width="400px" HorizontalAlign="Center" PageSize="40" CssClass="mGrid" PagerStyle-CssClass="pgr"
                                 AlternatingRowStyle-CssClass="alt" AutoGenerateColumns="false" AutoGenerateEditButton="true"
                                 OnRowEditing="GridViewInsumos_RowEditing" OnPageIndexChanging="GridViewInsumos_PageIndexChanging"
                                 OnRowUpdating="GridViewInsumos_OnRowUpdating" OnRowCancelingEdit="GridViewInsumos_OnRowCancelingEdit">

@@ -79,7 +79,7 @@
                             Display="Dynamic" ErrorMessage="*" SetFocusOnError="true" ValidationGroup="add" />
                     </td>
                     <td>
-                        <asp:TextBox ID="TxtComentario" runat="server" MaxLength="200" TextMode="MultiLine" Width="100%"></asp:TextBox>
+                        <asp:TextBox ID="TxtComentario" runat="server" MaxLength="200"  TextMode="MultiLine" Width="100%"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>

@@ -19,7 +19,7 @@
                 <asp:BoundField DataField="Precio" HeaderText="Precio" HeaderStyle-Font-Names="calibri" SortExpression="precio" />
                 <asp:BoundField DataField="StockAutomatico" HeaderText="Stock" HeaderStyle-Font-Names="calibri" SortExpression="cantidad" />
                 <asp:BoundField DataField="CostoAutomatico" HeaderText="Costo" HeaderStyle-Font-Names="calibri" SortExpression="costo" />
-                <asp:BoundField DataField="Tiempo" HeaderText="Tiempo" HeaderStyle-Font-Names="calibri" SortExpression="tiempo" />
+                <asp:BoundField DataField="Tiempo" HeaderText="Tiempo (minutos)" HeaderStyle-Font-Names="calibri" SortExpression="tiempo" />
 
                 <asp:TemplateField  ItemStyle-Width="25px">
                  <ItemTemplate>  
