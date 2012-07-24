@@ -150,8 +150,16 @@ namespace sublimacion
 
         protected void BtnNuevo_Click(object sender, EventArgs e)
         {
+            if (idCliente != null && idCliente != "")
+            { 
+                Response.Redirect("PedidoABM.aspx?idCliente=" + idCliente); 
+            }
+            else 
+            {
+                Response.Redirect("PedidoABM.aspx");
+            }
 
-            Response.Redirect("PedidoABM.aspx");
+
         }
 
         protected void CmbEstados_SelectedIndexChanged(object sender, EventArgs e)

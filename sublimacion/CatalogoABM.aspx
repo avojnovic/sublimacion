@@ -45,7 +45,7 @@
                     <tr>
                         <td colspan="2">
                             <asp:GridView ID="GridViewPlantillas" runat="server" GridLines="None" AllowPaging="true"
-                                Font-Names="Calibri" Width="400px" HorizontalAlign="Center" PageSize="20" CssClass="mGrid"
+                                Font-Names="Calibri" Width="400px" HorizontalAlign="Center" PageSize="40" CssClass="mGrid"
                                 PagerStyle-CssClass="pgr" AlternatingRowStyle-CssClass="alt" AutoGenerateColumns="false"
                                 OnPageIndexChanging="GridViewPlantillas_PageIndexChanging">
                                 <PagerSettings PageButtonCount="5" />

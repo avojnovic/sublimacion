@@ -83,10 +83,17 @@ namespace sublimacion
         {
 
             setearObjeto();
+            if (TxtComentario.Text.Length <= 250)
+            {
 
-            PedidoDAO.actualizarPedido(_pedido);
+                PedidoDAO.actualizarPedido(_pedido);
 
-            Response.Redirect("DiseniosPendientes.aspx");
+                Response.Redirect("DiseniosPendientes.aspx");
+            }
+            else
+            {
+                LblComentario.Text = "Comentario demasiado largo";
+            }
             
         }
 

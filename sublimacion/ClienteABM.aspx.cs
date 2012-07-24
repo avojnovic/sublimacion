@@ -75,7 +75,7 @@ namespace sublimacion
                 TxtDireccion.Text =_cliente.Direccion;
                 TxtTelefono.Text = _cliente.Telefono;
                 TxtMail.Text = _cliente.Mail;
-                TxtFecha.Text= _cliente.Fecha.ToString();
+                TxtFecha.Text= _cliente.Fecha.ToShortDateString();
                 
            }
             else
