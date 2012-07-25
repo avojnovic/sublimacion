@@ -171,7 +171,7 @@ namespace sublimacion.BussinesObjects.BussinesObjects
             get
             {
               
-                decimal tiempoTotal = (from lp in LineaPedido select lp.Producto.Tiempo).Sum();
+                decimal tiempoTotal = (from lp in LineaPedido select lp.Producto.Tiempo * lp.Cantidad).Sum();
 
                 return tiempoTotal.ToString();
             }
