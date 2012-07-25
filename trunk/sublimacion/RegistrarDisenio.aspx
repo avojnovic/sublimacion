@@ -7,7 +7,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <br />
     <br />
-    <asp:Label ID="LblComentario" runat="server"></asp:Label>
+    <asp:Label ID="LblComentario" runat="server" Font-Bold="true" Font-Names="calibri" ForeColor="Red"></asp:Label>
     <center>
         <asp:Panel runat="server" ID="panel1" Visible="true" Width="800px" Style="background-color: #DDDDDD">
             <table>

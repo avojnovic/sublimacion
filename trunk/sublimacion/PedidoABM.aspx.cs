@@ -332,7 +332,7 @@ namespace sublimacion
 
                 calcularPrecio();
 
-                ;
+               
                 lblInformacionFechas.Text = "Fecha Inicio estimada: " + _pedido.PlanDeProduccion.Fecha_inicio_str;
                 lblInformacionFechas.Text += " Fecha Fin estimada: " + _pedido.PlanDeProduccion.Fecha_fin_str;
                 lblInformacionFechas.Text += " - Fecha Inicio real: " + _pedido.OrdenDeTrabajo.Fecha_inicio_str;
