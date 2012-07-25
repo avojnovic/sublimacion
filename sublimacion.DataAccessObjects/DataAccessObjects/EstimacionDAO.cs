@@ -88,7 +88,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             e.TiempoOrden = tsOrden.TotalMinutes;
             e.TiempoPlan = tsPlan.TotalMinutes;
 
-            e.Estimado=(tsOrden.TotalMinutes * 100 / tsPlan.TotalMinutes);
+            e.Estimado=(tsOrden.TotalMinutes * 100 / tsPlan.TotalMinutes)-100;
             
 
 

@@ -137,6 +137,8 @@ namespace sublimacion
             GridView1.DataBind();
 
             setearGrillaSiEstaVacia();
+
+            //this.GridView1.Columns[2].ItemStyle.Width = new Unit(50);
         }
       
 
@@ -166,6 +168,8 @@ namespace sublimacion
         {
             cargarGrilla();
         }
+
+
 
        
     }

@@ -87,12 +87,15 @@ namespace sublimacion
         protected void BtnGuardar_Click(object sender, EventArgs e)
         {
 
-          guardar();
+         if( guardar())
+                Response.Redirect("ClienteVer.aspx");
              
        }
 
-        private void guardar()
+        private bool guardar()
         {
+            bool ok = true;
+
             if (_modoApertura == ModosEdicionEnum.Nuevo)
             {
 
@@ -103,10 +106,11 @@ namespace sublimacion
                 if (cli == null || cli.Dni == 0)
                 {
                     _cliente = ClienteDAO.insertarCliente(_cliente);
-                    Response.Redirect("ClienteVer.aspx");
+                   
                 }
                 else
                 {
+                    ok = false;
                     LblMensaje.Text = "Ya existe un cliente con ese DNI";
                 }
 
@@ -121,14 +125,16 @@ namespace sublimacion
                     if (cli == null || cli.Dni == 0)
                         {
                             ClienteDAO.actualizarCliente(_cliente);
-                            Response.Redirect("ClienteVer.aspx");
+                          
                         }
                         else
                         {
+                            ok = false;
                             LblMensaje.Text = "Ya existe un cliente con ese DNI";
                         }
                 }
             }
+            return ok;
         }
 
         private void setearObjeto()
@@ -148,8 +154,8 @@ namespace sublimacion
         }
         protected void BtnPedidoNew_Click(object sender, EventArgs e)
         {
-            guardar();
-            Response.Redirect("PedidoABM.aspx?idCliente="+_cliente.IdClienteStr);
+           if( guardar())
+                Response.Redirect("PedidoABM.aspx?idCliente="+_cliente.IdClienteStr);
 
         }
         
