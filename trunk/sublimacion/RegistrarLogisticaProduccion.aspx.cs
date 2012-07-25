@@ -278,7 +278,15 @@ namespace sublimacion
                 }
                 try
                 {
-                    fechaFin = DateTime.ParseExact(TxtFechaFin.Text + " " + TxtHoraFin.Text, "dd/MM/yyyy HH:mm", provider);
+                    System.Nullable<Decimal> tiempoTotal = (from ord in dp.Values.ToList()
+                                                            select ord.TiempoTotal).Sum();
+
+                    fechaFin = fechaInicio.AddMinutes((double)tiempoTotal);
+
+                    TxtFechaFin.Text = fechaFin.ToString("dd/MM/yyyy");
+                    TxtHoraFin.Text = fechaFin.ToString("HH:mm");
+
+                    
                 }
                 catch (Exception)
                 {
@@ -291,10 +299,8 @@ namespace sublimacion
 
                    GenerarPlanificacion(fechaInicio,fechaFin,dp);
                 }
-                else
-                {
-                    LblComentario.Text = "Fecha de Inicio Incorrecta";
-                }
+               
+
             }
             else
             {

@@ -194,7 +194,7 @@ namespace sublimacion
             }
             else
             {
-                LblComentario.Text = "Por seleccione un Plan con pedidos";
+                LblComentario.Text = "Por favor seleccione un Plan con pedidos";
             }
         }
 

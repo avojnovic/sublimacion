@@ -10,7 +10,8 @@
     <br />
 
     <asp:Label ID="LbComentario" runat="server" Font-Bold="true" Font-Names="calibri" ForeColor="Red"/> 
-
+    <br />
+     
      <asp:Panel ID="Panel1" DefaultButton="BtnBuscar" runat="server">
         
         <br />
@@ -70,5 +71,6 @@
             <HeaderStyle BackColor="Silver" Font-Bold="True" ForeColor="White" />
         </asp:GridView>
     </asp:Panel>
-
+    <br />
+    <asp:Label ID="Label3" runat="server" Font-Size="Small"  Text="Leyenda Estimación:  {-inf a -26%} Mal Estimado /{-25% a 0%} Rapido / {0%} Optimo / {0% a 25%} Razonable / {26% a 50%} Demorado / {51% a +inf}  Mal Estimado" Font-Names="calibri"/> 
 </asp:Content>
