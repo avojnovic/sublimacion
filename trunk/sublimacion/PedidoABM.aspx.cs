@@ -142,7 +142,7 @@ namespace sublimacion
                     BtnGuardar.Visible = false;
                     BtnBorrar.Visible = false;
                     TxtComentario.Enabled = false;
-                   
+
                 }
 
                 if (_pedido.EstadoId == (long)sublimacion.BussinesObjects.BussinesObjects.EstadosPedido.EstadosPedidoEnum.Terminado)
@@ -163,7 +163,7 @@ namespace sublimacion
                 GridViewProductos.Columns[9].Visible = false;
 
 
-    
+
             }
         }
 
@@ -171,22 +171,17 @@ namespace sublimacion
 
         private void cargarCombos()
         {
-
-
-
+            
             CmbEstado.DataSource = _listaEstados.Values.ToList();
             CmbEstado.DataTextField = "Descripcion";
             CmbEstado.DataValueField = "Id";
             CmbEstado.DataBind();
-
-
-
+            
             CmbCliente.DataSource = _listaClientes.Values.ToList();
             CmbCliente.DataTextField = "NombreCompleto";
             CmbCliente.DataValueField = "IdCliente";
             CmbCliente.DataBind();
-
-
+            
             DDLProducto.DataSource = _listaProductos.Values.ToList();
             DDLProducto.DataTextField = "Nombre";
             DDLProducto.DataValueField = "Idproducto";
@@ -194,14 +189,6 @@ namespace sublimacion
 
             CargarCatalogos();
 
-        }
-
-        protected void DDLProducto_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            DDLPlantilla.Items.Clear();
-            DDLCatalogo.Items.Clear();
-
-            CargarCatalogos();
         }
 
         private void CargarCatalogos()
@@ -217,6 +204,44 @@ namespace sublimacion
                 CargarPlantilla();
             }
         }
+
+        private void CargarPlantilla()
+        {
+            if (DDLCatalogo.SelectedValue != null && DDLCatalogo.SelectedValue != "")
+            {
+                _listaPlantilla = PlantillaDAO.obtenerPlantillaPorCatalogo(DDLCatalogo.SelectedValue.Trim());
+                DDLPlantilla.DataSource = _listaPlantilla.Values.ToList();
+                DDLPlantilla.DataTextField = "Nombre";
+                DDLPlantilla.DataValueField = "IdPlantilla";
+                DDLPlantilla.DataBind();
+            }
+        }
+
+
+        protected void DDLProducto_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DDLPlantilla.Items.Clear();
+            DDLCatalogo.Items.Clear();
+
+            CargarCatalogos();
+        }
+
+        protected void DDLCatalogo_SelectedIndexChanged1(object sender, EventArgs e)
+        {
+            DDLPlantilla.Items.Clear();
+            CargarPlantilla();
+        }
+
+        protected void DDLCatalogo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            DropDownList ddl = sender as DropDownList;
+
+            CargarPlantillas(ddl);
+
+        }
+
+
 
         private void calcularPrecio()
         {
@@ -251,8 +276,7 @@ namespace sublimacion
 
                 }
 
-
-
+                
                 if (_modoApertura == ModosEdicionEnum.Nuevo)
                 {
                     if (sinStock)
@@ -291,25 +315,7 @@ namespace sublimacion
             }
         }
 
-
-        protected void DDLCatalogo_SelectedIndexChanged1(object sender, EventArgs e)
-        {
-            DDLPlantilla.Items.Clear();
-            CargarPlantilla();
-        }
-
-        private void CargarPlantilla()
-        {
-            if (DDLCatalogo.SelectedValue != null && DDLCatalogo.SelectedValue != "")
-            {
-                _listaPlantilla = PlantillaDAO.obtenerPlantillaPorCatalogo(DDLCatalogo.SelectedValue.Trim());
-                DDLPlantilla.DataSource = _listaPlantilla.Values.ToList();
-                DDLPlantilla.DataTextField = "Nombre";
-                DDLPlantilla.DataValueField = "IdPlantilla";
-                DDLPlantilla.DataBind();
-            }
-        }
-
+  
         private void cargarPedido()
         {
             if (_pedido != null)
@@ -332,7 +338,7 @@ namespace sublimacion
 
                 calcularPrecio();
 
-               
+
                 lblInformacionFechas.Text = "Fecha Inicio estimada: " + _pedido.PlanDeProduccion.Fecha_inicio_str;
                 lblInformacionFechas.Text += " Fecha Fin estimada: " + _pedido.PlanDeProduccion.Fecha_fin_str;
                 lblInformacionFechas.Text += " - Fecha Inicio real: " + _pedido.OrdenDeTrabajo.Fecha_inicio_str;
@@ -390,7 +396,7 @@ namespace sublimacion
 
             Response.Redirect(prevPage);
 
-           
+
         }
 
         protected void BtnAceptarDisenio_Click(object sender, EventArgs e)
@@ -406,11 +412,10 @@ namespace sublimacion
 
                     Response.Redirect(prevPage);
                 }
-               
+
 
             }
         }
-
 
 
 
@@ -426,7 +431,7 @@ namespace sublimacion
 
                     Response.Redirect(prevPage);
                 }
-                
+
 
             }
         }
@@ -442,7 +447,7 @@ namespace sublimacion
 
                     Response.Redirect(prevPage);
                 }
-                
+
 
             }
         }
@@ -450,14 +455,14 @@ namespace sublimacion
         private bool checkGuardar()
         {
 
-            bool check=true;
+            bool check = true;
 
             if (TxtComentario.Text.Length > 250)
             {
-               LblComentario.Text = "Comentario demasiado largo";
-               check = false;
+                LblComentario.Text = "Comentario demasiado largo";
+                check = false;
             }
-           
+
             if (_pedido.LineaPedido == null || _pedido.LineaPedido.Count == 0)
             {
                 LblComentario.Text = "Debe por lo menos ingresar un producto";
@@ -465,7 +470,7 @@ namespace sublimacion
             }
 
             return check;
-        
+
         }
 
         protected void BtnGuardar_Click(object sender, EventArgs e)
@@ -498,7 +503,7 @@ namespace sublimacion
                     }
                 }
 
-                                
+
             }
         }
 
@@ -507,7 +512,7 @@ namespace sublimacion
 
             if (_pedido == null)
                 _pedido = new Pedido();
-            
+
             calcularPrecio();
 
             _pedido.Cliente = _listaClientes[long.Parse(this.CmbCliente.SelectedValue)];
@@ -524,9 +529,6 @@ namespace sublimacion
 
 
 
-
-
-
             if (_modoApertura == ModosEdicionEnum.Nuevo)
             {
                 _pedido.Usuario = (Usuario)Session["usuario"];
@@ -537,11 +539,7 @@ namespace sublimacion
 
             }
 
-
-
-
-
-
+            
             if (!_pedido.EstadosPedido.ContainsKey(long.Parse(this.CmbEstado.SelectedValue)))
             {
                 EstadosPedido est = new EstadosPedido();
@@ -583,11 +581,7 @@ namespace sublimacion
 
             _pedido.LineaPedido = dt;
 
-
-
-
-
-
+            
 
         }
 
@@ -817,14 +811,7 @@ namespace sublimacion
 
 
 
-        protected void DDLCatalogo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-            DropDownList ddl = sender as DropDownList;
-
-            CargarPlantillas(ddl);
-
-        }
+      
 
         private void CargarPlantillas(DropDownList ddl)
         {
