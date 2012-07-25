@@ -232,14 +232,14 @@ namespace sublimacion
             CargarPlantilla();
         }
 
-        protected void DDLCatalogo_SelectedIndexChanged(object sender, EventArgs e)
+    /*    protected void DDLCatalogo_SelectedIndexChanged(object sender, EventArgs e)
         {
 
             DropDownList ddl = sender as DropDownList;
 
             CargarPlantillas(ddl);
 
-        }
+        }*/
 
 
 

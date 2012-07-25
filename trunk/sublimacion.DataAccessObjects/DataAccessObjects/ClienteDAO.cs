@@ -66,6 +66,53 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
 
         }
 
+        public static Cliente validarCliente(string dni)
+        {
+
+            string sql = "";
+            sql = @"SELECT idcliente, nombre, apellido, dni, direccion, telefono, mail, fecha, borrado
+                FROM cliente
+                where dni={0}";
+
+            sql = string.Format(sql, dni);
+            NpgsqlDb.Instancia.PrepareCommand(sql);
+            NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
+            Dictionary<long, Cliente> dicCliente = new Dictionary<long, Cliente>();
+            Cliente u = null;
+            while (dr.Read())
+            {
+                u = getClienteDelDataReader(dr);
+
+            }
+
+            return u;
+
+        }
+
+        public static Cliente validarCliente(string dni, string id)
+        {
+
+            string sql = "";
+            sql = @"SELECT idcliente, nombre, apellido, dni, direccion, telefono, mail, fecha, borrado
+                FROM cliente
+                where dni={0} and idcliente<>{1}";
+
+            sql = string.Format(sql, dni, id);
+            NpgsqlDb.Instancia.PrepareCommand(sql);
+            NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
+            Dictionary<long, Cliente> dicCliente = new Dictionary<long, Cliente>();
+            Cliente u = null;
+            while (dr.Read())
+            {
+                u = getClienteDelDataReader(dr);
+
+            }
+
+            return u;
+
+        }
+
+
         private static Cliente getClienteDelDataReader(NpgsqlDataReader dr)
         {
 
