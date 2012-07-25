@@ -53,6 +53,8 @@ namespace sublimacion
         private void generarMenu()
         {
 
+            divMenu.Items.Clear();
+
 
             if ((user.Perfil == Usuario.PerfilesEnum.Diseniador) || (user.Perfil == Usuario.PerfilesEnum.Administrador))
             {
@@ -143,7 +145,7 @@ namespace sublimacion
                 divMenu.Items.Add(itDe);
             }
 
-            if ((user.Perfil == Usuario.PerfilesEnum.Vendedor) || (user.Perfil == Usuario.PerfilesEnum.Administrador) || (user.Perfil == Usuario.PerfilesEnum.Diseniador))
+            if ((user.Perfil == Usuario.PerfilesEnum.Administrador) || (user.Perfil == Usuario.PerfilesEnum.Diseniador))
             {
                 //DISENIO
                 MenuItem itDiseno = new MenuItem("Diseño");
@@ -152,8 +154,6 @@ namespace sublimacion
                 itDisPe.Value = "DiseniosPendientes";
                 itDisPe.NavigateUrl = "DiseniosPendientes.aspx";
                 itDiseno.ChildItems.Add(itDisPe);
-
-               
 
 
                 divMenu.Items.Add(itDiseno);

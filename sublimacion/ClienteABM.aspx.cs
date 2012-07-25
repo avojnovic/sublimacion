@@ -87,20 +87,28 @@ namespace sublimacion
         protected void BtnGuardar_Click(object sender, EventArgs e)
         {
 
-
-            guardar();
-
-
-            Response.Redirect("ClienteVer.aspx");
-
-        }
+          guardar();
+             
+       }
 
         private void guardar()
         {
             if (_modoApertura == ModosEdicionEnum.Nuevo)
             {
+
                 setearObjeto();
-                _cliente=ClienteDAO.insertarCliente(_cliente);
+
+                Cliente cli = ClienteDAO.validarCliente(_cliente.Dni.ToString());
+
+                if (cli == null || cli.Dni == 0)
+                {
+                    _cliente = ClienteDAO.insertarCliente(_cliente);
+                    Response.Redirect("ClienteVer.aspx");
+                }
+                else
+                {
+                    LblMensaje.Text = "Ya existe un cliente con ese DNI";
+                }
 
             }
             else
@@ -108,7 +116,17 @@ namespace sublimacion
                 if (_modoApertura == ModosEdicionEnum.Modificar)
                 {
                     setearObjeto();
-                    ClienteDAO.actualizarCliente(_cliente);
+                     Cliente cli = ClienteDAO.validarCliente(_cliente.Dni.ToString(), _cliente.IdClienteStr);
+
+                    if (cli == null || cli.Dni == 0)
+                        {
+                            ClienteDAO.actualizarCliente(_cliente);
+                            Response.Redirect("ClienteVer.aspx");
+                        }
+                        else
+                        {
+                            LblMensaje.Text = "Ya existe un cliente con ese DNI";
+                        }
                 }
             }
         }

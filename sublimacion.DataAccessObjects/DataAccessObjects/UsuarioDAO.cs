@@ -71,6 +71,70 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             return u;
 
         }
+
+
+        public static Usuario validarUsuario(string usuario)
+        {
+
+            string sql = @"
+            SELECT  u.id as usu_id, u.usuario as usu_usuario, u.contrasenia as usu_contrasenia, u.nombre as usu_nombre,
+                      u.apellido as usu_apellido, u.telefono as usu_telefono, u.mail as usu_mail, u.borrado as usu_borrado, 
+                      u.id_perfil as usu_id_perfil
+            FROM usuario u
+            inner join perfil p on u.id_perfil=p.id 
+            where u.usuario='{0}' ";
+
+            sql = string.Format(sql, usuario);
+
+
+            NpgsqlDb.Instancia.PrepareCommand(sql);
+            NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
+
+
+            Dictionary<long, Usuario> dicUsuario = new Dictionary<long, Usuario>();
+            Usuario u = null;
+
+            while (dr.Read())
+            {
+                u = getUsuarioDelDataReader(dr);
+
+            }
+
+            return u;
+
+        }
+
+        public static Usuario validarUsuario(string usuario, string id)
+        {
+
+            string sql = @"
+            SELECT  u.id as usu_id, u.usuario as usu_usuario, u.contrasenia as usu_contrasenia, u.nombre as usu_nombre,
+                      u.apellido as usu_apellido, u.telefono as usu_telefono, u.mail as usu_mail, u.borrado as usu_borrado, 
+                      u.id_perfil as usu_id_perfil
+            FROM usuario u
+            inner join perfil p on u.id_perfil=p.id 
+            where u.usuario='{0}' and u.id<>{1} ";
+
+            sql = string.Format(sql, usuario, id);
+
+
+            NpgsqlDb.Instancia.PrepareCommand(sql);
+            NpgsqlDataReader dr = NpgsqlDb.Instancia.ExecuteQuery();
+
+
+            Dictionary<long, Usuario> dicUsuario = new Dictionary<long, Usuario>();
+            Usuario u = null;
+
+            while (dr.Read())
+            {
+                u = getUsuarioDelDataReader(dr);
+
+            }
+
+            return u;
+
+        }
+
         public static Usuario obtenerUsuarioPorId(string id)
         {
 

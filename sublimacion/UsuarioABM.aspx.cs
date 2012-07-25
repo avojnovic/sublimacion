@@ -93,7 +93,17 @@ namespace sublimacion
             {
 
                 setearObjeto();
-                UsuarioDAO.insertarUsuario(_usuario);
+                Usuario user = UsuarioDAO.validarUsuario(_usuario.User);
+
+                if (user == null || user.Id == 0)
+                {
+                    UsuarioDAO.insertarUsuario(_usuario);
+                    Response.Redirect("UsuarioVer.aspx");
+                }
+                else
+                {
+                    LblMensaje.Text = "Ya existe ese Usuario!";
+                }
 
 
             }
@@ -102,11 +112,22 @@ namespace sublimacion
                 if (_modoApertura == ModosEdicionEnum.Modificar)
                 {
                     setearObjeto();
-                    UsuarioDAO.actualizarUsuario(_usuario);
+                    Usuario user = UsuarioDAO.validarUsuario(_usuario.User, _usuario.Id.ToString());
+
+                    if (user == null || user.Id == 0)
+                    {
+                        UsuarioDAO.actualizarUsuario(_usuario);
+                        Response.Redirect("UsuarioVer.aspx");
+                    }
+                    else
+                    {
+                        LblMensaje.Text = "Ya existe ese Usuario!";
+                    }
+
                 }
             }
 
-            Response.Redirect("UsuarioVer.aspx");
+            
 
         }
 
