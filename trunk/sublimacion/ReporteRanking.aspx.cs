@@ -222,7 +222,13 @@ namespace sublimacion
 
         protected void CmbEstados_SelectedIndexChanged(object sender, EventArgs e)
         {
+            GridViewReporte.DataSource = null;
+            GridViewReporte.DataBind();
+
+
+            LbComentario.Text = "";
             cargarGrilla();
+            
         }  
 
     }
