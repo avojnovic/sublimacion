@@ -23,7 +23,7 @@ namespace sublimacion
         ModosEdicionEnum _modoApertura = new ModosEdicionEnum();
         protected void Page_Load(object sender, EventArgs e)
         {
-            BtnBorrar.Attributes.Add("OnClick", "javascript:if(confirm('Esta seguro que desea borrar el Insumo')== false) return false;");
+            BtnBorrar.Attributes.Add("OnClick", "javascript:if(confirm('¿Esta seguro que desea borrar el Insumo?')== false) return false;");
 
             string id = Request.QueryString["id"];
 
@@ -97,22 +97,7 @@ namespace sublimacion
         }
 
        
-        private void setearObjeto()
-        {
-            if (_insumo == null)
-                _insumo = new Insumo();
-
-            _insumo.Nombre = TxtNombre.Text;
-            _insumo.Costo = Utils.convertToDecimal(TxtCosto.Text);
        
-            _insumo.NombreFab = TxtFabricante.Text.Trim();
-            _insumo.FechaAct = DateTime.Now;
-            _insumo.Stock = int.Parse(Txtstock.Text.Trim());
-
-
-          
-        }
-
         protected void BtnSalir_Click(object sender, EventArgs e)
         {
             Response.Redirect("InsumoVer.aspx");
@@ -127,6 +112,24 @@ namespace sublimacion
             Response.Redirect("InsumoVer.aspx");
 
         }
+
+
+        private void setearObjeto()
+        {
+            if (_insumo == null)
+                _insumo = new Insumo();
+
+            _insumo.Nombre = TxtNombre.Text;
+            _insumo.Costo = Utils.convertToDecimal(TxtCosto.Text);
+
+            _insumo.NombreFab = TxtFabricante.Text.Trim();
+            _insumo.FechaAct = DateTime.Now;
+            _insumo.Stock = int.Parse(Txtstock.Text.Trim());
+
+
+
+        }
+
 
     }
 }
