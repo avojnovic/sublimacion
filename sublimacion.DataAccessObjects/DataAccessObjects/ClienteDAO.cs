@@ -114,6 +114,7 @@ namespace sublimacion.DataAccessObjects.DataAccessObjects
             NpgsqlDb.Instancia.PrepareCommand(queryStr);
 
             i.Fecha = DateTime.Now;
+
             NpgsqlDb.Instancia.AddCommandParameter(":fecha", NpgsqlDbType.Date, ParameterDirection.Input, false, i.Fecha);
 
             parametrosQuery(i);
